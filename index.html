@@ -486,6 +486,44 @@ svg.ic{width:18px;height:18px;flex:none}
 .reveal.compact .rcard .cpos{font-size:8px}
 .reveal.compact .rcard.skill .front{padding:3px}
 .reveal.compact{gap:6px}
+
+/* ---- start screen ---- */
+.title{position:fixed;inset:0;z-index:55;background:#07081a;overflow:hidden;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;align-items:center;
+  padding:max(28px, calc(env(safe-area-inset-top,0px) + 18px)) max(16px, env(safe-area-inset-right,0px)) max(26px, calc(env(safe-area-inset-bottom,0px) + 18px)) max(16px, env(safe-area-inset-left,0px));transition:opacity .45s ease, transform .45s ease}
+.title.out{opacity:0;transform:scale(1.06);pointer-events:none}
+.tart{position:absolute;inset:0;background:var(--tbg) center 40%/cover no-repeat,radial-gradient(80% 60% at 50% 45%,#7a2a1a,#1c1240 60%,#07081a);animation:kb 18s ease-in-out infinite alternate}
+@keyframes kb{from{transform:scale(1.04)}to{transform:scale(1.14) translateY(-1.5%)}}
+.tshade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,8,26,.85) 0%,rgba(7,8,26,.15) 32%,rgba(7,8,26,0) 55%,rgba(7,8,26,.55) 78%,rgba(7,8,26,.92) 100%);pointer-events:none}
+.tlogo{position:relative;display:flex;flex-direction:column;align-items:center;line-height:.86;animation:logoIn .9s cubic-bezier(.2,1.4,.4,1) both .15s;text-align:center}
+.tlogo span{font-family:var(--display);font-weight:400;font-size:clamp(54px,17vw,92px);letter-spacing:.01em;
+  background:linear-gradient(180deg,#fff6d6 0%,#ffd25e 45%,#ff8a3d 100%);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 4px 0 #7d1b14) drop-shadow(0 8px 18px rgba(0,0,0,.6))}
+.tlogo .t2{margin-top:-2px}
+.tlogo small{margin-top:12px;font-family:var(--label);font-weight:700;font-size:14px;letter-spacing:.32em;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.8)}
+@keyframes logoIn{from{transform:translateY(-30px) scale(.7);opacity:0}}
+.tfoot{position:relative;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
+.twelcome{margin:0;font-size:16px;font-weight:700;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.8)}
+.twelcome:empty{display:none}
+.ttap{font-family:var(--display);font-weight:400;font-size:22px;color:#fff;letter-spacing:.06em;padding:12px 26px;border-radius:999px;border:2px solid rgba(255,201,77,.8);background:rgba(7,8,26,.45);
+  box-shadow:0 0 22px -4px #ffc94d;animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{50%{transform:scale(1.06);box-shadow:0 0 34px 0 #ffc94d}}
+.tver{font-size:11px;color:rgba(255,255,255,.55);font-weight:600;letter-spacing:.1em}
+.tflash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+.title.out .tflash{animation:flash .45s ease-out}
+@media (prefers-reduced-motion:reduce){.tart,.ttap,.tlogo{animation:none}}
+.tball,.tbeams{display:none}
+.noart .tball{display:block;position:absolute;left:50%;top:50%;width:min(62vw,300px);transform:translate(-50%,-46%);filter:drop-shadow(0 0 40px rgba(255,138,61,.7));animation:spinb 14s linear infinite}
+@keyframes spinb{to{transform:translate(-50%,-46%) rotate(360deg)}}
+.noart .tbeams{display:block;position:absolute;inset:-40%;background:repeating-conic-gradient(from 0deg at 50% 52%,rgba(255,201,77,.12) 0 6deg,transparent 6deg 18deg);animation:spin 40s linear infinite}
+@media (prefers-reduced-motion:reduce){.noart .tball,.noart .tbeams{animation:none}}
+.tvid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 40%;opacity:0;transition:opacity .8s ease}
+.vidon .tvid{opacity:1}
+.tball,.tbeams{display:none}
+.noart .tball{display:block;position:absolute;left:50%;top:50%;width:min(62vw,300px);transform:translate(-50%,-46%);filter:drop-shadow(0 0 40px rgba(255,138,61,.7));animation:spinb 14s linear infinite}
+@keyframes spinb{to{transform:translate(-50%,-46%) rotate(360deg)}}
+.noart .tbeams{display:block;position:absolute;inset:-40%;background:repeating-conic-gradient(from 0deg at 50% 52%,rgba(255,201,77,.12) 0 6deg,transparent 6deg 18deg);animation:spin 40s linear infinite}
+.title .tlogo,.title .tfoot{z-index:1}
+@media (prefers-reduced-motion:reduce){.noart .tball,.noart .tbeams{animation:none}}
 </style>
 <style>
 :root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -541,6 +579,16 @@ img{max-width:100%}
 
 <div class="modal" id="modal" hidden></div>
 <div class="setup" id="setup" hidden></div>
+<div class="title" id="title" data-act="start" role="button" tabindex="0" aria-label="Tap to start">
+  <div class="tart" id="tart"></div>
+  <video class="tvid" id="tvid" muted loop playsinline autoplay preload="auto" aria-hidden="true"></video>
+  <svg class="tball" viewBox="0 0 100 100" aria-hidden="true"><defs><radialGradient id="tbg1" cx="38%" cy="32%" r="70%"><stop offset="0" stop-color="#ffb070"/><stop offset=".55" stop-color="#e8742a"/><stop offset="1" stop-color="#7a2a08"/></radialGradient></defs><circle cx="50" cy="50" r="44" fill="url(#tbg1)"/><path d="M6 50h88M50 6v88M19 19c17 17 17 45 0 62M81 19c-17 17-17 45 0 62" stroke="#2a1206" stroke-width="3" fill="none"/></svg>
+  <div class="tbeams"></div>
+  <div class="tshade"></div>
+  <div class="tlogo"><span class="t1">DREAM</span><span class="t2">BALL</span><small>5-ON-5 CARD BASKETBALL</small></div>
+  <div class="tfoot"><p class="twelcome" id="twelcome"></p><b class="ttap">TAP TO START</b><span class="tver">v1.5 · Made with Claude</span></div>
+  <div class="tflash"></div>
+</div>
 <div id="rotate"><div class="phone"></div><h2>DREAM BALL</h2><p>Turn your phone upright to keep playing</p></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -3308,6 +3356,7 @@ function act(a, d) {
   else if (a === 'vpose') { VW.anim = d.k; if (VW.a) VW.a.t = 0; document.querySelectorAll('.vposes .fchip').forEach(b => b.classList.toggle('on', b.dataset.k === d.k)); }
   else if (a === 'mclose') closeModal();
   else if (a === 'settings') openSettings();
+  else if (a === 'start') startGame();
   else if (a === 'setfps') { SET.fps = +d.v; saveSet(); openSettings(); }
   else if (a === 'setq') { SET.q = d.v; saveSet(); applyQuality(); openSettings(); }
   else if (a === 'setshow') { SET.showFps = d.v === '1'; saveSet(); $('fpsbox').hidden = !SET.showFps; openSettings(); }
@@ -3374,11 +3423,28 @@ S = load();
 try { initScene(); m4c = new THREE.Matrix4(); vproj = new THREE.Vector3(); applyQuality(); }
 catch (err) { renderer = null; const d = document.createElement('div'); d.className = 'glfail'; d.textContent = 'This device could not start the 3D view. Try an up-to-date browser.'; wrap.appendChild(d); }
 setMode('home');
+function startGame() {
+  const t = $('title'); if (!t || t.classList.contains('out')) return;
+  t.classList.add('out'); setTimeout(() => { t.hidden = true; }, 480);
+  const v = $('tvid'); setTimeout(() => { if (v && v.pause) { v.pause(); v.removeAttribute('src'); if (v.load) v.load(); } }, 500);
+  if (!S) renderSetup();
+}
+$('title').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); startGame(); } });
+if (S) $('twelcome').textContent = `Welcome back, ${S.name}`;
+const TITLE_ART = 'https://d8j0ntlcm91z4.cloudfront.net/user_3K6QP4i5xFR5ycxs1fK5oVOgn0s/hf_20261023_132958_e2238fbe-ed96-4ba5-b22a-c27ccf564620.png';
+const TITLE_VID = 'https://d8j0ntlcm91z4.cloudfront.net/user_3K6QP4i5xFR5ycxs1fK5oVOgn0s/hf_20261023_133204_6e42d3d8-033c-4b2e-a8df-715fb7c04d5c.mp4';
+(() => {
+  const t = $('title'); t.classList.add('noart');
+  const img = new Image(); img.onload = () => { $('tart').style.setProperty('--tbg', `url("${img.src}")`); t.classList.remove('noart'); }; img.src = TITLE_ART;
+  const v = $('tvid'); if (!v || !TITLE_VID) return;
+  v.addEventListener('playing', () => { t.classList.add('vidon'); t.classList.remove('noart'); });
+  v.src = TITLE_VID; const pr = v.play && v.play(); if (pr && pr.catch) pr.catch(() => {});
+})();
 if (S) {
   const gains = offlineTraining();
   renderTop(); repaintGym(); gymSetup(); save();
   if (gains.length) { const tot = gains.reduce((a, g) => a + g.n, 0); setTimeout(() => toast(`While you were away your players gained ${tot} stat point${tot === 1 ? '' : 's'} in the gym`), 600); }
-} else renderSetup();
+}
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => {
   repaintGym(); if (mode === 'match') { repaintArena(); buildArenaPeople(); } else if (S) gymSetup();
 });
