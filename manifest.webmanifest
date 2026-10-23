@@ -1,8 +1,8 @@
 {
   "name": "Dream Ball",
   "short_name": "Dream Ball",
-  "id": "./",
-  "start_url": "./",
+  "id": "./?app=dreamball-2",
+  "start_url": "./?app=dreamball-2",
   "scope": "./",
   "description": "A hi-bit pixel 3-on-3 basketball card game: build your squad, pull banners and play a story-mode season.",
   "display": "standalone",
