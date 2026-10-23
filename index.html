@@ -220,7 +220,7 @@ svg.ic{width:18px;height:18px;flex:none}
 .rcard .covr{font-family:var(--num);font-size:22px;font-weight:600;line-height:1}
 .rcard .cpos{font-size:10px;font-weight:700;letter-spacing:.08em;color:var(--muted)}
 .rcard .front .av{width:70%;max-width:78px;margin-top:10px}
-.rcard .front svg.sh{width:82%;margin-top:10px}
+.rcard .front .sh{width:82%;margin-top:10px}
 .rcard .front b{font-size:12px;line-height:1.05}
 .rcard .front b.cbig{font-family:var(--display);font-weight:400;font-size:13px;margin-top:8px}
 .rcard .front .rr{font-size:10px;font-weight:700;color:var(--rc);letter-spacing:.08em;text-transform:uppercase}
@@ -229,10 +229,10 @@ svg.ic{width:18px;height:18px;flex:none}
 @media (prefers-reduced-motion:reduce){.foil::after,.opening .rays,.stagepack,.rcard,.rcard.r3 .front{animation:none}}
 
 .locked-panel{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;color:var(--muted);padding:20px}
-.locked-panel svg{width:56px;height:56px;color:var(--muted)}
+.locked-panel>svg{width:56px;height:56px;color:var(--muted)}
 .locked-panel b{font-family:var(--display);font-weight:400;font-size:22px;color:var(--ink)}
 
-.nav{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;background:var(--panel);border:1px solid var(--rule);border-radius:14px;padding:5px}
+.nav{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;background:var(--panel);border:1px solid var(--rule);border-radius:14px;padding:5px}
 .nav button{position:relative;border:0;background:transparent;border-radius:10px;padding:8px 2px 7px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;color:var(--muted);font-size:13px;font-weight:700;letter-spacing:.08em}
 .nav button svg{width:24px;height:24px}
 .nav button.on{background:var(--panel2);color:var(--ink)}
@@ -449,7 +449,7 @@ svg.ic{width:18px;height:18px;flex:none}
 .trio .av{width:64px;height:64px;border-radius:10px;border:2px solid rgba(255,255,255,.4)}
 .trio .av:nth-child(2){transform:translateY(-6px) scale(1.12);border-color:var(--gold)}
 .street-items{position:absolute;right:10px;top:16px;display:flex;align-items:center;gap:6px}
-.street-items svg.sh{width:80px;height:40px}
+.street-items .sh{width:80px;height:auto}
 .street-items .mini{width:54px;display:block;transform:rotate(-6deg)}
 .street-items .mini:last-child{transform:rotate(7deg)}
 .street-items .mini .cname{font-size:8px}
@@ -479,7 +479,7 @@ svg.ic{width:18px;height:18px;flex:none}
 .reveal.compact .front .rr{font-size:8px;letter-spacing:.04em}
 .reveal.compact .front .cstat{display:none}
 .reveal.compact .front .av{width:62%;margin-top:0}
-.reveal.compact .front svg.sh{width:84%;margin-top:0}
+.reveal.compact .front .sh{width:84%;margin-top:0}
 .reveal.compact .front .tg{font-size:8px;padding:0 3px}
 .reveal.compact .rcard .ctop{top:3px;left:4px;right:4px}
 .reveal.compact .rcard .covr{font-size:17px}
@@ -499,6 +499,55 @@ svg.ic{width:18px;height:18px;flex:none}
 img.px,img.av.px,.avi.px{image-rendering:pixelated;image-rendering:crisp-edges;object-fit:cover}
 .vcanvas{image-rendering:pixelated}
 .av.phw>img{image-rendering:pixelated}
+
+/* ---- pixel cards, shoes, Basket Bucks, banners v2 ---- */
+.nav button{font-size:10px}
+.ic.buck,svg.ic.buck{width:20px;height:14px;image-rendering:pixelated}
+.cur .gemic img.hfbuck{width:22px;height:22px;border-radius:50%;display:block;image-rendering:pixelated}
+.cframe{border-radius:0;border:2px solid var(--rc);box-shadow:0 0 0 2px #0a0b16,3px 3px 0 2px rgba(0,0,0,.45);
+  clip-path:polygon(0 4px,2px 4px,2px 2px,4px 2px,4px 0,calc(100% - 4px) 0,calc(100% - 4px) 2px,calc(100% - 2px) 2px,calc(100% - 2px) 4px,100% 4px,100% calc(100% - 4px),calc(100% - 2px) calc(100% - 4px),calc(100% - 2px) calc(100% - 2px),calc(100% - 4px) calc(100% - 2px),calc(100% - 4px) 100%,4px 100%,4px calc(100% - 2px),2px calc(100% - 2px),2px calc(100% - 4px),0 calc(100% - 4px))}
+.cframe .art.pxart{position:relative;display:block;width:100%;aspect-ratio:1.25;overflow:hidden;background:#0d0f22}
+.cframe .art.pxart img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;image-rendering:pixelated;display:block}
+.cframe .ccost,.cframe .ctype,.cframe .clv,.cframe .cname{font-family:Silkscreen,var(--label),monospace;border-radius:0}
+.cframe .ccost{font-size:13px;padding:1px 4px 1px 2px;box-shadow:0 0 0 1px rgba(255,255,255,.15)}
+.cframe .ctype{font-size:7px;letter-spacing:.04em}
+.cframe .cname{font-size:9px;letter-spacing:.02em;background:#0a0b16;border-top:2px solid var(--rc)}
+.cframe.t-ply .cname{color:#a9dcff} .cframe.t-ply .ctype{color:#a9dcff}
+.cframe.t-drb{--tc:#7c6bff} .cframe.t-sht{--tc:#ff8a3d} .cframe.t-pas{--tc:#2fd18a} .cframe.t-def{--tc:#ff4d6a} .cframe.t-ply{--tc:#4fb8ff}
+.sh.px,svg.sh.px,.shi.px{image-rendering:pixelated}
+.sh.shw{position:relative;display:block;aspect-ratio:23/12}
+.sh.shw>svg,.sh.shw>img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;image-rendering:pixelated}
+.sh.shw>img{object-fit:cover;border-radius:4px}
+.bart .bbg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;image-rendering:pixelated;opacity:.85}
+.bart.b2-shoe{background:repeating-linear-gradient(90deg,#1a2240 0 22px,#202a4e 22px 44px)}
+.bart.b2-play{background:#16302a}
+.bart.b2-hof{background:radial-gradient(90% 120% at 50% 20%,#ffe08a,#9a6a00 50%,#2a1d00)}
+.street-items.shoes3 .sh{width:64px}
+.binfo{position:absolute;right:8px;top:8px;z-index:3;width:28px;height:28px;border:2px solid #fff;background:rgba(10,11,22,.75);color:#fff;font-family:Silkscreen,var(--display),monospace;font-size:15px;font-weight:700;line-height:1;cursor:pointer;display:grid;place-items:center;
+  clip-path:polygon(0 4px,4px 4px,4px 0,calc(100% - 4px) 0,calc(100% - 4px) 4px,100% 4px,100% calc(100% - 4px),calc(100% - 4px) calc(100% - 4px),calc(100% - 4px) 100%,4px 100%,4px calc(100% - 4px),0 calc(100% - 4px))}
+.trio{z-index:1}
+.bart .btext{z-index:1}
+.binfo-sheet .mhead2{display:flex;align-items:center;justify-content:space-between}
+.binfo-sheet h2{margin:0;font-family:var(--display);font-weight:400;font-size:22px}
+.binfo-sheet .mx{border:0;background:var(--panel2);color:var(--ink);width:34px;height:34px;border-radius:10px;display:grid;place-items:center;cursor:pointer}
+.bi-odds{display:flex;flex-direction:column;gap:4px;background:var(--panel2);border-radius:12px;padding:10px 12px;font-size:13px}
+.bi-odds b{font-size:11px;letter-spacing:.14em;color:var(--muted)}
+.bi-rar{display:flex;flex-wrap:wrap;gap:4px 12px;font-weight:700}
+.bi-h{margin:4px 0 0;font-size:12px;letter-spacing:.14em;color:var(--muted);display:flex;justify-content:space-between}
+.bi-h em{font-style:normal;color:var(--ink)}
+.bi-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.bi-grid.cards{grid-template-columns:repeat(4,minmax(0,1fr))}
+.bi-p,.bi-s{display:flex;flex-direction:column;align-items:center;gap:2px;background:var(--panel2);border:2px solid var(--rc);padding:4px;min-width:0}
+.bi-p .av{width:100%;aspect-ratio:1;display:block}
+.bi-p b,.bi-s b{font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.bi-p small{font-size:9px;color:var(--muted)}
+.bi-s .sh{width:100%}
+.bi-c .cframe .cname{font-size:8px}
+.shop-lock .shopart{display:flex;align-items:center;gap:10px}
+.shop-lock .shopart svg.ic{width:56px;height:40px}
+.shop-lock .shopart .sh{width:90px}
+.shop-lock .shopart .cframe{width:64px;transform:rotate(6deg)}
+.shop-lock .shopart svg{height:auto}
 :root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 body{margin:0;-webkit-text-size-adjust:100%;overscroll-behavior:none;touch-action:manipulation}
 img{max-width:100%}
@@ -512,7 +561,7 @@ img{max-width:100%}
   <div class="topbar">
     <div class="who"><span id="crest"></span><div style="min-width:0"><b id="tname">DREAM BALL</b><small id="tsub"></small></div></div>
     <button class="installbtn" id="installBtn" hidden>Install</button>
-    <div class="wallet"><button class="gear" data-act="settings" aria-label="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button><span class="cur" aria-label="Coins"><span class="coinic"></span><b id="coins">0</b></span><span class="cur" aria-label="Gems"><span class="gemic"></span><b id="gems">0</b></span></div>
+    <div class="wallet"><button class="gear" data-act="settings" aria-label="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button><span class="cur bucks" aria-label="Basket Bucks"><span class="gemic"></span><b id="gems">0</b></span></div>
   </div>
 
   <header class="board" aria-label="Scoreboard">
@@ -548,6 +597,7 @@ img{max-width:100%}
     <button data-act="tab" data-tab="story"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M7 14h3M14 14h3M7 18h3"/></svg>STORY</button>
     <button data-act="tab" data-tab="pvp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 4l11 11M20 4 9 15M6 16l-2 4M18 16l2 4M13 13l-2 2M11 13l2 2"/></svg>PVP<svg class="lock" viewBox="0 0 16 16"><rect x="3" y="7" width="10" height="8" rx="1.5" fill="currentColor"/><path d="M5 7V5a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button>
     <button data-act="tab" data-tab="packs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M6 3h12v18l-6-4-6 4z"/><path d="M12 7l1.2 2.4 2.6.4-1.9 1.8.5 2.6L12 13l-2.4 1.2.5-2.6-1.9-1.8 2.6-.4z"/></svg>BANNERS</button>
+    <button data-act="tab" data-tab="shop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 9l2-5h14l2 5M3 9h18v2a3 3 0 0 1-6 0 3 3 0 0 1-6 0 3 3 0 0 1-6 0zM5 13v8h14v-8M10 21v-5h4v5"/></svg>SHOP<svg class="lock" viewBox="0 0 16 16"><rect x="3" y="7" width="10" height="8" rx="1.5" fill="currentColor"/><path d="M5 7V5a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button>
   </nav>
 </div>
 
@@ -622,7 +672,8 @@ const TYPES = {
   drb:{n:'DRIBBLE', a:'#7c6bff', b:'#2a1d7a', stat:'drb'},
   sht:{n:'SHOT',    a:'#ff8a3d', b:'#7a2a0a', stat:'sht'},
   pas:{n:'PASS',    a:'#2fd18a', b:'#0b4a3a', stat:'spd'},
-  def:{n:'DEFENSE', a:'#ff4d6a', b:'#5a0f22', stat:'def'}
+  def:{n:'DEFENSE', a:'#ff4d6a', b:'#5a0f22', stat:'def'},
+  ply:{n:'PLAY',    a:'#4fb8ff', b:'#0b2f5a', stat:'sht'}
 };
 const CARDS = [
   {id:'hesi',     n:'Hesitation',       t:'drb', r:0, cost:3,  beat:.42, stun:.8,  burst:.5,  anim:'hesi',  art:'hesi'},
@@ -686,10 +737,24 @@ const CARDS = [
   {id:'deny',     n:'Deny the Ball',    t:'def', r:1, cost:5,  d:'lane',   dur:6, art:'lane'},
   {id:'trap',     n:'Double Team',      t:'def', r:2, cost:7,  d:'trap',   p:.5, art:'trap'},
   {id:'rimprot',  n:'Rim Protector',    t:'def', r:2, cost:7,  d:'block',  p:.6, dur:6, art:'block'},
-  {id:'clamps',   n:'Clamps',           t:'def', r:3, cost:9,  d:'lock',   dur:9, art:'stance'}
+  {id:'clamps',   n:'Clamps',           t:'def', r:3, cost:9,  d:'lock',   dur:9, art:'stance'},
+
+  {id:'pnr',      n:'Pick and Roll',    t:'ply', r:0, cost:5,  play:'pnr',       art:'pnr'},
+  {id:'givego',   n:'Give and Go',      t:'ply', r:0, cost:4,  play:'givego',    art:'givego'},
+  {id:'backdoor', n:'Backdoor Cut',     t:'ply', r:1, cost:6,  play:'backdoor',  art:'backdoor'},
+  {id:'pop',      n:'Pick and Pop',     t:'ply', r:1, cost:6,  play:'pop',       art:'pop'},
+  {id:'clearout', n:'Clear Out',        t:'ply', r:1, cost:5,  play:'clearout',  art:'clearout'},
+  {id:'floppy',   n:'Floppy',           t:'ply', r:2, cost:7,  play:'floppy',    art:'floppy'},
+  {id:'fastbreak',n:'Fast Break',       t:'ply', r:2, cost:7,  play:'fastbreak', art:'fastbreak'},
+  {id:'spain',    n:'Spain Pick and Roll', t:'ply', r:3, cost:10, play:'spain',  art:'spain'},
+  {id:'motion',   n:'Splash Motion',    t:'ply', r:3, cost:9,  play:'motion',    art:'motion'}
 ];
 const CARD = Object.fromEntries(CARDS.map(c => [c.id, c]));
+const PLAY_DESC = {pnr:'Your big sets a screen, rolls, and catches for a dunk', givego:'Pass to the wing, cut, get it back for a layup', backdoor:'Wing sneaks behind his man for a layup',
+  pop:'Big screens, pops out and fires a hot three', clearout:'Teammates clear out. You get the floor and a hot hand', floppy:'Best shooter runs off screens for a hot three',
+  fastbreak:'Hit the man streaking ahead for a dunk', spain:'Two screens, then a lob for an alley-oop', motion:'Three quick passes end in a red-hot open three'};
 const DESC = {
+  ply:c => PLAY_DESC[c.play],
   drb:c => c.back ? 'Step away from your man for an open look' : c.multi ? 'Shakes two defenders at once' : c.drive ? 'Beat your man and attack the rim' : 'Shake your defender',
   sht:c => c.pump ? 'Fake the shot, then rise up. Hold, release on green' : c.shot === 'meter' ? (c.deep ? 'Hold, release on green. Huge green from deep' : c.three ? 'Hold, release on green. Bigger green from three' : c.fade ? 'Hold, release on green. Hard to contest' : 'Hold, release on green')
     : c.fin === 'dunk' ? (c.poster ? 'Drive and throw it down. Can posterize' : 'Drive and throw it down') : c.fin === 'floater' ? 'Soft touch over the big men' : 'Drive and finish at the rim',
@@ -715,31 +780,42 @@ const SHOES = [
   {n:'Midnight Royale',r:3, b:{sht:7, drb:3, spd:6},        c:0x2e1452, s:0xffc94d}
 ];
 const SHARDS = [0, 2, 3, 5, 8];
-const STAR_COST = [0, 500, 1200, 2500, 5000];
+const STAR_COST = [0, 50, 120, 250, 500];
 const ODDS = [.55, .3, .12, .03];
 const SEASON_GAMES = 12;
 const DECK_MAX = 50, DECK_MIN = 8, HAND = 8, STAM_MAX = 50, TRAIN_CAP = 15;
 const STATIONS = {
-  treadmill:{n:'Treadmill',     stat:['spd'],       cost:800,  icon:'run'},
-  ladder:   {n:'Agility Ladder',stat:['drb'],       cost:900,  icon:'ladder'},
-  bench:    {n:'Bench Press',   stat:['def'],       cost:1200, icon:'bench'},
-  machine:  {n:'Battle Ropes',  stat:['sht'],       cost:1500, icon:'ropes'},
-  squat:    {n:'Squat Rack',    stat:['def','spd'], cost:2200, icon:'squat'},
-  bike:     {n:'Spin Bike',     stat:['spd','drb'], cost:1800, icon:'bike'},
-  plyo:     {n:'Plyo Box',      stat:['def','sht'], cost:2000, icon:'plyo'}
+  treadmill:{n:'Treadmill',     stat:['spd'],       cost:80,  icon:'run'},
+  ladder:   {n:'Agility Ladder',stat:['drb'],       cost:90,  icon:'ladder'},
+  bench:    {n:'Bench Press',   stat:['def'],       cost:120, icon:'bench'},
+  machine:  {n:'Battle Ropes',  stat:['sht'],       cost:150, icon:'ropes'},
+  squat:    {n:'Squat Rack',    stat:['def','spd'], cost:220, icon:'squat'},
+  bike:     {n:'Spin Bike',     stat:['spd','drb'], cost:180, icon:'bike'},
+  plyo:     {n:'Plyo Box',      stat:['def','sht'], cost:200, icon:'plyo'}
 };
-const GYM_SLOTS = 8, UNIT_UP = [0, 600, 1400, 2800, 5200];
+const GYM_SLOTS = 8, UNIT_UP = [0, 60, 140, 280, 520];
 
 // ================= icons and artwork =================
-const COIN = '<svg class="ic" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="#ffc94d" stroke="#9a6a00" stroke-width="2"/><circle cx="10" cy="10" r="4" fill="none" stroke="#9a6a00" stroke-width="1.6"/></svg>';
-const GEM = '<svg class="ic" viewBox="0 0 20 20"><path d="M5 3h10l4 5-9 10L1 8z" fill="#4fd3e8" stroke="#1a6f80" stroke-width="1.5" stroke-linejoin="round"/><path d="M1 8h18M7 3l3 15 3-15" fill="none" stroke="#1a6f80" stroke-width="1"/></svg>';
+// Basket Bucks: pixel dollar bill with a basketball on it
+const BUCK_MAP = [' GGGGGGGGGGGGGG ', 'GggggggggggggggG', 'GgDggwgggggggDgG', 'GgggwwwwgggggggG', 'GggwgwgggggooggG', 'GgggwwwgggokoogG', 'GggggwgwggoookgG', 'GggwwwwggggooggG', 'GgDggwgggggggDgG', 'GggggggggggggggG', ' GGGGGGGGGGGGGG '];
+function pixSVG(map, pal, cls) {
+  let r = '';
+  map.forEach((row, y) => { for (let x = 0; x < row.length; x++) { const c = pal[row[x]]; if (c) r += `<rect x="${x}" y="${y}" width="1" height="1" fill="${c}"/>`; } });
+  return `<svg class="${cls || 'ic'}" viewBox="0 0 ${map[0].length} ${map.length}" shape-rendering="crispEdges" aria-hidden="true">${r}</svg>`;
+}
+const BUCK = pixSVG(BUCK_MAP, {G:'#0d4a24', g:'#2fbf5a', D:'#1c7a3a', w:'#f4ffe8', o:'#ff8a3d', k:'#5a2405'}, 'ic buck');
+const GEM = BUCK, COIN = BUCK;
 const BOLT = '<svg viewBox="0 0 12 16" width="10" height="13" aria-hidden="true"><path d="M7 0 1 9h4l-1 7 6-9H6z" fill="currentColor"/></svg>';
 const XIC = '<svg viewBox="0 0 20 20" class="ic"><path d="M5 5l10 10M15 5 5 15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>';
 function crestSVG(f) {
   return `<svg class="crest" viewBox="0 0 40 44" aria-hidden="true"><path d="M20 2l16 6v12c0 11-7 18-16 22C11 38 4 31 4 20V8z" fill="${f.c}" stroke="${f.trim}" stroke-width="3"/><text x="20" y="29" text-anchor="middle" font-family="Bungee,Impact,sans-serif" font-size="17" fill="${f.numc}">${f.n[0]}</text></svg>`;
 }
+const SHOE_MAP = ['......kkkkk............', '.....kuuuuuk...........', '.....kuwwuuuk..........', '.....kuuwwuuuk.........', '....kuuuuwwuuukk.......', '....kuuuuuwwuuuukk.....', '...kuuaaaauuuuuuuukk...', '..kuuuuuaaaauuuuuuuukk.', '.kuuuuuuuuuuuuuuuuuuuuk', '.kllllllllllllllllllllk', '.ksssssssssssssssssssk.', '..kkkkkkkkkkkkkkkkkkk..'];
 function shoeSVG(m) {
-  return `<svg class="sh" viewBox="0 0 64 32" aria-hidden="true"><path d="M4 23c0-7 2-13 6-15l7 4c5 2 10 2 14-1l4-3c6 2 10 6 16 8 6 2 9 4 9 8v2H4z" fill="${hexS(m.c)}" stroke="rgba(0,0,0,.35)"/><path d="M14 13l3 4M19 13l2 4M24 12l1 4" stroke="${hexS(m.s)}" stroke-width="1.6" stroke-linecap="round"/><path d="M30 19c6 0 12 1 18 4" stroke="${hexS(m.s)}" stroke-width="2.2" fill="none" stroke-linecap="round"/><rect x="4" y="24" width="57" height="5" rx="2" fill="${hexS(m.s)}"/></svg>`;
+  const idx = SHOES.indexOf(m), u = hexS(m.c), sole = hexS(m.s);
+  const svg = pixSVG(SHOE_MAP, {k:'#120e18', u, w:'#f4f1ea', a:sole, l:'#f4f1ea', s:sole}, 'sh px');
+  if (typeof PHOTO_OK === 'undefined' || !PHOTO_OK || typeof SHOE_ART === 'undefined' || !SHOE_ART[idx]) return svg;
+  return `<span class="sh shw">${svg.replace('class="sh px"', 'class="shi px"')}<img src="${PH_BASE + SHOE_ART[idx]}_min.webp" alt="" loading="lazy" onerror="this.remove()"></span>`;
 }
 
 // Painted player portrait (bust)
@@ -832,7 +908,7 @@ function portraitSVG(look, f, num) {
   return `<span class="av phw">${svg.replace('class="av"', 'class="avi"').replace('class="av px"', 'class="avi px"')}<img src="${photoURL(look.pid)}" alt="" loading="lazy" decoding="async" onerror="this.remove()"></span>`;
 }
 
-function cardArt(c) {
+function vectorCardArt(c) {
   const T = TYPES[c.t], P = POSES[c.art] || POSES.cross, u = 'c' + (++ART_ID);
   const H = [42, P.hy], R = d => d * Math.PI / 180;
   const end = (p, ang, len) => [p[0] + Math.sin(R(ang)) * len, p[1] + Math.cos(R(ang)) * len];
@@ -875,17 +951,26 @@ function cardArt(c) {
     <path d="M0 0L36 80H24L-12 0zM70 0l40 80H98L58 0z" fill="#fff" opacity=".05"/>
     ${hoop}${fx}<g transform="translate(2.5 2.5)" opacity=".28">${fig('#000', '#000')}</g>${fig('#ffffff', 'rgba(225,230,255,.78)')}${ball}</svg>`;
 }
+// Higgsfield pixel art (only shows where the host can load it); coded pixel art underneath
+const CARD_ART = {"hesi":"190106_13583507-99b2-4db7-897a-c3983d6f0837","cross":"190108_4900ee77-8e1c-450d-b2ff-ce725d96fa21","btl":"190106_cf7b1da2-206c-4698-96c8-657fff7da183","btb":"190107_16ac3787-f5e9-4fdb-935b-9e9f472f6cf1","step":"190107_295b2395-2905-4b7f-b21c-0eb0a7f710a9","spin":"190108_15c6a70d-de32-4099-bef3-d0398048d7a9","euro":"190107_d15caaa7-188e-4269-bde6-f17f6c2b7198","stutter":"190107_e9f0328b-83dc-4d47-b1e6-c99c5d283549","jumper":"190109_d4c1b2ef-f8ac-4a79-b94f-b31cf6524f58","layup":"190106_740d1a49-8c2e-4b64-8e13-aa2374cfd653","floater":"190107_589ad6b7-7adf-43a1-ae90-e64528998feb","fade":"190108_577bca0b-f0f7-4139-ab99-b81a4dc01904","dunk":"190135_7d6a9045-a41b-45bb-8a79-19bb02b8fb8a","tomahawk":"190135_9c514ce4-3d1c-4dbd-9078-1ea5a8631ed7","windmill":"190137_8b94fb36-f8d4-4f1a-b78f-68a0dbdc1f41","hook":"190135_2e7ad282-99e1-477c-af63-62b709ab7b7e","pump":"190135_9a9b493b-de19-4d91-9b96-dd1641ec88c2","chest":"190137_612fb064-aee0-425c-aa11-f23bf43f2f2a","bounce":"190136_308a4e1e-6c5b-4ea7-9213-234b906c826c","skip":"190135_7b8fdd55-a9f7-444d-b611-17fd638d03a3","nolook":"190136_ce1c7da5-fef9-404d-b93b-7803eab21287","lob":"190136_64a5953b-4067-4427-9f2f-47ec6bd5fa9d","steal":"190138_d8eee8db-c900-4d66-935e-217619abc88d","stance":"190136_02d53d5e-574f-4a8d-8aa8-e20f0827b895","lane":"190205_ef23c358-4f8f-4fbd-9521-aca2d2c8dcba","block":"190204_0dee7b17-2a51-427b-b90e-a56bc47819a1","charge":"190204_d7718f05-f76e-4206-b224-a05b3ad4113c","trap":"190204_f8c348db-1d35-4dd6-bdd1-b673815214b3","pnr":"190206_751647fb-408f-4599-bf68-e6c5e2e94250","givego":"190205_1e2a29ba-1863-476f-a1b5-6691fe79a7e7","backdoor":"190206_6d88a4be-8e49-4040-84be-6973bcb67a9e","pop":"190205_fa4c8bc2-16c9-452e-8e4a-cc325ccdf5dc","clearout":"190204_9d773658-0656-41d6-837d-eb94832b9dcc","floppy":"190207_ff841c76-b472-4c8b-aae3-773bd6f326bb","fastbreak":"190206_315af849-aecc-47d2-b250-fd30aa09df47","spain":"190206_f9a3064f-4d13-43fd-99ac-f67b119eaec4","motion":"190232_1e569ce8-8721-4a02-9089-5bf35f33bddd"};
+const SHOE_ART = ["190230_efd30010-3515-4bb5-8fac-64fbfbb4b306","190232_39a35986-3117-4da8-89a4-53730e523135","190233_01014a21-9cbb-4768-9733-0d8f38f044b6","190232_965abf91-2826-4f67-b75e-025abfdc5881","190230_6c9fdb0f-9b2e-42ea-9e31-71e8e3fe22ec","190231_054cad79-20a8-4c44-99e2-739db0a97e83","190230_6db1ed17-62e6-4be2-9ef4-c59dc3fada18","190231_6ed81fd9-7675-4b8e-acdf-b55e1dfc82df","190232_a9746973-01a9-4785-8162-553663b548cb","190231_f013dd4c-9b06-4385-b0fd-c7099a1dbc5c","190231_bce97b11-4350-4712-82d1-604bdc871fc2","190252_6292861e-21b7-4185-8e40-fca471a71563"];
+const BANNER_ART = {"feat":"190253_5a451a44-ac70-4941-a722-6634276802ae","std":"190254_2028dbc3-14c1-46bb-9a95-0ff828763dd7","street":"190252_ba24add2-6af9-4dfe-bbd6-667d761d8932","shoe":"190253_ece834e9-0f47-4661-92c7-8dac9c28e397","play":"190253_af6e455e-6b9f-49ac-8652-9d9d3ee33353","hof":"190253_73230129-0c68-4784-9b19-93db69a488ad"};
+const BUCK_ART = '190252_a5deef41-9031-4a7a-9187-ddea7c71f1af';
+function cardArt(c) {
+  const px = typeof pixelCardArt === 'function' ? pixelCardArt(c) : '';
+  const hf = typeof PHOTO_OK !== 'undefined' && PHOTO_OK && CARD_ART[c.art] ? `<img class="hf" src="${PH_BASE + CARD_ART[c.art]}_min.webp" alt="" loading="lazy" onerror="this.remove()">` : '';
+  return px ? `<span class="art pxart">${px}${hf}</span>` : vectorCardArt(c);
+}
 function cardFace(id, opts) {
   const c = CARD[id], o = opts || {};
   return `<span class="cframe t-${c.t}" style="--rc:${RAR[c.r].c}">${cardArt(c)}<span class="ccost">${BOLT}${c.cost}</span><span class="ctype">${TYPES[c.t].n}</span>${o.lv ? `<span class="clv">LV ${o.lv}</span>` : ''}<span class="cname">${c.n}</span></span>`;
 }
-document.querySelectorAll('.coinic').forEach(e => e.innerHTML = COIN);
 document.querySelectorAll('.gemic').forEach(e => e.innerHTML = GEM);
 
 // ================= save =================
 const KEY = 'dreamball-save-v3', OLD_KEY = 'dreamball-save-v2';
 let S = null;
-const STARTER_CARDS = {hesi:3, cross:3, btl:2, inout:2, jumper:4, layup:4, chest:4, bounce:2, poke:3, lockdown:1};
+const STARTER_CARDS = {hesi:3, cross:3, btl:2, inout:2, jumper:4, layup:4, chest:4, bounce:2, poke:3, lockdown:1, pnr:2, givego:2};
 function starterDeck(cards) { const d = []; for (const id in cards) for (let i = 0; i < cards[id].n && d.length < DECK_MAX; i++) d.push(id); return d; }
 function load() {
   try {
@@ -910,13 +995,17 @@ function fixSave(s) {
   s.deck = (s.deck || []).filter(id => CARD[id]);
   if (s.lineup && s.lineup.length > TEAM_N * 2) s.lineup = [...s.lineup.slice(0, TEAM_N), ...s.lineup.slice(5, 5 + TEAM_N)];   // 5-on-5 saves -> 3-on-3
   s.auto = !!s.auto;
+  if (s.coins != null) { s.gems = (s.gems || 0) + Math.floor(s.coins / 10); delete s.coins; }   // coins became Basket Bucks
+  if (s.cards && !Object.keys(s.cards).some(id => CARD[id] && CARD[id].t === 'ply')) {        // everyone gets the starter plays
+    for (const [id, n] of [['pnr', 2], ['givego', 2]]) { s.cards[id] = {n}; for (let k = 0; k < n && s.deck.length < DECK_MAX; k++) s.deck.push(id); }
+  }
   s.seen = s.seen || Date.now();
   return s;
 }
 function save() { if (!S) return; S.seen = Date.now(); try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
 function newSave(name, fr) {
   const cards = {}; for (const id in STARTER_CARDS) cards[id] = {n:STARTER_CARDS[id]};
-  S = fixSave({v:3, name, fr, coins:2500, gems:300, owned:{}, lineup:[0,2,4,1,3,9], cards, deck:starterDeck(cards), shoes:[], uid:1, story:{season:1, res:[]}});
+  S = fixSave({v:3, name, fr, gems:550, owned:{}, lineup:[0,2,4,1,3,9], cards, deck:starterDeck(cards), shoes:[], uid:1, story:{season:1, res:[]}});
   for (let i = 0; i < 10; i++) S.owned[i] = {st:1, sh:0, shoe:null, tr:{sht:0, drb:0, spd:0, def:0}};
   save();
 }
@@ -963,7 +1052,7 @@ function genTeam(fi, ovr, seed) {
 function storyGame(g, season) {
   const others = FR.map((f, i) => i).filter(i => i !== S.fr);
   return {g, fi:others[g % others.length], ovr:Math.round(60 + g * 2.2 + (season - 1) * 8), seed:season * 1000 + g * 17,
-    win:{coins:400 + g * 40, gems:30 + (g === SEASON_GAMES - 1 ? 70 : 0)}, loss:{coins:150, gems:5}, final:g === SEASON_GAMES - 1};
+    win:{gems:70 + g * 4 + (g === SEASON_GAMES - 1 ? 70 : 0)}, loss:{gems:20}, final:g === SEASON_GAMES - 1};
 }
 
 // ================= gym training =================
@@ -1017,7 +1106,7 @@ const G = {
   T:[null,null], score:[0,0], q:1, clock:QLEN, shot:SC, poss:0, phase:'idle', timer:0, time:0, clockOut:false,
   firstPoss:0, banner:null, chasers:new Set(), inbounder:null, popups:[], cheer:0, paused:false,
   ball:{state:'held', owner:null, x:25, y:47, z:0, vx:0, vy:0}, meter:null, stam:15, queue:[], game:null, done:false,
-  eff:{lock:0, lane:0, block:0, blockP:0, press:0, charge:0}, ft:null, auto:false, foul:null
+  eff:{lock:0, lane:0, block:0, blockP:0, press:0, charge:0, clear:0}, ft:null, auto:false, foul:null, play:null
 };
 const nm = p => p.d.last;
 
@@ -1204,7 +1293,7 @@ function applyMove(p, card, lv, user) {
 function doPass(p, m, opt) {
   const b = G.ball; opt = opt || {};
   if (b.state !== 'held' || b.owner !== p || p.gather || p.finish || !m) return false;
-  b.state = 'pass'; b.owner = null; b.to = m; b.z = 3; b.passer = p; b.lob = !!opt.lob; b.hot = opt.hot || 0; b.burst = !!opt.burst;
+  b.state = 'pass'; b.owner = null; b.to = m; b.z = 3; b.passer = p; b.lob = !!opt.lob; b.hot = opt.hot || 0; b.burst = !!opt.burst; b.fin = opt.fin || null; b.shoot = !!opt.shoot;
   b.speed = opt.lob ? 30 : 44;
   let stealMul = opt.steal == null ? 1 : opt.steal;
   if (p.t === 1 && G.eff.lane > 0) {
@@ -1259,6 +1348,9 @@ function handlerTarget(p) {
 }
 function offTarget(p) {
   const b = G.ball, h = HOOPS[p.t], dir = dirOf(p.t), hd = b.owner ? dist(b.owner, h) : dist(b, h);
+  if (G.eff.clear > 0 && p.t === 0 && b.owner && b.owner.t === 0 && b.owner !== p) {     // clear-out: get to the corners
+    const k = players[0].filter(m => m !== b.owner).indexOf(p), c = spotPos(0, k ? [3, 4] : [47, 4]); return {x:c.x, y:c.y, sp:1.1};
+  }
   let s = spotPos(p.t, SPOTS[p.i][p.spot]), sp = .85;
   if (hd > 40) { s = {x:LANE_X[p.i], y:s.y}; sp = 1.05; }                          // fast break lanes
   else if (p.lobRun) { s = p.lobRun; sp = 1.35; }
@@ -1366,6 +1458,7 @@ function update(dt) {
   for (const pp of G.popups) pp.t += dt;
   G.popups = G.popups.filter(pp => { if (pp.t < pp.life) return true; pp.el.remove(); return false; });
   for (const k in G.eff) if (k !== 'blockP') G.eff[k] = Math.max(0, G.eff[k] - dt);
+  if (G.play) stepPlay(dt);
   const b = G.ball;
   for (const p of all) {
     p.celebT = Math.max(0, p.celebT - dt);
@@ -1538,6 +1631,9 @@ function updateBall(dt) {
       if (tg.t !== G.poss) { setPoss(tg.t); popup(tg.x, tg.y, 'STEAL', '#fff', 1.6); feed(`Picked off by ${nm(tg)}`, tg.t); return; }
       if (b.hot) tg.hot = b.hot; if (b.burst) { tg.burst = 1; tg.mode = 'drive'; }
       if (lob) { tg.lobRun = null; popup(tg.x, tg.y, 'ALLEY-OOP!', '#ffc94d', 1.6); doFinish(tg, 'dunk', .2, 1, true); }
+      else if (b.fin) { tg.attack = {card:CARD[b.fin], lv:1, t:0}; tg.mode = 'drive'; tg.burst = 1.3; }
+      else if (b.shoot) { tg.hot = Math.max(tg.hot || 0, b.hot || 3); popup(tg.x, tg.y, 'CATCH & SHOOT', TYPES.ply.a, 1.3); doShoot(tg, {q:clamp(quality(tg) * 1.15 + .14, .05, .82)}); }
+      b.fin = null; b.shoot = false;
     } else if (d > .01) { b.x += dx / d * Math.min(step, d); b.y += dy / d * Math.min(step, d); b.z = b.lob ? 3 + Math.sin(Math.min(1, b.passT / 1.1) * Math.PI) * 9 : 3; }
   } else if (b.state === 'shot') {
     const h = HOOPS[b.shooter.t], p = b.shooter;
@@ -1680,6 +1776,7 @@ function playCard(k, phase) {
     }
     if (tg) ok = doPass(p, tg, {steal:c.steal, hot:c.hot, burst:c.burst, lob:c.pass === 'lob'});
     if (ok) feed(`${nm(p)} ${c.n.toLowerCase()} to ${nm(tg)}`, 0);
+  } else if (c.t === 'ply') { ok = runPlay(p, c, lv);
   } else if (c.t === 'def') {
     const e = G.eff, bonus = (lv - 1) * .04;
     if (c.d === 'steal') {
@@ -1706,6 +1803,47 @@ function playCard(k, phase) {
   }
   if (ok) { G.stam -= c.cost; G.queue.splice(k, 1); G.queue.push(id); renderHand(); }
   return ok;
+}
+
+// ---------- play cards: scripted sets run by your team ----------
+function runPlay(p, c, lv) {
+  const mates = players[0].filter(m => m !== p); if (!mates.length) return false;
+  const h = HOOPS[0], bonus = (lv - 1) * .05;
+  const big = mates.slice().sort((a, b) => b.i - a.i)[0], wing = mates.find(m => m !== big) || mates[0];
+  const shooter = mates.slice().sort((a, b) => b.d.st.sht - a.d.st.sht)[0];
+  const ahead = mates.slice().sort((a, b) => dist(a, h) - dist(b, h))[0];
+  const three = x => ({x:x < 25 ? 8 : 42, y:21});
+  const P = {k:c.play, t:0, lv, bonus, ev:[], steps:[], i:0, held:0};
+  const screen = (scr, on, at, ch) => { P.ev.push({at, fn:() => { const md = nearestDef(on).p; if (md && Math.random() < ch + bonus) { md.stun = Math.max(md.stun, 1.1); popup(md.x, md.y, 'SCREEN!', TYPES.ply.a, 1.4); } }}); scr.screen = Math.max(scr.screen, at + .6); };
+  const shake = (m, ch, txt) => { const md = nearestDef(m).p; if (md && Math.random() < ch + bonus) { md.stun = Math.max(md.stun, 1); popup(md.x, md.y, txt, TYPES.ply.a, 1.4); } };
+  switch (c.play) {
+    case 'pnr': screen(big, p, .5, .7); P.ev.push({at:.55, fn:() => { p.burst = 1.3; p.mode = 'drive'; }}); P.steps.push({from:p, to:big, at:1.2, opt:{fin:'dunk', steal:.4}}); break;
+    case 'givego': p.cut = 2.4; P.steps.push({from:p, to:wing, at:0, opt:{steal:.6}}, {from:wing, to:p, at:'catch', opt:{fin:'layup', steal:.4}}); break;
+    case 'backdoor': wing.cut = 1.8; shake(wing, .65, 'BACKDOOR!'); P.steps.push({from:p, to:wing, at:.8, opt:{fin:'layup', steal:.3}}); break;
+    case 'pop': screen(big, p, .4, .6); P.ev.push({at:.5, fn:() => { big.screen = 0; big.lobRun = three(big.x); }}); P.steps.push({from:p, to:big, at:1.5, opt:{shoot:true, hot:3, steal:.5}}); break;
+    case 'clearout': G.eff.clear = 4.5; p.hot = Math.max(p.hot || 0, 2.5); p.burst = 1.2; p.mode = 'drive'; shake(p, .45, 'CLEAR OUT!'); break;
+    case 'floppy': shooter.lobRun = three(shooter.x); P.ev.push({at:.7, fn:() => shake(shooter, .75, 'OFF THE SCREEN!')}); P.steps.push({from:p, to:shooter, at:1.3, opt:{shoot:true, hot:3.5, steal:.4}}); break;
+    case 'fastbreak': ahead.lobRun = {x:h.x + (ahead.x < 25 ? -2 : 2), y:h.y + 7}; ahead.burst = 1.4; P.steps.push({from:p, to:ahead, at:.5, opt:{fin:'dunk', burst:true, steal:.6}}); break;
+    case 'spain': screen(big, p, .4, .8); screen(wing, big, .6, .8); P.ev.push({at:.7, fn:() => { big.lobRun = {x:h.x + (big.x < 25 ? -1.6 : 1.6), y:h.y + 2.4}; }}); P.steps.push({from:p, to:big, at:1.3, opt:{lob:true}}); break;
+    case 'motion': p.lobRun = three(p.x > 25 ? 10 : 40); P.steps.push({from:p, to:wing, at:0, opt:{steal:.5}}, {from:wing, to:big, at:'catch', opt:{steal:.5}}, {from:big, to:p, at:'catch', opt:{shoot:true, hot:4, steal:.4}}); break;
+    default: return false;
+  }
+  G.play = P;
+  popup(p.x, p.y, c.n.toUpperCase(), TYPES.ply.a, 1.5); feed(`${nm(p)} calls ${c.n}`, 0);
+  stepPlay(0);
+  return true;
+}
+function stepPlay(dt) {
+  const P = G.play, b = G.ball; P.t += dt;
+  if (G.phase !== 'live' || G.poss !== 0 || P.t > 7 || b.state === 'shot' || (b.owner && b.owner.t !== 0)) { G.play = null; return; }
+  for (const e of P.ev) if (!e.done && P.t >= e.at) { e.done = true; e.fn(); }
+  const st = P.steps[P.i];
+  if (!st) { if (P.ev.every(e => e.done)) G.play = null; return; }
+  if (b.state === 'held' && b.owner === st.from) {
+    P.held += dt;
+    const go = st.at === 'catch' ? P.held >= .3 : P.t >= st.at;
+    if (go && !st.from.gather && !st.from.finish && doPass(st.from, st.to, st.opt)) { P.i++; P.held = 0; }
+  } else P.held = 0;
 }
 
 // ================= pixel-art renderer (2D canvas, 3/4 top-down) =================
@@ -2552,6 +2690,158 @@ function pixelPortrait(look, f, num) {
   return `<img class="av px" src="${url}" alt="" draggable="false">`;
 }
 
+// ================= pixel card art (coded; Higgsfield art layers on top when it loads) =================
+const CARD_ART_CACHE = new Map();
+const WHITE_KIT = {n:'W', c:'#f2f2f2', d:'#c7c9d4', trim:'#9aa3b5', numc:'#1d2433'};
+const DARK_KIT = {n:'D', c:'#23263a', d:'#15172a', trim:'#3a3f5c', numc:'#f2f2f2'};
+// figure: x (feet), lift px, dir, flip, legs, crouch, arms [{s,f,y}], kit 'w'|'d', lying
+const ART_POSE = {
+  hesi:{figs:[{x:23, dir:'side', flip:1, legs:'wide', crouch:2, arms:[{f:2, y:2}, {f:3, y:6}], ball:'R'}, {x:31, dir:'side', flip:-1, legs:'wide', crouch:1, arms:[{f:3, y:1}, {f:3, y:1}], kit:'d'}], fx:'pause'},
+  cross:{figs:[{x:20, dir:'down', legs:'wide', crouch:2, arms:[{s:3, f:0, y:5}, {s:1, f:0, y:4}], ball:[16, 24]}, {x:31, dir:'side', flip:-1, legs:'wide', crouch:2, arms:[{f:2, y:2}, {f:2, y:2}], kit:'d'}], fx:'swipe'},
+  btl:{figs:[{x:22, dir:'down', legs:'wide', crouch:3, arms:[{s:2, y:5}, {s:2, y:5}], ball:[22, 25]}], fx:'motion'},
+  btb:{figs:[{x:22, dir:'side', flip:1, legs:'run', ph:1, crouch:1, arms:[{f:-3, y:5}, {f:2, y:4}], ball:[16, 21]}, {x:32, dir:'side', flip:-1, legs:'wide', arms:[{f:2, y:2}, {f:2, y:2}], kit:'d'}], fx:'motion'},
+  step:{figs:[{x:16, dir:'side', flip:1, legs:'wide', arms:[{f:3, y:3}, {f:3, y:4}], ball:'R', lean:-1}, {x:28, dir:'side', flip:-1, legs:'wide', crouch:2, arms:[{f:3, y:1}, {f:3, y:1}], kit:'d'}], fx:'back'},
+  spin:{figs:[{x:22, dir:'up', legs:'wide', crouch:1, arms:[{s:3, y:3}, {s:3, y:3}], ball:'R'}], fx:'spin'},
+  euro:{figs:[{x:24, dir:'side', flip:1, legs:'run', ph:1.6, arms:[{f:3, y:2}, {f:-1, y:4}], ball:'L'}, {x:16, dir:'side', flip:1, legs:'wide', crouch:2, arms:[{f:2, y:1}, {f:2, y:1}], kit:'d'}], fx:'zig'},
+  stutter:{figs:[{x:22, dir:'side', flip:1, legs:'run', ph:.4, crouch:1, arms:[{f:2, y:4}, {f:3, y:6}], ball:'R'}], fx:'motion'},
+  jumper:{figs:[{x:20, dir:'down', lift:5, legs:'tuck', arms:[{s:-1, y:-6}, {s:-2, y:-9}], ball:'over'}], hoop:true, fx:'arc'},
+  fade:{figs:[{x:17, dir:'side', flip:1, lift:5, legs:'tuck', lean:-1, arms:[{f:2, y:-7}, {f:3, y:-9}], ball:'over'}, {x:27, dir:'side', flip:-1, lift:2, arms:[{f:1, y:-8}, {f:1, y:-8}], kit:'d'}], hoop:true},
+  pump:{figs:[{x:16, dir:'side', flip:1, arms:[{f:2, y:-4}, {f:2, y:-4}], ball:'over'}, {x:27, dir:'side', flip:-1, lift:6, legs:'tuck', arms:[{f:1, y:-8}, {f:1, y:-8}], kit:'d'}], fx:'pause'},
+  hook:{figs:[{x:22, dir:'side', flip:1, lift:2, arms:[{f:0, y:-10}, {f:-1, y:2}], ball:'high'}, {x:29, dir:'side', flip:-1, arms:[{f:1, y:-6}, {f:1, y:-6}], kit:'d'}], hoop:true},
+  layup:{figs:[{x:22, dir:'side', flip:1, lift:7, legs:'tuck', arms:[{f:2, y:-9}, {f:-1, y:3}], ball:'high'}], hoop:true, fx:'motion'},
+  floater:{figs:[{x:17, dir:'side', flip:1, lift:4, legs:'tuck', arms:[{f:3, y:-8}, {f:0, y:3}], ball:[24, 4]}, {x:27, dir:'side', flip:-1, arms:[{f:1, y:-7}, {f:1, y:-7}], kit:'d'}], hoop:true, fx:'arc'},
+  dunk:{figs:[{x:27, dir:'side', flip:1, lift:9, legs:'tuck', arms:[{f:2, y:-10}, {f:-1, y:2}], ball:'high'}], hoop:'near', fx:'slam'},
+  tomahawk:{figs:[{x:24, dir:'side', flip:1, lift:9, legs:'tuck', arms:[{f:-2, y:-9}, {f:1, y:2}], ball:'back'}], hoop:'near', fx:'slam'},
+  windmill:{figs:[{x:25, dir:'side', flip:1, lift:9, legs:'tuck', arms:[{f:-4, y:-3}, {f:1, y:-8}], ball:'back'}], hoop:'near', fx:'circle'},
+  chest:{figs:[{x:12, dir:'side', flip:1, legs:'wide', arms:[{f:4, y:1}, {f:4, y:1}], ball:[22, 16]}, {x:32, dir:'side', flip:-1, arms:[{f:3, y:1}, {f:3, y:1}]}], fx:'pass'},
+  bounce:{figs:[{x:10, dir:'side', flip:1, legs:'wide', crouch:2, arms:[{f:4, y:4}, {f:3, y:4}]}, {x:20, dir:'side', flip:-1, arms:[{f:1, y:1}, {f:1, y:1}], kit:'d'}, {x:32, dir:'side', flip:-1, arms:[{f:3, y:3}, {f:3, y:3}]}], ball:[24, 25], fx:'bounce'},
+  skip:{figs:[{x:9, dir:'side', flip:1, arms:[{f:2, y:-6}, {f:3, y:-5}]}, {x:33, dir:'side', flip:-1, arms:[{f:2, y:-3}, {f:2, y:-3}]}], ball:[22, 4], fx:'lobarc'},
+  nolook:{figs:[{x:20, dir:'down', arms:[{s:5, y:1}, {s:1, y:6}], ball:[12, 13]}], fx:'pass'},
+  lob:{figs:[{x:11, dir:'side', flip:1, arms:[{f:2, y:-7}, {f:2, y:-7}]}, {x:30, dir:'side', flip:1, lift:6, legs:'tuck', arms:[{f:1, y:-9}, {f:1, y:-9}]}], ball:[24, 4], hoop:'near', fx:'lobarc'},
+  steal:{figs:[{x:16, dir:'side', flip:1, legs:'wide', crouch:2, arms:[{f:5, y:3}, {f:2, y:2}], kit:'w'}, {x:27, dir:'side', flip:-1, crouch:1, arms:[{f:2, y:5}, {f:2, y:4}], kit:'d'}], ball:[21, 20], fx:'spark'},
+  stance:{figs:[{x:20, dir:'down', legs:'wide', crouch:3, arms:[{s:4, y:0}, {s:4, y:0}]}], fx:'none'},
+  lane:{figs:[{x:22, dir:'side', flip:1, legs:'run', ph:1.2, crouch:1, arms:[{f:5, y:-1}, {f:1, y:4}], ball:[30, 10]}], fx:'pass'},
+  block:{figs:[{x:22, dir:'side', flip:-1, lift:8, legs:'tuck', arms:[{f:2, y:-10}, {f:1, y:-5}]}], ball:[17, 3], fx:'swat'},
+  charge:{figs:[{x:16, lying:true}, {x:25, dir:'side', flip:-1, lift:2, legs:'run', ph:1, arms:[{f:2, y:3}, {f:-1, y:2}], ball:'R', kit:'d'}], fx:'impact'},
+  trap:{figs:[{x:12, dir:'side', flip:1, legs:'wide', crouch:2, arms:[{f:4, y:0}, {f:4, y:-2}]}, {x:30, dir:'side', flip:-1, legs:'wide', crouch:2, arms:[{f:4, y:0}, {f:4, y:-2}]}, {x:21, dir:'down', crouch:1, arms:[{s:1, y:5}, {s:1, y:4}], ball:[23, 23], kit:'d'}], fx:'none'}
+};
+// chalkboard diagrams for play cards: O = offense, X = defense, arrows: [x0,y0,x1,y1,kind] kind: run | pass | screen
+const PLAY_ART = {
+  pnr:{o:[[16, 20], [24, 13], [30, 22]], x:[[17, 17], [26, 11], [29, 19]], a:[[24, 13, 18, 17, 'screen'], [16, 20, 26, 23, 'run'], [24, 14, 21, 6, 'run'], [26, 23, 22, 8, 'pass']]},
+  givego:{o:[[17, 22], [31, 18], [10, 12]], x:[[18, 19], [30, 15], [11, 10]], a:[[17, 22, 30, 18, 'pass'], [17, 22, 20, 7, 'run'], [30, 17, 21, 8, 'pass']]},
+  backdoor:{o:[[20, 23], [32, 14], [9, 15]], x:[[20, 20], [30, 15], [10, 13]], a:[[32, 14, 24, 7, 'run'], [20, 22, 24, 9, 'pass']]},
+  pop:{o:[[20, 22], [26, 16], [8, 12]], x:[[20, 19], [27, 13], [9, 10]], a:[[26, 16, 21, 20, 'screen'], [26, 16, 35, 19, 'run'], [20, 22, 34, 19, 'pass']]},
+  clearout:{o:[[20, 22], [4, 6], [36, 6]], x:[[20, 19], [6, 6], [34, 6]], a:[[12, 10, 5, 7, 'run'], [28, 10, 35, 7, 'run'], [20, 22, 20, 9, 'run']]},
+  floppy:{o:[[20, 24], [20, 9], [14, 10]], x:[[20, 21], [21, 7], [16, 8]], a:[[20, 9, 32, 17, 'run'], [24, 12, 27, 13, 'screen'], [20, 24, 32, 18, 'pass']]},
+  fastbreak:{o:[[20, 28], [8, 14], [32, 9]], x:[[22, 24], [12, 20], [26, 18]], a:[[32, 9, 22, 5, 'run'], [20, 28, 31, 10, 'pass'], [8, 14, 13, 6, 'run']]},
+  spain:{o:[[18, 23], [25, 16], [31, 21]], x:[[18, 20], [27, 13], [30, 18]], a:[[25, 16, 19, 20, 'screen'], [31, 21, 27, 14, 'screen'], [25, 15, 21, 6, 'run'], [18, 23, 21, 6, 'pass']]},
+  motion:{o:[[20, 23], [33, 16], [8, 15]], x:[[20, 20], [31, 13], [10, 12]], a:[[20, 23, 33, 16, 'pass'], [33, 16, 8, 15, 'pass'], [8, 15, 20, 23, 'pass'], [20, 23, 26, 26, 'run']]}
+};
+function artBg(g, T, w, h, cx, cy) {
+  const pal = [T.b, mixHex(T.b, T.a, .3), mixHex(T.b, T.a, .55), mixHex(T.b, T.a, .8)];
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+    const d = Math.hypot((x - cx) / 1.25, y - cy) / 24, lv = clamp(1 - d, 0, 1) * 3.2, base = Math.floor(lv), fr = lv - base;
+    g.fillStyle = pal[clamp(base + (fr > .5 && (x + y) % 2 ? 1 : 0), 0, 3)]; g.fillRect(x, y, 1, 1);
+  }
+}
+function pixelCardArt(c) {
+  const key = c.art + c.t;
+  let url = CARD_ART_CACHE.get(key);
+  if (url === undefined) {
+    url = null;
+    try {
+      const W = 40, H = 32, cv2 = document.createElement('canvas'); cv2.width = W; cv2.height = H;
+      const g = cv2.getContext('2d'); if (!g || !g.fillRect) return '';
+      const T = TYPES[c.t];
+      if (c.t === 'ply') drawPlayArt(g, T, PLAY_ART[c.art] || PLAY_ART.pnr, W, H);
+      else drawPoseArt(g, T, ART_POSE[c.art] || ART_POSE.cross, W, H, c.art);
+      url = cv2.toDataURL('image/png');
+      if (typeof url !== 'string' || url.length < 40) url = null;
+    } catch (e) { url = null; }
+    CARD_ART_CACHE.set(key, url);
+  }
+  return url ? `<img class="px" src="${url}" alt="" draggable="false">` : '';
+}
+function drawPoseArt(g, T, A, W, H, key) {
+  artBg(g, T, W, H, 22, 11);
+  const FL = 27;
+  g.fillStyle = 'rgba(0,0,0,.28)'; g.fillRect(0, FL, W, H - FL);
+  g.fillStyle = 'rgba(255,255,255,.18)'; g.fillRect(0, FL, W, 1);
+  const wl = 'rgba(255,255,255,.75)';
+  // hoop in the top right
+  if (A.hoop) {
+    const hx = A.hoop === 'near' ? 33 : 34, hy = A.hoop === 'near' ? 6 : 5;
+    g.fillStyle = OUT; g.fillRect(hx - 1, hy - 5, 8, 7); g.fillStyle = 'rgba(255,255,255,.55)'; g.fillRect(hx, hy - 4, 6, 5);
+    g.fillStyle = '#ffffff'; g.fillRect(hx, hy - 4, 6, 1); g.fillRect(hx, hy, 6, 1); g.fillRect(hx, hy - 4, 1, 5); g.fillRect(hx + 5, hy - 4, 1, 5);
+    g.fillStyle = '#ff6a1f'; g.fillRect(hx - 3, hy + 1, 5, 1);
+    g.fillStyle = 'rgba(255,255,255,.85)'; for (let k = 0; k < 3; k++) { g.fillRect(hx - 3 + k, hy + 2 + k, 1, 1); g.fillRect(hx + 1 - k, hy + 2 + k, 1, 1); }
+  }
+  // motion effects behind the figures
+  const fx = A.fx;
+  if (fx === 'motion') { g.fillStyle = wl; for (const [x, y, l] of [[3, 12, 6], [1, 16, 7], [4, 20, 5]]) g.fillRect(x, y, l, 1); }
+  if (fx === 'back') { g.fillStyle = wl; for (const [x, y, l] of [[2, 11, 5], [1, 15, 6], [3, 19, 4]]) g.fillRect(x, y, l, 1); }
+  if (fx === 'zig') { g.fillStyle = wl; for (let x = 2; x < 30; x += 2) g.fillRect(x, 29 + ((x / 2) % 2 ? 1 : 0), 1, 1); }
+  if (fx === 'spin' || fx === 'circle') { const cx = fx === 'spin' ? 22 : 27, cy = fx === 'spin' ? 16 : 6; g.fillStyle = fx === 'spin' ? wl : '#ffe08a'; for (let a = 0; a < Math.PI * 1.7; a += .18) g.fillRect(Math.round(cx + Math.cos(a) * 10), Math.round(cy + Math.sin(a) * 6), 1, 1); }
+  if (fx === 'pause') { g.fillStyle = '#ffffff'; g.fillRect(4, 3, 2, 5); g.fillRect(8, 3, 2, 5); }
+  if (fx === 'swipe') { g.fillStyle = wl; for (let x = 12; x < 28; x += 2) g.fillRect(x, 24 + Math.round(Math.sin((x - 12) / 16 * Math.PI) * 2), 1, 1); }
+  // figures
+  const hands = [];
+  for (const F of A.figs) {
+    const kit = F.kit === 'd' ? DARK_KIT : WHITE_KIT;
+    const look = {skin:(key.length * 3 + F.x) % 8, hair:(F.x + key.length) % 6, h:.94, w:1, shoe:F.kit === 'd' ? [0x15171f, 0xf2f2f2] : [0xf4f1ea, hexN(T.a)], beard:false, band:false, v:F.x};
+    if (F.lying) { const r = drawLying(g, F.x + 4, FL, look, kit, {faceUp:true}); hands.push(r.hands); continue; }
+    const arms = (F.arms || []).map(a => ({s:a.s || 0, f:a.f || 0, y:a.y}));
+    const P = {dir:F.dir, flip:F.flip || 1, crouch:F.crouch || 0, legs:{mode:F.legs || 'stand', ph:F.ph || 0, amp:1}, arms, bob:0, mouth:!!F.lift};
+    const r = drawDoll(g, F.x, FL - (F.lift || 0), look, kit, '', P);
+    hands.push(r.hands);
+    if (F.ball) {
+      const hh = r.hands, R2 = hh[1] || hh[0], L2 = hh[0];
+      let bx, by;
+      if (Array.isArray(F.ball)) [bx, by] = F.ball;
+      else if (F.ball === 'R') { bx = R2[0] + 1; by = R2[1] + 2; }
+      else if (F.ball === 'L') { bx = L2[0] - 1; by = L2[1] + 2; }
+      else if (F.ball === 'over') { bx = r.head[0]; by = r.top - 2; }
+      else if (F.ball === 'high') { const top = hh[0][1] < hh[1][1] ? hh[0] : hh[1]; bx = top[0]; by = top[1] - 2; }
+      else if (F.ball === 'back') { bx = r.head[0] - 4; by = r.top; }
+      drawBall(g, Math.round(bx), Math.round(by));
+    }
+  }
+  if (A.ball) drawBall(g, A.ball[0], A.ball[1]);
+  // effects in front
+  if (fx === 'arc') { g.fillStyle = wl; for (let t = .1; t < .9; t += .08) { const x = 20 + 14 * t, y = 6 - Math.sin(t * Math.PI) * 6 + t * 1; g.fillRect(Math.round(x), Math.round(y), 1, 1); } }
+  if (fx === 'lobarc') { g.fillStyle = wl; for (let t = .05; t < .95; t += .06) { const x = 10 + 22 * t, y = 12 - Math.sin(t * Math.PI) * 10; g.fillRect(Math.round(x), Math.round(y), 1, 1); } }
+  if (fx === 'pass') { g.fillStyle = wl; for (let x = 15; x < 30; x += 2) g.fillRect(x, 16, 1, 1); }
+  if (fx === 'bounce') { g.fillStyle = wl; for (let t = 0; t <= 1; t += .07) { const x = 13 + 18 * t, y = t < .6 ? 18 + t / .6 * 8 : 26 - (t - .6) / .4 * 9; g.fillRect(Math.round(x), Math.round(y), 1, 1); } }
+  if (fx === 'slam' || fx === 'spark' || fx === 'impact' || fx === 'swat') {
+    const [sx, sy] = fx === 'slam' ? [31, 4] : fx === 'spark' ? [21, 20] : fx === 'impact' ? [21, 18] : [16, 3];
+    g.fillStyle = '#ffe08a'; for (const [dx, dy] of [[-3, 0], [3, 0], [0, -3], [0, 3], [-2, -2], [2, 2], [2, -2], [-2, 2]]) g.fillRect(sx + dx, sy + dy, 1, 1);
+  }
+}
+function drawPlayArt(g, T, D, W, H) {
+  // chalkboard half court
+  g.fillStyle = '#16302a'; g.fillRect(0, 0, W, H);
+  g.fillStyle = '#1c3a33'; for (let y = 0; y < H; y += 2) for (let x = (y / 2) % 2; x < W; x += 2) g.fillRect(x, y, 1, 1);
+  const ln = 'rgba(230,240,235,.45)';
+  g.fillStyle = ln;
+  g.fillRect(1, 1, W - 2, 1); g.fillRect(1, 1, 1, H - 2); g.fillRect(W - 2, 1, 1, H - 2);
+  g.fillRect(14, 1, 1, 12); g.fillRect(25, 1, 1, 12); g.fillRect(14, 12, 12, 1);
+  for (let a = 0; a <= Math.PI; a += .05) g.fillRect(Math.round(20 + Math.cos(a) * 17), Math.round(2 + Math.sin(a) * 17), 1, 1);
+  g.fillStyle = '#ff8a3d'; g.fillRect(19, 3, 2, 1);
+  // arrows
+  for (const [x0, y0, x1, y1, k] of D.a) {
+    const col = k === 'pass' ? '#ffe08a' : k === 'screen' ? T.a : '#ffffff', n = Math.max(1, Math.round(Math.hypot(x1 - x0, y1 - y0)));
+    g.fillStyle = col;
+    for (let i = 0; i <= n; i++) { if (k === 'pass' && i % 2) continue; g.fillRect(Math.round(x0 + (x1 - x0) * i / n), Math.round(y0 + (y1 - y0) * i / n), 1, 1); }
+    const ang = Math.atan2(y1 - y0, x1 - x0);
+    if (k === 'screen') { const px = -Math.sin(ang), py = Math.cos(ang); for (let d = -2; d <= 2; d++) g.fillRect(Math.round(x1 + px * d), Math.round(y1 + py * d), 1, 1); }
+    else for (const s of [-1, 1]) g.fillRect(Math.round(x1 - Math.cos(ang + s * .6) * 2), Math.round(y1 - Math.sin(ang + s * .6) * 2), 1, 1);
+  }
+  // players: O offense, X defense
+  for (const [x, y] of D.x) { g.fillStyle = T.a; g.fillRect(x - 1, y - 1, 1, 1); g.fillRect(x + 1, y - 1, 1, 1); g.fillRect(x, y, 1, 1); g.fillRect(x - 1, y + 1, 1, 1); g.fillRect(x + 1, y + 1, 1, 1); }
+  for (const [x, y] of D.o) { g.fillStyle = '#ffffff'; g.fillRect(x - 1, y - 2, 3, 1); g.fillRect(x - 1, y + 2, 3, 1); g.fillRect(x - 2, y - 1, 1, 3); g.fillRect(x + 2, y - 1, 1, 3); }
+  g.fillStyle = 'rgba(0,0,0,.25)'; g.fillRect(0, H - 1, W, 1);
+}
+
 // ================= UI =================
 const app = $('app'), panel = $('panel'), modal = $('modal');
 let mode = 'home', tab = null, teamSub = 'lineup', selSlot = -1, setupFr = 0, deckFilter = 'all', rosterSort = 'ovr';
@@ -2570,7 +2860,7 @@ function renderTop() {
   $('tname').textContent = S.name;
   $('tsub').textContent = `${f.city} ${f.n} · OVR ${teamOvr()}`;
   const short = n => n >= 1e6 ? (n / 1e6).toFixed(1).replace(/\.0$/, '') + 'M' : n >= 1e4 ? (n / 1e3).toFixed(1).replace(/\.0$/, '') + 'K' : n.toLocaleString();
-  $('coins').textContent = short(S.coins); $('gems').textContent = short(S.gems);
+  $('gems').textContent = short(S.gems);
   const rs = document.documentElement.style;
   rs.setProperty('--team', f.c); rs.setProperty('--team-d', f.d); rs.setProperty('--team-ink', darkInk(f) ? f.numc : '#fffaf2');
   const busy = Object.keys(S.gym.assign).length;
@@ -2596,6 +2886,7 @@ function renderPanel() {
   else if (tab === 'gym') panel.innerHTML = head('TRAINING GYM') + gymHTML();
   else if (tab === 'pvp') panel.innerHTML = head('PVP') + `<div class="locked-panel"><svg viewBox="0 0 16 16"><rect x="3" y="7" width="10" height="8" rx="1.5" fill="currentColor"/><path d="M5 7V5a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="1.4"/></svg><b>PVP IS LOCKED</b><p class="hint">Head-to-head games against other players aren't open yet. Build your squad in Story mode for now.</p></div>`;
   else if (tab === 'packs') panel.innerHTML = head('BANNERS') + packsHTML();
+  else if (tab === 'shop') panel.innerHTML = head('SHOP') + `<div class="locked-panel shop-lock"><div class="shopart">${GEM}${shoeSVG(SHOES[10])}${cardFace('spain')}</div><b>SHOP IS LOCKED</b><p class="hint">Spend Basket Bucks on players, plays and sneakers here soon. For now, pull from Banners.</p></div>`;
   panel.scrollTop = st;
 }
 function plainLook(c) { return {skin:c.skin, hair:c.hair, band:c.r >= 2, beard:c.beard, v:c.id, pid:c.id}; }
@@ -2632,12 +2923,12 @@ function teamHTML() {
       return `<button class="dcard ${inD >= o.n ? 'full' : ''}" data-act="deckadd" data-id="${c.id}" aria-label="Add ${c.n}">${cardFace(c.id, {lv})}<span class="own">${inD}/${o.n} in deck · ${nxt}</span><span class="desc">${cardDesc(c)}</span></button>`;
     }).join('');
     const b = deckBoost();
-    return tabs + `<div class="deckhead"><div><b>${S.deck.length}</b><span>/ ${DECK_MAX} CARDS</span></div><div class="mix">${['drb','sht','pas','def'].map(t => `<span style="--tc:${TYPES[t].a}">${TYPES[t].n} ${byType(t)}</span>`).join('')}</div><div class="avg">AVG COST<b>${avg}</b></div></div>
+    return tabs + `<div class="deckhead"><div><b>${S.deck.length}</b><span>/ ${DECK_MAX} CARDS</span></div><div class="mix">${['ply','drb','sht','pas','def'].map(t => `<span style="--tc:${TYPES[t].a}">${TYPES[t].n} ${byType(t)}</span>`).join('')}</div><div class="avg">AVG COST<b>${avg}</b></div></div>
       <div class="mrow"><button class="mbtn sec" data-act="deckfill">Fill with my cards</button><button class="mbtn sec" data-act="deckclear">Clear</button></div>
       <p class="hint">In a game you hold ${HAND} cards. Playing one sends it to the bottom and draws the next. Each different card in your deck also gives a small team boost: ${STATS.map(k => `${STATN[k]} +${b[k]}`).join(', ')}.</p>
       <div class="sect"><h3>YOUR DECK <em>Tap to remove one</em></h3><div class="dgrid">${deck || '<p class="hint">Your deck is empty. Add cards from your collection below.</p>'}</div></div>
       <div class="sect"><h3>COLLECTION <em>Tap to add a copy</em></h3>
-      <div class="chips">${['all','drb','sht','pas','def'].map(t => `<button class="fchip ${deckFilter === t ? 'on' : ''}" data-act="dfilter" data-t="${t}" style="--tc:${t === 'all' ? 'var(--gold)' : TYPES[t].a}">${t === 'all' ? 'ALL' : TYPES[t].n}</button>`).join('')}</div>
+      <div class="chips">${['all','ply','drb','sht','pas','def'].map(t => `<button class="fchip ${deckFilter === t ? 'on' : ''}" data-act="dfilter" data-t="${t}" style="--tc:${t === 'all' ? 'var(--gold)' : TYPES[t].a}">${t === 'all' ? 'ALL' : TYPES[t].n}</button>`).join('')}</div>
       <div class="dgrid big">${coll}</div></div>`;
   }
   const wear = {}; for (const id in S.owned) if (S.owned[id].shoe != null) wear[S.owned[id].shoe] = CHARS[id].last;
@@ -2661,7 +2952,7 @@ function storyHTML() {
     const sg = storyGame(n, st.season), f = FR[sg.fi];
     top = `<div class="next"><div class="vs">${crestSVG(f)}<div><small>${sg.final ? 'SEASON FINALE' : 'GAME ' + (n + 1) + ' OF ' + SEASON_GAMES}</small><b>${f.city} ${f.n}</b></div></div>
       <div class="ovrs"><span>THEM<b>${sg.ovr}</b></span><span>YOU<b>${teamOvr()}</b></span></div>
-      <div class="rewards" style="justify-content:flex-start"><span class="cur">${COIN}<b>${sg.win.coins}</b></span><span class="cur">${GEM}<b>${sg.win.gems}</b></span><span class="hint" style="align-self:center">for a win</span></div>
+      <div class="rewards" style="justify-content:flex-start"><span class="cur">${GEM}<b>${sg.win.gems}</b></span><span class="hint" style="align-self:center">for a win</span></div>
       ${S.deck.length < DECK_MIN ? `<p class="hint act">Your deck needs at least ${DECK_MIN} cards. Add more in Team, then Deck.</p>` : ''}
       <button class="mbtn pri" data-act="play">Play game</button></div>`;
   }
@@ -2692,11 +2983,11 @@ function gymHTML() {
     return `<div class="station">
       <div class="shead"><span class="sic">${ST_ICON[T.icon]}</span><div><b>${T.n}</b><small>Trains ${T.stat.map(k => STATN[k]).join(' and ')} · +${perHour(u)} per hour</small></div><span class="slv">${'★'.repeat(u.lv)}<i>${'★'.repeat(5 - u.lv)}</i></span></div>
       ${ppl || '<p class="hint">Nobody here. Send a player to start training.</p>'}
-      <div class="mrow"><button class="mbtn sec" data-act="gympick" data-u="${i}">${ids.length ? 'Swap player' : 'Send a player'}</button>${u.lv < 5 ? (S.coins >= up ? `<button class="mbtn pri" data-act="gymup" data-u="${i}">Upgrade ${COIN}${up}</button>` : `<button class="mbtn no" aria-disabled="true">Upgrade ${COIN}${up}</button>`) : '<button class="mbtn no" aria-disabled="true">Max level</button>'}</div></div>`;
+      <div class="mrow"><button class="mbtn sec" data-act="gympick" data-u="${i}">${ids.length ? 'Swap player' : 'Send a player'}</button>${u.lv < 5 ? (S.gems >= up ? `<button class="mbtn pri" data-act="gymup" data-u="${i}">Upgrade ${GEM}${up}</button>` : `<button class="mbtn no" aria-disabled="true">Upgrade ${GEM}${up}</button>`) : '<button class="mbtn no" aria-disabled="true">Max level</button>'}</div></div>`;
   }).join('');
   const shop = g.units.length >= GYM_SLOTS ? '<p class="hint">Your gym is full.</p>' : Object.entries(STATIONS).map(([k, T]) => {
-    const ok = S.coins >= T.cost;
-    return `<button class="buyst ${ok ? '' : 'no'}" ${ok ? `data-act="gymbuy" data-k="${k}"` : 'aria-disabled="true"'}><span class="sic">${ST_ICON[T.icon]}</span><span><b>${T.n}</b><small>${T.stat.map(s => STATN[s]).join(' and ')}</small></span><span class="pr">${COIN}${T.cost}</span></button>`;
+    const ok = S.gems >= T.cost;
+    return `<button class="buyst ${ok ? '' : 'no'}" ${ok ? `data-act="gymbuy" data-k="${k}"` : 'aria-disabled="true"'}><span class="sic">${ST_ICON[T.icon]}</span><span><b>${T.n}</b><small>${T.stat.map(s => STATN[s]).join(' and ')}</small></span><span class="pr">${GEM}${T.cost}</span></button>`;
   }).join('');
   return `<p class="hint">Players at a station gain stats over time, even while the app is closed (up to 8 hours). Each stat can grow by ${TRAIN_CAP} points. Upgrading a station makes it train faster.</p>
     <div class="sect"><h3>STATIONS <em>${g.units.length}/${GYM_SLOTS}</em></h3>${rows}</div>
@@ -2742,38 +3033,77 @@ const dayNo = () => Math.floor((Date.now() - new Date().getTimezoneOffset() * 60
 const featured = () => LEGENDS[dayNo() % LEGENDS.length];
 const PITY = 60;
 const BANNERS = [
-  {id:'feat', n:'Spotlight', cur:'gems', c1:120, c10:1100, mix:{p:.45, c:.4, s:.15}, minR10:2},
-  {id:'std', n:'All-Star', cur:'gems', c1:100, c10:900, mix:{p:.4, c:.4, s:.2}, minR10:2},
-  {id:'street', n:'Street', cur:'coins', c1:300, c10:2700, mix:{p:.15, c:.6, s:.25}, minR10:1, maxP:1}
+  {id:'feat', n:'Spotlight', c1:120, c10:1100, mix:{p:.45, c:.4, s:.15}, minR10:2, tag:'RATE UP · TODAY ONLY'},
+  {id:'std', n:'All-Star', c1:100, c10:900, mix:{p:.4, c:.4, s:.2}, minR10:2, tag:'EVERY PLAYER · CARD · SHOE'},
+  {id:'street', n:'Street', c1:40, c10:360, mix:{p:.15, c:.6, s:.25}, minR10:1, maxP:1, tag:'CHEAP PULLS'},
+  {id:'shoe', n:'Sneaker Drop', c1:60, c10:540, mix:{p:0, c:0, s:1}, minR10:1, tag:'SHOES ONLY'},
+  {id:'play', n:'Playbook', c1:90, c10:800, mix:{p:0, c:1, s:0}, minR10:2, plays:.6, tag:'CARDS · PLAYS RATE UP'},
+  {id:'hof', n:'Hall of Fame', c1:250, c10:2250, mix:{p:.7, c:.2, s:.1}, minR10:3, odds:[0, .55, .33, .12], tag:'EPIC+ ONLY · LEGEND IN EVERY ×10'}
 ];
+const BANNER_NOTE = {
+  feat:() => `Legend players pulled here are ${esc(featured().last)} half the time. Guaranteed ${esc(featured().last)} within <b>${PITY - (S.pity || 0)}</b> pulls. ×10 always has an Epic or better.`,
+  std:() => 'Everything in the game can show up. ×10 always has an Epic or better.',
+  street:() => 'Cheap pulls. Players here are Common or Rare. ×10 always has a Rare or better.',
+  shoe:() => 'Every pull is a pair of sneakers. ×10 always has a Rare or better.',
+  play:() => 'Only cards, and 60% of them are play cards. ×10 always has an Epic or better.',
+  hof:() => 'No Commons. Every ×10 has a Legend.'
+};
+const bannerOdds = B => B.odds || ODDS;
+function bannerBg(B) {
+  const u = typeof PHOTO_OK !== 'undefined' && PHOTO_OK && BANNER_ART[B.id] ? `<img class="bbg" src="${PH_BASE + BANNER_ART[B.id]}_min.webp" alt="" loading="lazy" onerror="this.remove()">` : '';
+  return u;
+}
 function bannerArt(B) {
-  const f = FR[S.fr];
+  const f = FR[S.fr], info = `<button class="binfo" data-act="binfo" data-b="${B.id}" aria-label="What's in the ${B.n} banner">i</button>`;
+  let inner;
   if (B.id === 'feat') {
     const L = featured();
-    return `<div class="bart feat">${portraitSVG(plainLook(L), f, L.num)}<div class="bglow"></div><div class="btext"><span>RATE UP · TODAY ONLY</span><b>${esc(L.name)}</b><small>Legend ${L.pos} · OVR ${ovrOf({sht:L.base.sht, drb:L.base.drb, spd:L.base.spd, def:L.base.def})}</small></div></div>`;
-  }
-  if (B.id === 'std') {
+    inner = `${portraitSVG(plainLook(L), f, L.num)}<div class="bglow"></div><div class="btext"><span>${B.tag}</span><b>${esc(L.name)}</b><small>Legend ${L.pos} · OVR ${ovrOf({sht:L.base.sht, drb:L.base.drb, spd:L.base.spd, def:L.base.def})}</small></div>`;
+  } else if (B.id === 'std') {
     const pk = [CHARS.find(c => c.r === 2 && c.id > 26) || CHARS[17], LEGENDS[(dayNo() + 3) % LEGENDS.length], CHARS.find(c => c.r === 1 && c.id > 30) || CHARS[10]];
-    return `<div class="bart std"><div class="trio">${pk.map(c => portraitSVG(plainLook(c), f, c.num)).join('')}</div><div class="btext"><span>EVERY PLAYER · CARD · SHOE</span><b>ALL-STAR</b></div></div>`;
-  }
-  return `<div class="bart street"><div class="street-items">${shoeSVG(SHOES[7])}<span class="mini">${cardFace('killer')}</span><span class="mini">${cardFace('windmill')}</span></div><div class="btext"><span>PAID IN COINS</span><b>STREET</b><small>Mostly cards and shoes</small></div></div>`;
+    inner = `<div class="trio">${pk.map(c => portraitSVG(plainLook(c), f, c.num)).join('')}</div><div class="btext"><span>${B.tag}</span><b>ALL-STAR</b></div>`;
+  } else if (B.id === 'street') inner = `<div class="street-items">${shoeSVG(SHOES[7])}<span class="mini">${cardFace('killer')}</span><span class="mini">${cardFace('windmill')}</span></div><div class="btext"><span>${B.tag}</span><b>STREET</b><small>Mostly cards and shoes</small></div>`;
+  else if (B.id === 'shoe') inner = `<div class="street-items shoes3">${[10, 7, 11].map(i => shoeSVG(SHOES[i])).join('')}</div><div class="btext"><span>${B.tag}</span><b>SNEAKER DROP</b><small>12 pairs to collect</small></div>`;
+  else if (B.id === 'play') inner = `<div class="street-items"><span class="mini">${cardFace('spain')}</span><span class="mini">${cardFace('motion')}</span><span class="mini">${cardFace('pnr')}</span></div><div class="btext"><span>${B.tag}</span><b>PLAYBOOK</b><small>Run sets your team executes</small></div>`;
+  else { const pk = LEGENDS.slice(0, 3); inner = `<div class="trio">${pk.map(c => portraitSVG(plainLook(c), f, c.num)).join('')}</div><div class="btext"><span>${B.tag}</span><b>HALL OF FAME</b></div>`; }
+  return `<div class="bart ${B.id === 'feat' ? 'feat' : B.id === 'std' || B.id === 'hof' ? 'std' : 'street'} b2-${B.id}">${bannerBg(B)}${inner}${info}</div>`;
 }
 function packsHTML() {
   const btn = (B, n) => {
-    const cost = n === 1 ? B.c1 : B.c10, ok = S[B.cur] >= cost, ic = B.cur === 'gems' ? GEM : COIN;
-    return ok ? `<button class="buy ${n === 10 ? 'ten' : ''}" data-act="pull" data-b="${B.id}" data-n="${n}">${n === 1 ? 'Pull ×1' : 'Pull ×10'} ${ic}${cost}</button>`
-      : `<button class="buy no" aria-disabled="true">×${n} · need ${cost - S[B.cur]} more ${ic}</button>`;
+    const cost = n === 1 ? B.c1 : B.c10, ok = S.gems >= cost;
+    return ok ? `<button class="buy ${n === 10 ? 'ten' : ''}" data-act="pull" data-b="${B.id}" data-n="${n}">${n === 1 ? 'Pull ×1' : 'Pull ×10'} ${GEM}${cost}</button>`
+      : `<button class="buy no" aria-disabled="true">×${n} · need ${cost - S.gems} more ${GEM}</button>`;
   };
-  const pity = S.pity || 0;
   return BANNERS.map(B => {
-    const mix = `<div class="mixrow"><span>Players ${Math.round(B.mix.p * 100)}%</span><span>Cards ${Math.round(B.mix.c * 100)}%</span><span>Shoes ${Math.round(B.mix.s * 100)}%</span></div>`;
-    const note = B.id === 'feat' ? `<p class="bnote">Legend players pulled here are ${esc(featured().last)} half the time. Guaranteed ${esc(featured().last)} within <b>${PITY - pity}</b> pulls. ×10 always has an Epic or better.</p>`
-      : B.id === 'std' ? '<p class="bnote">Everything in the game can show up. ×10 always has an Epic or better.</p>'
-      : '<p class="bnote">Players here are Common or Rare. ×10 always has a Rare or better.</p>';
-    return `<div class="banner-card b-${B.id}">${bannerArt(B)}<div class="bbody"><h3>${B.n} Banner</h3>${mix}${note}<div class="buyrow">${btn(B, 1)}${btn(B, 10)}</div></div></div>`;
-  }).join('') + `<p class="odds">Rarity odds: ${RAR.map((r, i) => `${r.n} ${Math.round(ODDS[i] * 100)}%`).join(' · ')}</p>`;
+    const mix = `<div class="mixrow">${B.mix.p ? `<span>Players ${Math.round(B.mix.p * 100)}%</span>` : ''}${B.mix.c ? `<span>Cards ${Math.round(B.mix.c * 100)}%</span>` : ''}${B.mix.s ? `<span>Shoes ${Math.round(B.mix.s * 100)}%</span>` : ''}</div>`;
+    return `<div class="banner-card b-${B.id}">${bannerArt(B)}<div class="bbody"><h3>${B.n} Banner</h3>${mix}<p class="bnote">${BANNER_NOTE[B.id]()}</p><div class="buyrow">${btn(B, 1)}${btn(B, 10)}</div></div></div>`;
+  }).join('') + `<p class="odds">Tap <b>i</b> on a banner to see everything inside it and the odds.</p>`;
 }
-function rollR(minR, maxR) { const x = Math.random(); let acc = 0, r = 0; for (let i = 3; i >= 0; i--) { acc += ODDS[i]; if (x < acc) { r = i; break; } } return clamp(Math.max(r, minR || 0), 0, maxR == null ? 3 : maxR); }
+function bannerPool(B) {
+  const maxR = B.maxP != null ? B.maxP : 3, minR = B.odds ? B.odds.findIndex(x => x > 0) : 0;
+  const players = B.mix.p ? CHARS.filter(c => c.r <= maxR && c.r >= minR).sort((a, b) => b.r - a.r || a.name.localeCompare(b.name)) : [];
+  const cards = B.mix.c ? CARDS.filter(c => c.r >= minR).sort((a, b) => b.r - a.r || a.t.localeCompare(b.t)) : [];
+  const shoes = B.mix.s ? SHOES.map((m, i) => ({m, i})).filter(x => x.m.r >= minR).sort((a, b) => b.m.r - a.m.r) : [];
+  return {players, cards, shoes};
+}
+function openBannerInfo(bid) {
+  const B = BANNERS.find(x => x.id === bid); if (!B) return;
+  const P = bannerPool(B), od = bannerOdds(B), f = FR[S.fr];
+  const rar = RAR.map((r, i) => od[i] ? `<span style="color:${r.c}">${r.n} ${Math.round(od[i] * 1000) / 10}%</span>` : '').join('');
+  const kinds = [B.mix.p && `Players ${Math.round(B.mix.p * 100)}%`, B.mix.c && `Cards ${Math.round(B.mix.c * 100)}%`, B.mix.s && `Shoes ${Math.round(B.mix.s * 100)}%`].filter(Boolean).join(' · ');
+  const pl = P.players.map(c => `<div class="bi-p" style="--rc:${RAR[c.r].c}">${portraitSVG(plainLook(c), f, c.num)}<b>${esc(c.last)}</b><small>${c.pos}${S.owned[c.id] ? ' · OWNED' : ''}</small></div>`).join('');
+  const cd = P.cards.map(c => `<div class="bi-c">${cardFace(c.id)}</div>`).join('');
+  const sh = P.shoes.map(x => `<div class="bi-s" style="--rc:${RAR[x.m.r].c}">${shoeSVG(x.m)}<b>${x.m.n}</b></div>`).join('');
+  modal.innerHTML = `<div class="sheet binfo-sheet"><div class="mhead2"><h2>${esc(B.n)} Banner</h2><button class="mx" data-act="mclose" aria-label="Close">${XIC}</button></div>
+    <p class="bnote">${BANNER_NOTE[B.id]()}</p>
+    <div class="bi-odds"><b>WHAT YOU GET</b><span>${kinds}</span><b>RARITY</b><div class="bi-rar">${rar}</div>${B.plays ? `<span>Play cards: ${Math.round(B.plays * 100)}% of cards</span>` : ''}</div>
+    ${pl ? `<h3 class="bi-h">PLAYERS <em>${P.players.length}</em></h3><div class="bi-grid">${pl}</div>` : ''}
+    ${cd ? `<h3 class="bi-h">CARDS <em>${P.cards.length}</em></h3><div class="bi-grid cards">${cd}</div>` : ''}
+    ${sh ? `<h3 class="bi-h">SHOES <em>${P.shoes.length}</em></h3><div class="bi-grid">${sh}</div>` : ''}
+    <button class="mbtn pri" data-act="mclose">Got it</button></div>`;
+  modal.hidden = false;
+}
+function rollR(minR, maxR, odds) { const O = odds || ODDS, x = Math.random(); let acc = 0, r = 0; for (let i = 3; i >= 0; i--) { acc += O[i]; if (x < acc) { r = i; break; } } return clamp(Math.max(r, minR || 0), 0, maxR == null ? 3 : maxR); }
 function grantPlayer(c, r, out) {
   const o = S.owned[c.id];
   if (!o) { S.owned[c.id] = {st:1, sh:0, shoe:null, tr:{sht:0, drb:0, spd:0, def:0}}; out.push({k:'p', id:c.id, r, tag:'NEW'}); }
@@ -2789,11 +3119,11 @@ function grantCard(c, r, out) {
 function pullBanner(bid, n) {
   const B = BANNERS.find(x => x.id === bid); if (!B) return;
   const cost = n === 1 ? B.c1 : B.c10;
-  if (S[B.cur] < cost) return;
-  S[B.cur] -= cost;
+  if (S.gems < cost) return;
+  S.gems -= cost;
   S.pity = S.pity || 0;
   const out = [];
-  const rs = Array.from({length:n}, () => rollR(0, B.maxP != null ? 3 : 3));
+  const rs = Array.from({length:n}, () => rollR(0, 3, B.odds));
   if (n === 10 && rs.every(r => r < B.minR10)) rs[9] = B.minR10;
   for (const r0 of rs) {
     let kind = Math.random(), r = r0;
@@ -2807,14 +3137,14 @@ function pullBanner(bid, n) {
       }
     }
     if (kind === 'p') { if (B.maxP != null) r = Math.min(r, B.maxP); grantPlayer(pick(CHARS.filter(x => x.r === r)), r, out); }
-    else if (kind === 'c') grantCard(pick(CARDS.filter(x => x.r === r)), r, out);
+    else if (kind === 'c') { const pool = B.plays && Math.random() < B.plays ? CARDS.filter(x => x.r === r && x.t === 'ply') : CARDS.filter(x => x.r === r); grantCard(pick(pool.length ? pool : CARDS.filter(x => x.r === r)), r, out); }
     else { const mi = SHOES.indexOf(pick(SHOES.filter(x => x.r === r))); S.shoes.push({u:S.uid++, m:mi}); out.push({k:'s', m:mi, r, tag:'NEW'}); }
   }
   save(); renderTop(); renderPanel();
   showReveal(out, bid);
 }
 let revealTok = 0;
-function showReveal(out) { revealTok++; dealCards(out); }
+function showReveal(out) { revealTok++; dealCards(out); modal.hidden = false; }
 function dealCards(out) {
   const f = FR[S.fr], best = Math.max(...out.map(o => o.r));
   const cards = out.map((o, i) => {
@@ -2903,10 +3233,10 @@ function renderPlayer() {
       <div class="statsrc">${[tr ? `Gym +${tr}` : '', shoeB ? `Shoes +${shoeB}` : '', db[k] ? `Deck +${db[k]}` : ''].filter(Boolean).join(' · ')}</div>`;
   }).join('');
   const need = SHARDS[o.st] || 0, cost = STAR_COST[o.st] || 0, max = o.st >= 5;
-  const canStar = !max && o.sh >= need && S.coins >= cost;
+  const canStar = !max && o.sh >= need && S.gems >= cost;
   const starBtn = max ? '<button class="mbtn no" aria-disabled="true">Max stars</button>'
-    : canStar ? `<button class="mbtn pri" data-act="starup" data-id="${id}">Star up · ${COIN}${cost}</button>`
-    : `<button class="mbtn no" aria-disabled="true">${o.sh < need ? `${o.sh}/${need} shards to ★${o.st + 1}` : `Need ${cost - S.coins} more coins`}</button>`;
+    : canStar ? `<button class="mbtn pri" data-act="starup" data-id="${id}">Star up · ${GEM}${cost}</button>`
+    : `<button class="mbtn no" aria-disabled="true">${o.sh < need ? `${o.sh}/${need} shards to ★${o.st + 1}` : `Need ${cost - S.gems} more Basket Bucks`}</button>`;
   let shoeBlock;
   if (sheetShoes) {
     const wearer = {}; for (const k in S.owned) if (S.owned[k].shoe != null) wearer[S.owned[k].shoe] = +k;
@@ -2939,7 +3269,7 @@ function renderSetup() {
     <div class="field"><label>PICK YOUR FRANCHISE</label><div class="frs">${FR.map((f, i) => `<button class="fr ${i === setupFr ? 'on' : ''}" data-act="setfr" data-fr="${i}">${crestSVG(f)}<span><b>${f.n}</b><small>${f.city}</small></span></button>`).join('')}</div></div>
     <p class="err" id="setuperr"></p>
     <button class="mbtn pri" data-act="create">Start career</button>
-    <p class="hint" style="text-align:center">You start with 10 players, a 28-card deck, a training gym, 2,500 coins and 300 gems.</p></div>`;
+    <p class="hint" style="text-align:center">You start with 10 players, a 32-card deck with your first plays, a training gym and 550 Basket Bucks.</p></div>`;
   el.hidden = false;
   $('teamname').addEventListener('input', () => { $('setuperr').textContent = ''; });
 }
@@ -2993,7 +3323,7 @@ function finishStory(win, forfeit) {
   if (!G.game || G.done) return;
   G.done = true; G.meter = null; meterEl.hidden = true;
   const sg = G.game, rw = win ? sg.win : sg.loss;
-  S.coins += rw.coins; S.gems += rw.gems;
+  S.gems += rw.gems;
   S.story.res.push({w:win, s:[G.score[0], G.score[1]]});
   save();
   const top = t => { const ps = [...G.T[t].starters, ...G.T[t].bench].sort((a, b) => (b.gpts || 0) - (a.gpts || 0))[0]; return ps && ps.gpts ? `${esc(ps.last)} ${ps.gpts} PTS` : '—'; };
@@ -3001,7 +3331,7 @@ function finishStory(win, forfeit) {
   r.innerHTML = `<h2 style="color:${win ? 'var(--good)' : 'var(--bad)'}">${win ? 'WIN' : 'LOSS'}</h2>
     <div class="line">${esc(G.T[0].short)} ${G.score[0]} – ${G.score[1]} ${G.T[1].short}</div>
     ${forfeit ? '<p class="hint">You forfeited this game.</p>' : `<div class="leaders"><span><small>TOP SCORER</small>${top(0)}</span><span><small>THEIR BEST</small>${top(1)}</span></div>`}
-    <div class="rewards"><span class="cur">${COIN}<b>+${rw.coins}</b></span><span class="cur">${GEM}<b>+${rw.gems}</b></span></div>
+    <div class="rewards"><span class="cur">${GEM}<b>+${rw.gems}</b></span></div>
     <p class="hint">Season record ${S.story.res.filter(x => x.w).length}–${S.story.res.filter(x => !x.w).length}</p>
     <button class="mbtn pri" data-act="continue" style="min-width:200px">Continue</button>`;
   setTimeout(() => { if (G.done && G.game) r.hidden = false; }, forfeit ? 0 : 1600);
@@ -3026,7 +3356,7 @@ function updateMatchHud() {
   const els = $('hand').querySelectorAll('.hcard[data-k]');
   els.forEach((el, k) => { const id = G.queue[k], ok = cardUsable(id), afford = id && G.stam >= CARD[id].cost; el.classList.toggle('off', !ok); el.classList.toggle('poor', !afford); sig += ok ? 1 : 0; });
   const h = userHandler();
-  $('handhint').textContent = G.auto ? 'Autoplay is on. Your team plays itself.' : G.meter ? 'Let go on green!' : h ? 'Your ball. Play a dribble, shot or pass card.' : G.poss === 1 && G.phase === 'live' ? 'On defense. Play a defense card.' : 'Wait for the next play.';
+  $('handhint').textContent = G.auto ? 'Autoplay is on. Your team plays itself.' : G.meter ? 'Let go on green!' : h ? 'Your ball. Play a dribble, shot, pass or play card.' : G.poss === 1 && G.phase === 'live' ? 'On defense. Play a defense card.' : 'Wait for the next play.';
   $('s0').textContent = G.score[0]; $('s1').textContent = G.score[1];
   $('qtr').textContent = G.q > 4 ? (G.q === 5 ? 'OVERTIME' : `${G.q - 4}OT`) : (QNAMES[G.q - 1] || '');
   const c = G.clock; $('clock').textContent = c < 10 ? c.toFixed(1) : `${Math.floor(Math.ceil(c) / 60)}:${String(Math.ceil(c) % 60).padStart(2, '0')}`;
@@ -3087,6 +3417,7 @@ function act(a, d) {
       S.lineup[selSlot] = id; selSlot = -1; save(); renderTop(); renderPanel();
     } else openPlayer(id);
   }
+  else if (a === 'binfo') openBannerInfo(d.b);
   else if (a === 'dfilter') { deckFilter = d.t; renderPanel(); }
   else if (a === 'deckadd') {
     const id = d.id, have = S.cards[id] ? S.cards[id].n : 0, inD = S.deck.filter(x => x === id).length;
@@ -3103,7 +3434,7 @@ function act(a, d) {
   else if (a === 'deckclear') { S.deck = []; save(); renderTop(); renderPanel(); }
   else if (a === 'starup') {
     const id = +d.id, o = S.owned[id], need = SHARDS[o.st], cost = STAR_COST[o.st];
-    if (o.st < 5 && o.sh >= need && S.coins >= cost) { o.sh -= need; S.coins -= cost; o.st++; save(); renderTop(); renderPlayer(); renderPanel(); toast(`${CHARS[id].last} is now ${o.st}★`); }
+    if (o.st < 5 && o.sh >= need && S.gems >= cost) { o.sh -= need; S.gems -= cost; o.st++; save(); renderTop(); renderPlayer(); renderPanel(); toast(`${CHARS[id].last} is now ${o.st}★`); }
   }
   else if (a === 'shoes') { sheetShoes = true; renderPlayer(); }
   else if (a === 'equip') { const u = +d.shoe; for (const k in S.owned) if (S.owned[k].shoe === u) S.owned[k].shoe = null; S.owned[sheetId].shoe = u; sheetShoes = false; save(); renderTop(); renderPlayer(); renderPanel(); }
@@ -3131,11 +3462,11 @@ function act(a, d) {
   else if (a === 'sendto') { assignTo(sendId, +d.u); closeModal(); }
   else if (a === 'gymup') {
     const u = S.gym.units[+d.u], c = UNIT_UP[u.lv];
-    if (u.lv < 5 && S.coins >= c) { S.coins -= c; u.lv++; save(); renderTop(); renderPanel(); buildStations(); gym.actors.forEach(setActorUnit); toast(`${STATIONS[u.type].n} upgraded to level ${u.lv}`); }
+    if (u.lv < 5 && S.gems >= c) { S.gems -= c; u.lv++; save(); renderTop(); renderPanel(); buildStations(); gym.actors.forEach(setActorUnit); toast(`${STATIONS[u.type].n} upgraded to level ${u.lv}`); }
   }
   else if (a === 'gymbuy') {
     const T = STATIONS[d.k];
-    if (S.gym.units.length < GYM_SLOTS && S.coins >= T.cost) { S.coins -= T.cost; S.gym.units.push({type:d.k, lv:1}); save(); renderTop(); renderPanel(); buildStations(); gym.actors.forEach(setActorUnit); toast(`${T.n} added to your gym`); }
+    if (S.gym.units.length < GYM_SLOTS && S.gems >= T.cost) { S.gems -= T.cost; S.gym.units.push({type:d.k, lv:1}); save(); renderTop(); renderPanel(); buildStations(); gym.actors.forEach(setActorUnit); toast(`${T.n} added to your gym`); }
   }
 }
 document.addEventListener('click', e => { const el = e.target.closest && e.target.closest('[data-act]'); if (el) act(el.dataset.act, el.dataset); });
@@ -3178,7 +3509,7 @@ catch (err) { renderer = null; const d = document.createElement('div'); d.classN
 setMode('home');
 if (!S) renderSetup();
 (() => { // painted portraits: switch on only if this host can actually load them
-  const im = new Image(); im.onload = () => { PHOTO_OK = true; if (S && !panel.hidden) renderPanel(); }; im.src = photoURL(0);
+  const im = new Image(); im.onload = () => { PHOTO_OK = true; if (BUCK_ART) document.querySelectorAll('.gemic').forEach(e => { e.innerHTML = `<img class="hfbuck" src="${PH_BASE + BUCK_ART}_min.webp" alt="" onerror="this.parentNode.innerHTML=GEM_SVG_FALLBACK">`; }); if (S && !panel.hidden) renderPanel(); }; im.src = photoURL(0);
 })();
 if (S) {
   const gains = offlineTraining();
