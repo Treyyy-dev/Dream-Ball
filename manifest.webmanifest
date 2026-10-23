@@ -4,7 +4,7 @@
   "id": "./",
   "start_url": "./",
   "scope": "./",
-  "description": "Build a 3D basketball squad, open packs, and play a story-mode season.",
+  "description": "A hi-bit pixel 3-on-3 basketball card game: build your squad, pull banners and play a story-mode season.",
   "display": "standalone",
   "display_override": [
     "fullscreen",
