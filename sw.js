@@ -1,5 +1,5 @@
 // Dream Ball service worker: app shell precache + runtime cache for the 3D library and fonts.
-const VERSION = 'dreamball-v2';
+const VERSION = 'dreamball-v3';
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png', './icons/maskable-512.png', './icons/apple-touch-icon.png', './icons/favicon.png'];
 const THREE_URL = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
 

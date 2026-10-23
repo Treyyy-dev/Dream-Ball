@@ -1,6 +1,6 @@
 # Dream Ball
 
-A 3D basketball game you can install on your phone. Build a squad, open player, shoe and skill-card packs, set a lineup and a 10-card dribble-move deck, and play a story-mode season with Pass, Shoot (hold and release on green) and stamina-powered move cards.
+A 3D basketball game you can install on your phone. Collect 87 players, train them in your gym, build a deck of up to 50 dribble, shot, pass and defense cards, and play a story-mode season where you hold 8 cards and spend stamina to make plays. Hold shot cards and release on green.
 
 ## Play
 
