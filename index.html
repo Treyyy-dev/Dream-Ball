@@ -574,7 +574,7 @@ img.px,img.av.px,.avi.px{image-rendering:pixelated;image-rendering:crisp-edges;o
 @media (prefers-reduced-motion: reduce){.st-ball,.st-doll,.st-tap{animation:none}}
 
 /* TreyyyVerse intro */
-.intro{position:fixed;inset:0;z-index:70;background:#000;cursor:pointer;overflow:hidden;transition:opacity .4s}
+.intro{position:fixed;inset:0;z-index:70;background:#000;overflow:hidden;transition:opacity .4s}
 .intro.out{opacity:0;pointer-events:none}
 .in-scene{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:min(100vw,56.25vh);aspect-ratio:9/16}
 .in-cv,.in-video{position:absolute;inset:0;width:100%;height:100%;display:block;image-rendering:pixelated}
@@ -1095,6 +1095,7 @@ function storyGame(g, season) {
 
 // ================= match engine =================
 const W = 50, L = 94, SC = 18, QLEN = 100, OTLEN = 50;
+const BODY = 3.4, SPACE_MATE = 9, SPACE_ANY = 5.4;   // ft: hard body size, comfort radius for teammates / anyone
 const HOOPS = [{x:25, y:5.25}, {x:25, y:88.75}];
 // 3-on-3 roles by slot: 0 = ball handler, 1 = wing, 2 = big
 const SPOTS = [
@@ -1378,7 +1379,7 @@ function offTarget(p) {
   let px = 0, py = 0;
   for (const m of players[p.t]) {
     if (m === p) continue;
-    const dx = s.x - m.x, dy = s.y - m.y, dd = Math.hypot(dx, dy), want = m === b.owner ? 10 : 8.5;
+    const dx = s.x - m.x, dy = s.y - m.y, dd = Math.hypot(dx, dy), want = m === b.owner ? 12 : 10.5;
     if (dd < want && dd > .01) { px += dx / dd * (want - dd); py += dy / dd * (want - dd); }
   }
   return {x:clamp(s.x + px * .8, 1.5, 48.5), y:clamp(s.y + py * .8, 1.5, 92.5), sp};
@@ -1387,7 +1388,7 @@ function defTarget(p) {
   const man = players[G.poss][p.i], h = HOOPS[G.poss], b = G.ball;
   const dx = h.x - man.x, dy = h.y - man.y, d = Math.hypot(dx, dy) || 1, onBall = b.owner === man;
   if (b.state === 'shot' && b.shooter && b.shooter.t === G.poss) {               // box out
-    return {x:man.x + dx / d * 2.4, y:man.y + dy / d * 2.4, sp:1};
+    return {x:man.x + dx / d * 3.8, y:man.y + dy / d * 3.8, sp:1};
   }
   let g = onBall ? (d > 30 ? 7 : 2.6) : Math.min(7, 3.5 + dist(man, b) * .12);
   if (onBall && p.t === 0 && G.eff.press > 0) g = 2;
@@ -1567,20 +1568,30 @@ function update(dt) {
         for (const df of players[1 - p.t]) {
           if (df.stun > 0) continue;
           const ox = df.x - p.x, oy = df.y - p.y, od = Math.hypot(ox, oy);
-          if (od < 3.2 && (ox * ux + oy * uy) / (od || 1) > .55) { sp *= p.burst > 0 ? .85 : .4; break; }
+          if (od < BODY + 1 && (ox * ux + oy * uy) / (od || 1) > .55) { sp *= p.burst > 0 ? .85 : .4; break; }
         }
       }
       sp = Math.min(sp, d * 2.5);
       if (d > .05) { dvx = dx / d * sp; dvy = dy / d * sp; }
     }
+    // personal space: ease away from anyone inside the comfort radius
+    for (const o of all) {
+      if (o === p || o.finish) continue;
+      const ox = p.x - o.x, oy = p.y - o.y, od = Math.hypot(ox, oy), want = o.t === p.t ? SPACE_MATE : SPACE_ANY;
+      if (od < want && od > .001) { const f = (want - od) / want * (o.t === p.t ? 9 : 6); dvx += ox / od * f; dvy += oy / od * f; }
+    }
     const k = Math.min(1, dt * (p.stun > 0 || p.lockT > 0 ? 3 : 7));
     p.vx += (dvx - p.vx) * k; p.vy += (dvy - p.vy) * k;
     p.x += p.vx * dt; p.y += p.vy * dt;
   }
-  for (let i = 0; i < all.length; i++) for (let j = i + 1; j < all.length; j++) {
-    const a = all[i], c = all[j]; if (a.finish || c.finish) continue;
-    const dx = c.x - a.x, dy = c.y - a.y, d = Math.hypot(dx, dy), min = 2.2;
-    if (d < min && d > .001) { const push = (min - d) / 2, nx = dx / d, ny = dy / d; a.x -= nx*push; a.y -= ny*push; c.x += nx*push; c.y += ny*push; }
+  for (let it = 0; it < 2; it++) for (let i = 0; i < all.length; i++) for (let j = i + 1; j < all.length; j++) {
+    const a = all[i], c = all[j]; if (a.finish && c.finish) continue;
+    let dx = c.x - a.x, dy = c.y - a.y, d = Math.hypot(dx, dy);
+    if (d < .001) { dx = (i % 2 ? 1 : -1) * .01; dy = .01; d = Math.hypot(dx, dy); }
+    if (d < BODY) {
+      const over = BODY - d, nx = dx / d, ny = dy / d, wa = a.finish ? 0 : c.finish ? 1 : .5, wc = 1 - wa;
+      a.x -= nx * over * wa; a.y -= ny * over * wa; c.x += nx * over * wc; c.y += ny * over * wc;
+    }
   }
   for (const p of all) {
     if (G.phase === 'dead' && p === G.inbounder) { p.x = clamp(p.x, .8, 49.2); p.y = clamp(p.y, -2.5, 96.5); }
@@ -1863,7 +1874,7 @@ function stepPlay(dt) {
 const cv = $('cv'), wrap = $('wrap');
 let renderer = null, ctx = null, scene = null, camera = null;
 let IW = 200, IH = 300, DPR = 1, PSZ = 2, PXS = 2, CSSPX = 1, OFFX = 0, OFFY = 0;
-const FS = .74, HS = .66;                    // floor foreshortening and height scale of the 3/4 view
+const FS = .74, HS = .82;                    // floor foreshortening and height scale of the 3/4 view
 const cam = {x:25, y:47, k:3.4};
 const camF = {x:0, z:0};
 const arenaG = {visible:false, userData:{nets:[{userData:{sw:0}}, {userData:{sw:0}}]}};
@@ -2134,6 +2145,17 @@ function drawPerson(g, P, a, pose, sx, sy) {
 
 // ---------- ball ----------
 function drawBall(g, sx, sy, big) {
+  const r = big ? 4 : 3, rr = r * r + r * .8, sp = Math.round(Math.sin(CLK * 9) * r * .55);
+  pell(g, sx, sy, r + 1, r + 1, OUT);
+  for (let dy = -r; dy <= r; dy++) for (let dx = -r; dx <= r; dx++) {
+    if (dx * dx + dy * dy > rr) continue;
+    let c = dx + dy > r * .55 ? '#b9531d' : dx + dy < -r * .9 ? '#f08a3e' : '#e2702c';
+    if (dy === 0 || dx === sp || (Math.abs(dx - sp) === r - 1 && Math.abs(dy) >= r - 1)) c = '#3a1606';
+    g.fillStyle = c; g.fillRect(sx + dx, sy + dy, 1, 1);
+  }
+  g.fillStyle = '#ffd2a8'; g.fillRect(sx - r + 1, sy - r + 1, 1, 1); g.fillStyle = '#ffb27a'; g.fillRect(sx - r + 2, sy - r + 1, 1, 1); g.fillRect(sx - r + 1, sy - r + 2, 1, 1);
+}
+function drawBallMini(g, sx, sy, big) {
   const r = big ? 3 : 2;
   pell(g, sx, sy, r + 1, r + 1, OUT); pell(g, sx, sy, r, r, '#e2702c');
   g.fillStyle = '#ffb27a'; g.fillRect(sx - 1, sy - r + 1, 1, 1);
@@ -2151,7 +2173,7 @@ function drawCover(g, im, x, y, w, h, alignBottom) {
   try { g.drawImage(im, x + (w - dw) / 2, alignBottom ? y + h - dh : y + (h - dh) / 2, dw, dh); } catch (e) {}
   g.restore(); g.imageSmoothingEnabled = false;
 }
-const ART_SRC = {stands:'c8e46701-96aa-462d-b360-5f89a9dba145', side:'a81b31a8-8b71-4a2a-b338-04745ef0c1a5'};
+const ART_SRC = {stands:'4c696e6e-cab1-4626-a57c-25cec9f19dba', side:'b1cdb7ca-c280-4c5a-a098-17df17612d41'};   // hi-bit crowd art (Higgsfield)
 let arenaCv = null, arenaCv2 = null, arenaKey = '';
 const AP = 6, ST = 20;  // apron and stand depth (ft)
 function worldCanvas(x0, y0, x1, y1, hTop) {
@@ -2201,15 +2223,31 @@ function paintArena(A, B, cheer) {
   // apron
   g.fillStyle = A.d; g.fillRect(X(-AP), Y(-AP), X(50 + AP) - X(-AP), Y(94 + AP) - Y(-AP));
   g.fillStyle = OUT; g.fillRect(X(-AP), Y(-AP) - 2, X(50 + AP) - X(-AP), 2); g.fillRect(X(-AP), Y(94 + AP), X(50 + AP) - X(-AP), 3);
-  // wood
+  // wood: planks with per-board tones, end seams, grain, gloss and light pools
   const cx0 = X(0), cy0 = Y(0), cw = X(50) - X(0), ch = Y(94) - Y(0);
-  const tones = ['#d9a066', '#cf9558', '#e2ab72', '#c88d50'];
-  for (let x = 0; x < cw; x += 3) {
-    let y = -((x * 37) % 23);
-    let t = (x / 3) % 4;
-    while (y < ch) { const len = 14 + ((x * 13 + y * 7) % 19); g.fillStyle = tones[t % 4]; g.fillRect(cx0 + x, cy0 + Math.max(0, y), 3, Math.min(ch, y + len) - Math.max(0, y)); g.fillStyle = 'rgba(90,45,10,.35)'; if (y > 0) g.fillRect(cx0 + x, cy0 + y, 3, 1); y += len; t++; }
-    g.fillStyle = 'rgba(90,45,10,.18)'; g.fillRect(cx0 + x, cy0, 1, ch);
+  const tones = ['#d9a066', '#cf9558', '#e2ab72', '#c88d50', '#d69d62', '#dcaa70'];
+  let ps = 11; const prnd = () => (ps = (ps * 16807) % 2147483647) / 2147483647;
+  for (let x = 0; x < cw; x += 4) {
+    let y = -((prnd() * 30) | 0);
+    while (y < ch) {
+      const len = 18 + ((prnd() * 22) | 0), t = tones[(prnd() * tones.length) | 0], y0 = Math.max(0, y), y1 = Math.min(ch, y + len);
+      g.fillStyle = t; g.fillRect(cx0 + x, cy0 + y0, 4, y1 - y0);
+      g.fillStyle = shadeHex(t, 1.06); g.fillRect(cx0 + x + 1, cy0 + y0, 1, y1 - y0);
+      g.fillStyle = 'rgba(110,55,15,.22)'; for (let gy = y0 + 3; gy < y1; gy += 5 + ((prnd() * 4) | 0)) g.fillRect(cx0 + x + 2 + ((prnd() * 2) | 0), cy0 + gy, 1, 2);
+      if (y > 0) { g.fillStyle = 'rgba(80,40,10,.45)'; g.fillRect(cx0 + x, cy0 + y, 4, 1); }
+      y += len;
+    }
+    g.fillStyle = 'rgba(80,40,10,.32)'; g.fillRect(cx0 + x, cy0, 1, ch);
   }
+  g.save(); g.beginPath(); g.rect(cx0, cy0, cw, ch); g.clip();
+  for (let yy = 0; yy < ch; yy += 2) for (let xx = 0; xx < cw; xx += 2) {            // diagonal gloss bands (dithered)
+    const v = ((xx * .8 + yy) % 140); if (v < 14 && ((xx + yy) >> 1) % 2 === 0) { g.fillStyle = 'rgba(255,244,220,.16)'; g.fillRect(cx0 + xx, cy0 + yy, 2, 2); }
+  }
+  for (const [px, py, pr] of [[25, 47, 16], [25, 12, 12], [25, 82, 12]]) {            // light pools from the arena lights
+    for (let i = 4; i >= 1; i--) { g.fillStyle = 'rgba(255,250,235,.05)'; const rx = Math.round(pr * k * i / 4), ry = Math.round(pr * k * FS * i / 4); pell(g, X(px), Y(py), rx, ry, g.fillStyle); }
+  }
+  for (let i = 0; i < 10; i++) { g.fillStyle = `rgba(40,18,4,${(.26 - i * .025).toFixed(3)})`; g.fillRect(cx0 + i, cy0, 1, ch); g.fillRect(cx0 + cw - 1 - i, cy0, 1, ch); }
+  g.restore();
   // paint, circles, lines
   const ink = '#fbf7ee';
   const hl = (x0, x1, y) => { g.fillStyle = ink; g.fillRect(X(x0), Y(y), X(x1) - X(x0) + 1, 1); };
@@ -2219,7 +2257,8 @@ function paintArena(A, B, cheer) {
     const fy = y => flip ? 94 - y : y, F = flip ? A : B;
     const top = Math.min(fy(0), fy(19)), bot = Math.max(fy(0), fy(19));
     g.fillStyle = F.c; g.fillRect(X(17), Y(top), X(33) - X(17), Y(bot) - Y(top));
-    g.fillStyle = 'rgba(0,0,0,.12)'; for (let yy = Y(top); yy < Y(bot); yy += 2) g.fillRect(X(17), yy, X(33) - X(17), 1);
+    g.fillStyle = shadeHex(F.c, .82); g.fillRect(X(17), Y(top), X(33) - X(17), 2); g.fillRect(X(17), Y(top), 2, Y(bot) - Y(top)); g.fillRect(X(33) - 2, Y(top), 2, Y(bot) - Y(top));
+    g.fillStyle = 'rgba(255,255,255,.10)'; for (let yy = Y(top) + 3; yy < Y(bot) - 1; yy += 6) g.fillRect(X(17) + 3, yy, X(33) - X(17) - 6, 1);
     vl(17, top, bot); vl(33, top, bot); hl(17, 33, fy(19));
     const s = flip ? -1 : 1;
     arcPts(25, fy(19), 6, 0, Math.PI, flip ? false : false); arcPts(25, fy(19), 6, Math.PI, Math.PI * 2, true);
@@ -2238,7 +2277,7 @@ function paintArena(A, B, cheer) {
   pring(g, ccx, ccy, Math.round(5.2 * k), Math.round(5.2 * k * FS), A.trim);
   ptext(g, A.n[0], ccx, ccy, 14, darkInk(A) ? A.numc : '#fffaf2', 'center');
   // boundary + half court
-  g.fillStyle = ink; g.fillRect(X(0), Y(0), X(50) - X(0) + 1, 1); g.fillRect(X(0), Y(94), X(50) - X(0) + 1, 1); g.fillRect(X(0), Y(0), 1, Y(94) - Y(0)); g.fillRect(X(50), Y(0), 1, Y(94) - Y(0) + 1);
+  g.fillStyle = ink; g.fillRect(X(0) - 1, Y(0) - 1, X(50) - X(0) + 3, 2); g.fillRect(X(0) - 1, Y(94), X(50) - X(0) + 3, 2); g.fillRect(X(0) - 1, Y(0), 2, Y(94) - Y(0)); g.fillRect(X(50), Y(0), 2, Y(94) - Y(0) + 1);
   hl(0, 50, 47);
   ptext(g, 'DREAM', X(10), Y(-3), 8, '#ffffff', 'center'); ptext(g, 'BALL', X(40), Y(-3), 8, '#ffffff', 'center');
   ptext(g, A.n.toUpperCase(), X(10), Y(97.2), 8, A.trim, 'center'); ptext(g, A.n.toUpperCase(), X(40), Y(97.2), 8, A.trim, 'center');
@@ -2252,7 +2291,7 @@ function paintArena(A, B, cheer) {
   }
   return c;
 }
-const arenaK = () => Math.max(2, IW / 58);
+const arenaK = () => Math.max(2.4, IW / 46);   // zoomed so the court fits the hi-bit players
 const arenaKeyNow = () => G.T[0].fr.n + G.T[1].fr.n + arenaK().toFixed(3) + (ART.stands ? 1 : 0) + (ART.side ? 1 : 0) + SET.q;
 function repaintArena() {
   if (!renderer || !G.T[0]) return;
@@ -2270,32 +2309,57 @@ function poseCrowd() {} function colorCrowd() {}
 
 // ---------- hoops ----------
 function drawHoopBack(g, t) {
-  const H = HOOPS[t], top = t === 0, by = top ? H.y - 1.25 : H.y + 1.25, sy = top ? -2.5 : 96.5;
-  const fr = (top ? G.T[1] : G.T[0]).fr;
-  // stanchion: padded base + pole behind the baseline
-  const b0 = PX(21.5, sy - 1.5, 0), b1 = PX(28.5, sy + 1.5, 2.6), pole = PX(25, sy, 12.2);
-  R(g, b0[0] - 1, b1[1] - 1, b1[0] - b0[0] + 2, PX(25, sy + 1.5, 0)[1] - b1[1] + 2, OUT);
-  R(g, b0[0], b1[1], b1[0] - b0[0], PX(25, sy + 1.5, 0)[1] - b1[1], fr.c);
-  R(g, b0[0], b1[1], b1[0] - b0[0], 2, shadeHex(fr.c, 1.2));
-  R(g, pole[0] - 2, pole[1], 4, PX(25, sy, 2.6)[1] - pole[1], OUT); R(g, pole[0] - 1, pole[1], 2, PX(25, sy, 2.6)[1] - pole[1], '#2c3048');
-  const arm = PX(25, by, 12.2); pline(g, pole[0], pole[1], arm[0], arm[1], OUT, 3); pline(g, pole[0], pole[1], arm[0], arm[1], '#3a3f5c', 1);
+  const H = HOOPS[t], top = t === 0, by = top ? H.y - 1.25 : H.y + 1.25, sy = top ? -2.6 : 96.6;
+  const fr = (top ? G.T[1] : G.T[0]).fr, pad = fr.c;
+  // padded stanchion base with team colour, highlight and shadow side
+  const b0 = PX(22.4, sy - 1.2, 0), b1 = PX(27.6, sy + 1.2, 2.4), bf = PX(25, sy + 1.2, 0)[1];
+  R(g, b0[0] - 1, b1[1] - 1, b1[0] - b0[0] + 2, bf - b1[1] + 2, OUT);
+  R(g, b0[0], b1[1], b1[0] - b0[0], bf - b1[1], pad);
+  R(g, b0[0], b1[1], b1[0] - b0[0], 2, shadeHex(pad, 1.25));
+  R(g, b1[0] - 3, b1[1] + 2, 3, bf - b1[1] - 2, shadeHex(pad, .72));
+  R(g, b0[0], b1[1] + Math.round((bf - b1[1]) * .55), b1[0] - b0[0] - 3, 1, fr.trim);
+  // pole + arm
+  const pole = PX(25, sy, 12.6), pb = PX(25, sy, 3)[1];
+  R(g, pole[0] - 3, pole[1], 6, pb - pole[1], OUT); R(g, pole[0] - 2, pole[1], 4, pb - pole[1], '#3a3f5c'); R(g, pole[0] - 2, pole[1], 1, pb - pole[1], '#5a6086'); R(g, pole[0] + 1, pole[1], 1, pb - pole[1], '#262a3e');
+  R(g, pole[0] - 2, pb - Math.round((pb - pole[1]) * .45), 4, Math.round((pb - pole[1]) * .45), pad); R(g, pole[0] + 1, pb - Math.round((pb - pole[1]) * .45), 1, Math.round((pb - pole[1]) * .45), shadeHex(pad, .72));
+  const arm = PX(25, by, 12.6); pline(g, pole[0], pole[1], arm[0], arm[1], OUT, 4); pline(g, pole[0], pole[1], arm[0], arm[1], '#4a5070', 2);
   if (top) drawBoard(g, t);
 }
 function drawBoard(g, t) {
-  const H = HOOPS[t], by = t === 0 ? H.y - 1.25 : H.y + 1.25;
-  const a = PX(22, by, 13.2), b = PX(28, by, 9.6);
-  g.fillStyle = OUT; g.fillRect(a[0] - 1, a[1] - 1, b[0] - a[0] + 2, b[1] - a[1] + 2);
-  g.fillStyle = 'rgba(230,240,255,.42)'; g.fillRect(a[0], a[1], b[0] - a[0], b[1] - a[1]);
-  g.fillStyle = '#ffffff'; g.fillRect(a[0], a[1], b[0] - a[0], 1); g.fillRect(a[0], b[1] - 1, b[0] - a[0], 1); g.fillRect(a[0], a[1], 1, b[1] - a[1]); g.fillRect(b[0] - 1, a[1], 1, b[1] - a[1]);
-  const s0 = PX(24, by, 11.5), s1 = PX(26, by, 10.05);
-  g.fillRect(s0[0], s0[1], s1[0] - s0[0], 1); g.fillRect(s0[0], s1[1], s1[0] - s0[0], 1); g.fillRect(s0[0], s0[1], 1, s1[1] - s0[1]); g.fillRect(s1[0], s0[1], 1, s1[1] - s0[1] + 1);
+  const H = HOOPS[t], by = t === 0 ? H.y - 1.25 : H.y + 1.25, fr = (t === 0 ? G.T[1] : G.T[0]).fr;
+  const a = PX(22, by, 13.6), b = PX(28, by, 9.7), w = b[0] - a[0], h = b[1] - a[1];
+  // shot clock on top
+  const sc = Math.max(0, Math.ceil(G.shot)), cx = Math.round((a[0] + b[0]) / 2);
+  R(g, cx - 6, a[1] - 9, 12, 8, OUT); R(g, cx - 5, a[1] - 8, 10, 6, '#120e18');
+  if (G.phase === 'live' && G.poss === (t === 0 ? 0 : 1)) pnum(g, sc, cx, a[1] - 7, sc <= 5 ? '#ff4d3a' : '#ffb03a');
+  // frame, glass with reflections, white border and target square
+  R(g, a[0] - 2, a[1] - 2, w + 4, h + 4, OUT); R(g, a[0] - 1, a[1] - 1, w + 2, h + 2, '#9aa3b5');
+  g.fillStyle = 'rgba(200,225,255,.38)'; g.fillRect(a[0], a[1], w, h);
+  g.fillStyle = 'rgba(255,255,255,.35)'; for (let k = 0; k < h; k++) { g.fillRect(a[0] + 3 + k, a[1] + k, 2, 1); g.fillRect(a[0] + 9 + k, a[1] + k, 1, 1); }
+  g.fillStyle = '#ffffff'; g.fillRect(a[0], a[1], w, 1); g.fillRect(a[0], b[1] - 1, w, 1); g.fillRect(a[0], a[1], 1, h); g.fillRect(b[0] - 1, a[1], 1, h);
+  const s0 = PX(24, by, 11.6), s1 = PX(26, by, 10.05);
+  g.fillStyle = '#ffffff'; g.fillRect(s0[0], s0[1], s1[0] - s0[0], 1); g.fillRect(s0[0], s1[1], s1[0] - s0[0], 1); g.fillRect(s0[0], s0[1], 1, s1[1] - s0[1]); g.fillRect(s1[0], s0[1], 1, s1[1] - s0[1] + 1);
+  R(g, a[0] - 1, b[1] + 1, w + 2, 2, fr.c);                                            // bottom padding
 }
 function drawRim(g, t) {
   const H = HOOPS[t], c = PX(H.x, H.y, 10), net = arenaG.userData.nets[t].userData;
-  const rx = Math.max(3, Math.round(.85 * cam.k)), ry = Math.max(2, Math.round(rx * FS * .7));
-  const sw = net.sw || 0, st = 1 + Math.sin((1 - sw) * Math.PI * 3) * sw * .6, nh = Math.round(1.5 * cam.k * HS * st);
-  for (let y = 1; y <= nh; y++) { const w = Math.round(rx - (rx - rx * .55) * y / nh); g.fillStyle = (y % 2) ? 'rgba(255,255,255,.9)' : 'rgba(255,255,255,.55)'; for (let x = -w; x <= w; x += 2) g.fillRect(c[0] + x + (y % 2), c[1] + y, 1, 1); }
-  pring(g, c[0], c[1], rx + 1, ry + 1, OUT); pring(g, c[0], c[1], rx, ry, '#ff6a1f'); pring(g, c[0], c[1] - 1, rx, ry, '#e8571e');
+  const rx = Math.max(4, Math.round(.95 * cam.k)), ry = Math.max(2, Math.round(rx * FS * .62));
+  const sw = net.sw || 0, st = 1 + Math.sin((1 - sw) * Math.PI * 3) * sw * .6, nh = Math.round(1.7 * cam.k * HS * st);
+  // flange to the board
+  const by = t === 0 ? H.y - 1.25 : H.y + 1.25, f0 = PX(H.x, by, 10);
+  R(g, c[0] - 1, Math.min(f0[1], c[1] - ry), 3, Math.abs(c[1] - ry - f0[1]) + 1, '#c4501a');
+  // net: diamond mesh, lit on the left, shaded on the right
+  for (let y = 1; y <= nh; y++) {
+    const u = y / nh, w = Math.round(rx - rx * .42 * u), sh = Math.round(Math.sin(CLK * 3 + y * .7) * sw * 2);
+    for (let x = -w; x <= w; x++) {
+      if (((x + y + 100) % 3) !== 0 && y !== nh) continue;
+      g.fillStyle = x > w * .4 ? 'rgba(190,200,220,.85)' : 'rgba(255,255,255,.95)';
+      g.fillRect(c[0] + x + sh, c[1] + y, 1, 1);
+    }
+  }
+  // rim: thick ring, darker underside, hot highlight
+  pring(g, c[0], c[1], rx + 1, ry + 1, OUT); pring(g, c[0], c[1] + 1, rx, ry, '#b8461a'); pring(g, c[0], c[1], rx, ry, '#ff6a1f');
+  R(g, c[0] - rx + 1, c[1] - 1, 2, 1, '#ffb070'); R(g, c[0] - 1, c[1] - ry, 2, 1, '#ffb070');
 }
 function animateNets(dt) { for (const n of arenaG.userData.nets) if (n.userData.sw > 0) n.userData.sw = Math.max(0, n.userData.sw - dt * 1.6); }
 
@@ -2306,10 +2370,11 @@ function renderArena(dt) {
   animateNets(dt);
   const b = G.ball, live = G.phase === 'live' || G.phase === 'dead';
   // camera follows the ball
-  let ty = b.y + (G.poss === 0 ? -7 : 7), tx = 25 + (b.x - 25) * .2;
+  let ty = b.y + (G.poss === 0 ? -10 : 10), tx = 25 + (b.x - 25) * .55;
   if (G.phase === 'break' || G.phase === 'final') { ty = 47; tx = 25; }
-  const halfH = IH / 2 / (cam.k * FS);
-  ty = clamp(ty, -AP - 10 + halfH, 94 + AP + 12 - halfH);
+  const halfH = IH / 2 / (cam.k * FS), halfW = IW / 2 / cam.k, xr = Math.max(0, 25 + AP - halfW);
+  tx = clamp(tx, 25 - xr, 25 + xr);
+  ty = clamp(ty, -AP - 17 + halfH, 94 + AP + 6 - halfH);
   if (halfH * 2 > 94 + 2 * AP + 22) ty = 47;
   const kk = 1 - Math.exp(-dt * 2.4); camF.x += (tx - camF.x) * kk; camF.z += (ty - camF.z) * kk;
   if (!camF.init) { camF.x = tx; camF.z = ty; camF.init = true; }
@@ -2335,7 +2400,7 @@ function renderArena(dt) {
   items.push({y:96, f:() => drawHoopBack(g, 1)}, {y:HOOPS[1].y + .01, f:() => drawRim(g, 1)}, {y:HOOPS[1].y + 1.3, f:() => drawBoard(g, 1)});
   // ball height (feet)
   let h = .55;
-  if (b.state === 'held') h = (b.owner && b.owner.gather ? 6.9 + (b.owner.gv || 0) * 1.1 : .55 + b.z * 1.05) * DK;
+  if (b.state === 'held') h = (b.owner && b.owner.gather ? 6.9 + (b.owner.gv || 0) * 1.1 : .55 + b.z * 1.05) * 1.1;
   else if (b.state === 'pass') h = Math.max(3.4, b.z + 1);
   else if (b.state === 'shot' || b.state === 'rim') h = Math.max(.55, b.z);
   else if (b.state === 'dead') h = G.phase === 'dead' ? Math.max(.55, 9.6 - (1 - G.timer) * 22) : .55;
@@ -2545,7 +2610,7 @@ function loadArt() {
     im.src = PH_BASE + t + '_' + id + '_min.webp';
   }
 }
-let ARTT = {stands:'175603', side:'175603'};
+let ARTT = {stands:'212800', side:'212800'};
 function initScene() {
   ctx = cv.getContext('2d');
   if (!ctx) throw new Error('2D canvas unavailable');
@@ -2919,10 +2984,10 @@ function drawPoseArt(g, T, A, W, H, key) {
       else if (F.ball === 'over') { bx = r.head[0]; by = r.top - 2; }
       else if (F.ball === 'high') { const top = hh[0][1] < hh[1][1] ? hh[0] : hh[1]; bx = top[0]; by = top[1] - 2; }
       else if (F.ball === 'back') { bx = r.head[0] - 4; by = r.top; }
-      drawBall(g, Math.round(bx), Math.round(by));
+      drawBallMini(g, Math.round(bx), Math.round(by));
     }
   }
-  if (A.ball) drawBall(g, A.ball[0], A.ball[1]);
+  if (A.ball) drawBallMini(g, A.ball[0], A.ball[1]);
   // effects in front
   if (fx === 'arc') { g.fillStyle = wl; for (let t = .1; t < .9; t += .08) { const x = 20 + 14 * t, y = 6 - Math.sin(t * Math.PI) * 6 + t * 1; g.fillRect(Math.round(x), Math.round(y), 1, 1); } }
   if (fx === 'lobarc') { g.fillStyle = wl; for (let t = .05; t < .95; t += .06) { const x = 10 + 22 * t, y = 12 - Math.sin(t * Math.PI) * 10; g.fillRect(Math.round(x), Math.round(y), 1, 1); } }
@@ -3526,7 +3591,6 @@ function act(a, d) {
   else if (a === 'auto') { if (!G.game) return; G.auto = !G.auto; S.auto = G.auto; save(); if (G.auto && G.meter) releaseMeter(); for (const p of players[0]) p.attack = null; syncAuto(); toast(G.auto ? 'Autoplay on' : 'Autoplay off. Your cards are back'); }
   else if (a === 'buybucks') { const P = BUCK_PACKS.find(x => x.id === d.p); if (P) toast(`Checkout isn't open yet. You weren't charged ${P.usd}`); }
   else if (a === 'start') hideStart();
-  else if (a === 'skipintro') hideIntro();
 }
 document.addEventListener('click', e => { const el = e.target.closest && e.target.closest('[data-act]'); if (el) act(el.dataset.act, el.dataset); });
 modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
@@ -3600,7 +3664,7 @@ function showIntro() {
   const el = $('intro');
   const vid = INTRO_VIDEO ? `<video class="in-video" src="${PH_BASE + INTRO_VIDEO}.mp4" autoplay muted playsinline preload="auto" disablepictureinpicture aria-hidden="true"></video>` : '';
   el.innerHTML = `<div class="in-scene"><canvas class="in-cv" width="180" height="320"></canvas>${vid}</div><img class="in-logo" src="${INTRO_LOGO}" alt="TreyyyVerse" draggable="false">`;
-  el.hidden = false; el.classList.remove('out'); el.dataset.act = 'skipintro';
+  el.hidden = false; el.classList.remove('out');   // studio intro: plays in full, no skipping
   const ids = S ? S.lineup.slice(0, TEAM_N) : [0, 2, 4], f = S ? FR[S.fr] : FR[0];
   const mk = () => { const c = document.createElement('canvas'); c.width = 60; c.height = 64; return c; };
   INTRO = {t:0, el, g:el.querySelector('.in-cv').getContext('2d'), f, vid:false,
