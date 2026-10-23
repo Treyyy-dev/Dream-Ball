@@ -31,10 +31,10 @@
 html{height:100%;box-sizing:border-box}
 *,*::before,*::after{box-sizing:inherit}
 body{height:100%;background:var(--arena);color:var(--ink);font-family:var(--label);overflow:hidden;
-  padding-left:max(16px, env(safe-area-inset-left,0px));padding-right:max(16px, env(safe-area-inset-right,0px));
+  padding-left:max(8px, env(safe-area-inset-left,0px));padding-right:max(8px, env(safe-area-inset-right,0px));
   -webkit-user-select:none;user-select:none;font-size:15px}
 button{font-family:inherit;color:inherit}
-.app{height:100%;width:100%;max-width:min(500px, calc((100vh - 20px) * .6));max-width:min(500px, calc((100dvh - 20px) * .6));
+.app{height:100%;width:100%;max-width:none;
   margin:0 auto;display:flex;flex-direction:column;gap:8px;padding-block:10px}
 .home .board,.home .hud{display:none}
 .match .topbar,.match .nav,.match .gymtag{display:none}
@@ -239,7 +239,7 @@ svg.ic{width:18px;height:18px;flex:none}
 .nav button.on svg{color:var(--gold)}
 .nav .lock{position:absolute;top:4px;right:calc(50% - 22px);width:15px!important;height:15px!important;color:var(--muted)}
 
-.hud{display:flex;flex-direction:column;gap:7px}
+.hud{display:flex;flex-direction:column;gap:7px;width:100%;max-width:620px;margin:0 auto}
 .feedrow{display:flex;align-items:center;gap:7px;font-size:14px;font-weight:600;min-height:18px;overflow:hidden;white-space:nowrap}
 .feedrow i{width:8px;height:8px;border-radius:50%;background:var(--muted);flex:none}
 .feedrow span{overflow:hidden;text-overflow:ellipsis}
@@ -293,12 +293,12 @@ svg.ic{width:18px;height:18px;flex:none}
 .fr.on{border-color:var(--gold);background:var(--panel2)}
 .err{color:var(--bad);font-size:14px;font-weight:600;min-height:18px;margin:-6px 0 0}
 
-#rotate{position:fixed;inset:0;z-index:60;background:var(--arena);display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:20px}
+#rotate{position:fixed;inset:0;z-index:100;background:var(--arena);display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:20px}
 #rotate h2{font-family:var(--display);font-weight:400;font-size:24px;margin:0;color:var(--gold)}
 #rotate p{margin:0;font-size:17px;color:var(--muted);font-weight:600}
 #rotate .phone{width:34px;height:58px;border:4px solid var(--ink);border-radius:8px;animation:tilt 1.6s ease-in-out infinite}
 @keyframes tilt{0%,30%{transform:rotate(-90deg)}60%,100%{transform:rotate(0)}}
-@media (orientation:landscape) and (max-height:520px){ #rotate{display:flex} }
+@media (orientation:landscape) and (pointer:coarse){ #rotate{display:flex} }
 @media (prefers-reduced-motion:reduce){ #rotate .phone{animation:none} }
 
 /* ---- v3: training gym, cards, matchup, viewer ---- */
@@ -584,6 +584,13 @@ img.px,img.av.px,.avi.px{image-rendering:pixelated;image-rendering:crisp-edges;o
 .in-logo{position:absolute;left:50%;top:42%;width:min(56vw,400px);height:auto;transform:translate(-50%,-50%);image-rendering:pixelated;animation:inlogo .7s steps(5) both}
 @keyframes inlogo{from{opacity:0;transform:translate(-50%,-50%) scale(.9)}to{opacity:1;transform:translate(-50%,-50%)}}
 @media (prefers-reduced-motion: reduce){.in-logo{animation:none}}
+
+/* full screen everywhere; computers (which can't rotate) get a full-height vertical game in the middle */
+html,body{height:100dvh}
+@media (orientation:landscape) and (hover:hover) and (pointer:fine){
+  .app{max-width:min(620px, calc(100dvh * .62))}
+  body{background:radial-gradient(90% 120% at 50% 40%,#1c2350,#0a0c1c 70%)}
+}
 :root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 body{margin:0;-webkit-text-size-adjust:100%;overscroll-behavior:none;touch-action:manipulation}
 img{max-width:100%}
@@ -2623,7 +2630,8 @@ function resize() {
   if (!ctx) return;
   const r = wrap.getBoundingClientRect(), w = Math.max(50, r.width), h = Math.max(50, r.height);
   DPR = window.devicePixelRatio || 1;
-  PSZ = Math.max(1, Math.round(PXS * DPR));
+  const dev = Math.max(1, w / 400);            // bigger screens get bigger art pixels, so every device looks like the phone
+  PSZ = Math.max(1, Math.round(PXS * dev * DPR));
   IW = Math.ceil(w * DPR / PSZ); IH = Math.ceil(h * DPR / PSZ);
   if (cv.width !== IW || cv.height !== IH) { cv.width = IW; cv.height = IH; }
   CSSPX = PSZ / DPR;
@@ -3649,8 +3657,19 @@ function showStart() {
   }
   el.hidden = false; el.classList.remove('out'); el.dataset.act = 'start';
 }
+// go true fullscreen and lock to portrait (needs a tap; iPhone Safari can't, the home-screen app already is)
+function lockPortrait() { try { const o = screen.orientation; if (o && o.lock) o.lock('portrait').catch(() => {}); } catch (e) {} }
+function goFull() {
+  try {
+    const d = document.documentElement, fs = d.requestFullscreen || d.webkitRequestFullscreen;
+    const inFs = document.fullscreenElement || document.webkitFullscreenElement || (window.matchMedia && window.matchMedia('(display-mode: fullscreen)').matches);
+    if (fs && !inFs) { const p = fs.call(d, {navigationUI:'hide'}); if (p && p.then) p.then(lockPortrait, () => {}); else lockPortrait(); }
+    else lockPortrait();
+  } catch (e) {}
+}
 function hideStart() {
   const el = $('start'); if (el.hidden || el.classList.contains('out')) return;
+  goFull();
   el.classList.add('out');
   setTimeout(() => { el.hidden = true; el.innerHTML = ''; }, 380);
   if (!S) renderSetup();
@@ -3712,7 +3731,7 @@ function introFrame(dt) {
 }
 
 // ================= boot =================
-const rotMQ = window.matchMedia ? window.matchMedia('(orientation: landscape) and (max-height: 520px)') : {matches:false};
+const rotMQ = window.matchMedia ? window.matchMedia('(orientation: landscape) and (pointer: coarse)') : {matches:false};
 S = load();
 try { initScene(); applyQuality(); }
 catch (err) { renderer = null; const d = document.createElement('div'); d.className = 'glfail'; d.textContent = 'This device could not start the game view. Try an up-to-date browser.'; wrap.appendChild(d); }
