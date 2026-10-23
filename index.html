@@ -524,6 +524,44 @@ svg.ic{width:18px;height:18px;flex:none}
 .noart .tbeams{display:block;position:absolute;inset:-40%;background:repeating-conic-gradient(from 0deg at 50% 52%,rgba(255,201,77,.12) 0 6deg,transparent 6deg 18deg);animation:spin 40s linear infinite}
 .title .tlogo,.title .tfoot{z-index:1}
 @media (prefers-reduced-motion:reduce){.noart .tball,.noart .tbeams{animation:none}}
+
+/* ---- summon dunk ---- */
+.modal:has(.dunk){padding:0;align-items:stretch}
+.dunk{position:relative;width:100%;max-width:520px;margin:0 auto;height:100%;background:#05060f;overflow:hidden;border-radius:0}
+.dkv{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .3s}
+.dunk.vid .dkv{opacity:1}
+.dkv2{opacity:0!important}
+.dunk.vid2 .dkv2{opacity:1!important}
+.dunk.vid .dkfb{display:none}
+.dkfb{position:absolute;inset:0;background:radial-gradient(60% 40% at 50% 30%,var(--glow),transparent 70%),radial-gradient(120% 90% at 50% 100%,#2a2f6a,#05060f 70%)}
+.dkfb::before{content:"";position:absolute;inset:-40%;background:repeating-conic-gradient(from 0deg at 50% 40%,rgba(255,255,255,.07) 0 6deg,transparent 6deg 18deg);animation:spin 18s linear infinite}
+.dkrim{position:absolute;left:50%;top:24%;width:110px;height:22px;margin-left:-55px;border:6px solid #ff6a2a;border-radius:50%;box-shadow:0 0 18px #ff6a2a}
+.dkrim::before{content:"";position:absolute;left:50%;bottom:16px;width:150px;height:96px;margin-left:-75px;border:4px solid rgba(255,255,255,.75);border-radius:6px;background:rgba(255,255,255,.08)}
+.dkball{position:absolute;left:50%;bottom:40%;width:110px;height:110px;margin-left:-55px;animation:dkjump 1.6s cubic-bezier(.3,.1,.5,1) both;filter:drop-shadow(0 0 20px var(--glow))}
+@keyframes dkjump{0%{transform:translateY(12vh) scale(1.2)}55%{transform:translateY(6vh) scale(1)}100%{transform:translateY(-14vh) scale(.62)}}
+.dunk.slam .dkball{animation:dkslam .5s ease-in forwards}
+@keyframes dkslam{from{transform:translateY(-14vh) scale(.62)}to{transform:translateY(-8vh) scale(.42);opacity:.2}}
+.dktop{position:absolute;left:0;right:0;top:0;padding:calc(env(safe-area-inset-top,0px) + 18px) 16px 40px;background:linear-gradient(180deg,rgba(5,6,15,.85),transparent);text-align:center;display:flex;flex-direction:column;gap:2px;z-index:2}
+.dkr{font-size:12px;font-weight:700;letter-spacing:.2em}
+.dktop b{font-family:var(--display);font-weight:400;font-size:24px;text-shadow:0 3px 0 rgba(0,0,0,.5)}
+.dktop small{font-size:13px;font-weight:700;color:#cfd3ef;letter-spacing:.1em}
+.dkskip{position:absolute;right:12px;top:calc(env(safe-area-inset-top,0px) + 12px);z-index:3;border:1px solid rgba(255,255,255,.3);background:rgba(5,6,15,.6);border-radius:999px;padding:6px 12px;font-weight:700;font-size:13px;cursor:pointer}
+.dkbtn{position:absolute;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 9%);width:132px;height:132px;margin-left:-66px;z-index:3;border:0;border-radius:50%;background:radial-gradient(circle,#ffe08a,#ff8a3d 70%);color:#2a1206;font-family:var(--display);font-size:22px;cursor:pointer;box-shadow:0 0 0 6px rgba(5,6,15,.6),0 0 36px var(--glow);touch-action:manipulation;animation:dkpop .2s ease-out}
+@keyframes dkpop{from{transform:scale(.4);opacity:0}}
+.dkbtn .ring{position:absolute;inset:-70px;border-radius:50%;border:5px solid #fff;opacity:.9;pointer-events:none}
+.dkbtn.go .ring{animation:dkring var(--lead,.7s) linear forwards}
+@keyframes dkring{to{inset:-6px;border-color:#5fd38a;opacity:1}}
+.dkbtn span{position:relative}
+.dkgrade{position:absolute;left:0;right:0;top:42%;text-align:center;font-family:var(--display);font-size:38px;z-index:3;opacity:0;pointer-events:none;text-shadow:0 4px 0 rgba(0,0,0,.6)}
+.dkgrade.show{animation:dkgr .9s cubic-bezier(.2,1.4,.4,1) forwards}
+@keyframes dkgr{0%{transform:scale(.4);opacity:0}30%{transform:scale(1.1);opacity:1}100%{transform:scale(1);opacity:1}}
+.dkgrade.perfect{color:#5fd38a} .dkgrade.good{color:#ffc94d} .dkgrade.early,.dkgrade.late,.dkgrade.miss{color:#ff8a8a;font-size:28px} .dkgrade.up{color:var(--glow)}
+.dkflash{position:absolute;inset:0;background:radial-gradient(circle,#fff,var(--glow) 60%,transparent);opacity:0;pointer-events:none;z-index:4}
+.dkflash.on{animation:flash .6s ease-out}
+.obonus{position:relative;margin:-4px 0 0;text-align:center;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;gap:5px}
+.obonus.perfect{color:#5fd38a} .obonus.good{color:#ffc94d} .obonus.miss{color:var(--muted);font-weight:600;font-size:12px}
+.obonus .ic{width:16px;height:16px}
+@media (prefers-reduced-motion:reduce){.dkfb::before,.dkball{animation:none}}
 </style>
 <style>
 :root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -2797,6 +2835,7 @@ function openPanel(t) {
   tab = t; selSlot = -1; panel.hidden = false;
   document.querySelectorAll('.nav button').forEach(b => b.classList.toggle('on', b.dataset.tab === t));
   renderPanel(); panel.scrollTop = 0;
+  if (t === 'packs') preloadDunks();
 }
 function closePanel() {
   tab = null; panel.hidden = true; selSlot = -1;
@@ -3029,21 +3068,121 @@ function pullBanner(bid, n) {
   save(); renderTop(); renderPanel();
   showReveal(out, bid);
 }
-let revealTok = 0, revealOut = null;
+let revealTok = 0, revealOut = null, revealBonus = null, revealBid = null;
+// Summon dunk clips from Higgsfield, one dunker per rarity. a = run-up ending at takeoff, b = the slam.
+const DUNKERS = [
+  {id:0,  a:'https://d8j0ntlcm91z4.cloudfront.net/user_3K6QP4i5xFR5ycxs1fK5oVOgn0s/hf_20261023_134707_a644f6a1-7e8e-48cd-97fc-0c642c39d777.mp4', b:'https://d8j0ntlcm91z4.cloudfront.net/user_3K6QP4i5xFR5ycxs1fK5oVOgn0s/hf_20261023_134707_60163e2b-4be6-4c4f-99ad-def62d74d2d5.mp4'},
+  {id:11, a:'https://d8j0ntlcm91z4.cloudfront.net/user_3K6QP4i5xFR5ycxs1fK5oVOgn0s/hf_20261023_134707_ad7bbb5d-481e-43f1-8b89-e2f0565a8f24.mp4', b:'https://d8j0ntlcm91z4.cloudfront.net/user_3K6QP4i5xFR5ycxs1fK5oVOgn0s/hf_20261023_134707_8097c033-5d12-44ed-91c6-6fa4377c0ad8.mp4'},
+  {id:19, a:'https://d8j0ntlcm91z4.cloudfront.net/user_3K6QP4i5xFR5ycxs1fK5oVOgn0s/hf_20261023_134708_19954015-2c5a-47df-aeed-7c2154fe20c0.mp4', b:'https://d8j0ntlcm91z4.cloudfront.net/user_3K6QP4i5xFR5ycxs1fK5oVOgn0s/hf_20261023_134707_3c18b36d-512a-4a6a-a3a7-7a891e393222.mp4'},
+  {id:24, a:'https://d8j0ntlcm91z4.cloudfront.net/user_3K6QP4i5xFR5ycxs1fK5oVOgn0s/hf_20261023_134707_5a06e4c5-86f3-4731-b246-176928deaf75.mp4', b:'https://d8j0ntlcm91z4.cloudfront.net/user_3K6QP4i5xFR5ycxs1fK5oVOgn0s/hf_20261023_134707_919b429b-994d-4253-bcaa-3ca8629286fa.mp4'}
+];
+const DK = {vid:null, phase:'', endAt:0, tapped:false, tier:0, best:0, tok:0, timer:null, raf:0};
+const dunkCache = [];
+function preloadDunks() {
+  if (dunkCache.length) return;
+  for (const D of DUNKERS) for (const u of [D.a, D.b]) { if (!u) continue; const v = document.createElement('video'); v.muted = true; v.preload = 'auto'; v.src = u; dunkCache.push(v); }
+}
+function pickDunkTier(best) { return best > 0 && Math.random() < .28 ? best - 1 : best; }
 function showReveal(out, bid) {
-  const tok = ++revealTok, best = Math.max(...out.map(o => o.r)), glow = RAR[best].c;
-  modal.innerHTML = `<div class="sheet opening" style="--glow:${glow}"><div class="rays ${best >= 2 ? 'hot' : ''}"></div>
-    <button class="orb ${best >= 3 ? 'gold' : best >= 2 ? 'epic' : ''}" data-act="skipopen" aria-label="Reveal"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="40" fill="#e8742a"/><path d="M10 50h80M50 10v80M22 22c16 16 16 40 0 56M78 22c-16 16-16 40 0 56" stroke="#2a1206" stroke-width="3.5" fill="none"/><circle cx="38" cy="36" r="10" fill="#fff" opacity=".25"/></svg></button>
-    <p class="hint" style="position:relative">${out.length > 1 ? `${out.length} pulls` : '1 pull'} · tap to reveal</p></div>`;
-  modal.hidden = false; revealOut = out;
-  setTimeout(() => { if (tok === revealTok) ripPack(tok); }, 1500);
+  const tok = ++revealTok, best = Math.max(...out.map(o => o.r));
+  revealOut = out; revealBid = bid; revealBonus = null;
+  const tier = pickDunkTier(best), D = DUNKERS[tier], C = CHARS[D.id], col = RAR[tier].c;
+  Object.assign(DK, {phase:'intro', tapped:false, tier, best, tok, endAt:0});
+  modal.innerHTML = `<div class="dunk" style="--glow:${col}" id="dunk">
+    <video class="dkv" id="dkv" muted playsinline preload="auto" aria-hidden="true"></video>
+    <video class="dkv dkv2" id="dkv2" muted playsinline preload="auto" aria-hidden="true"></video>
+    <div class="dkfb" id="dkfb"><div class="dkrim"></div><div class="dkball"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="#e8742a"/><path d="M6 50h88M50 6v88M19 19c17 17 17 45 0 62M81 19c-17 17-17 45 0 62" stroke="#2a1206" stroke-width="3.5" fill="none"/></svg></div></div>
+    <div class="dktop"><span class="dkr" style="color:${col}">${RAR[tier].n.toUpperCase()} DUNKER</span><b>${esc(C.name)}</b><small>#${C.num} · ${C.pos}</small></div>
+    <button class="dkskip" data-act="dunkskip">Skip</button>
+    <button class="dkbtn" id="dkbtn" data-act="dunktap" hidden><i class="ring"></i><span>DUNK!</span></button>
+    <div class="dkgrade" id="dkgrade"></div>
+    <div class="dkflash" id="dkflash"></div></div>`;
+  modal.hidden = false;
+  const v = $('dkv'); DK.vid = v;
+  const useVideo = !!(D.a && D.b && v && v.play);
+  if (!useVideo) { fallbackDunk(tok); return; }
+  let started = false;
+  const fail = () => { if (started || tok !== revealTok) return; started = true; fallbackDunk(tok); };
+  const t0 = setTimeout(fail, 3500);
+  v.addEventListener('error', fail, {once:true});
+  v.addEventListener('canplay', () => {
+    if (started || tok !== revealTok) return; started = true; clearTimeout(t0);
+    $('dunk').classList.add('vid');
+    const pr = v.play(); if (pr && pr.catch) pr.catch(() => fallbackDunk(tok));
+    dunkWatchA(tok);
+  }, {once:true});
+  v.src = D.a; if (v.load) v.load();
+  const v2 = $('dkv2'); if (v2 && D.b) { v2.src = D.b; if (v2.load) v2.load(); }
+}
+function dunkWatchA(tok) {
+  const v = DK.vid;
+  const step = () => {
+    if (tok !== revealTok || DK.phase === 'done') return;
+    const dur = v.duration || 3, t = v.currentTime || 0;
+    if (DK.phase === 'intro' && dur - t < .75) { DK.phase = 'window'; DK.endAt = performance.now() + (dur - t) * 1000; showDunkBtn(dur - t); }
+    if (DK.phase === 'window' && performance.now() > DK.endAt + 450) { if (!DK.tapped) gradeDunk(null); return; }
+    DK.raf = requestAnimationFrame(step);
+  };
+  DK.raf = requestAnimationFrame(step);
+}
+function showDunkBtn(lead) {
+  const b = $('dkbtn'); if (!b) return;
+  b.hidden = false; b.style.setProperty('--lead', lead.toFixed(2) + 's'); b.classList.remove('go'); void b.offsetWidth; b.classList.add('go');
+}
+function dunkTap() {
+  if (DK.tapped || DK.phase === 'done') return;
+  if (DK.phase === 'intro') { DK.tapped = true; gradeDunk('early'); return; }
+  if (DK.phase !== 'window') return;
+  DK.tapped = true;
+  const d = Math.abs(performance.now() - DK.endAt);
+  gradeDunk(d <= 140 ? 'perfect' : d <= 320 ? 'good' : performance.now() < DK.endAt ? 'early' : 'late');
+}
+function gradeDunk(g) {
+  if (DK.phase === 'done' || DK.phase === 'slam') return;
+  DK.phase = 'slam'; cancelAnimationFrame(DK.raf);
+  const B = BANNERS.find(x => x.id === revealBid) || BANNERS[0], gem = B.cur === 'gems';
+  const amt = g === 'perfect' ? (gem ? 15 : 40) : g === 'good' ? (gem ? 5 : 15) : 0;
+  if (amt) { S[B.cur] += amt; save(); renderTop(); }
+  revealBonus = {g: g || 'miss', amt, cur:B.cur};
+  const btn = $('dkbtn'); if (btn) btn.hidden = true;
+  const gr = $('dkgrade');
+  if (gr) { gr.textContent = {perfect:'PERFECT!', good:'GOOD!', early:'TOO EARLY', late:'TOO LATE', miss:'MISSED IT'}[g || 'miss']; gr.className = 'dkgrade show ' + (g || 'miss'); }
+  const tok = DK.tok, D = DUNKERS[DK.tier], v = DK.vid;
+  const v2 = $('dkv2');
+  if ($('dunk').classList.contains('vid') && D.b && v2) {
+    DK.vid = v2;
+    const go = () => { if (tok !== revealTok) return; const pr = v2.play(); if (pr && pr.catch) pr.catch(() => slamDone(tok)); };
+    v2.addEventListener('playing', () => { $('dunk').classList.add('vid2'); }, {once:true});
+    v2.addEventListener('ended', () => slamDone(tok), {once:true});
+    v2.addEventListener('error', () => slamDone(tok), {once:true});
+    if (v2.readyState >= 3) go(); else v2.addEventListener('canplay', go, {once:true});
+    setTimeout(() => slamDone(tok), 6500);
+  } else {
+    $('dunk').classList.add('slam');
+    setTimeout(() => slamDone(tok), 1100);
+  }
+}
+function slamDone(tok) {
+  if (tok !== revealTok || DK.phase === 'done') return;
+  DK.phase = 'done';
+  const fl = $('dkflash'); if (fl) fl.classList.add('on');
+  if (DK.best > DK.tier) { const gr = $('dkgrade'); if (gr) { gr.textContent = 'RARITY UP!'; gr.className = 'dkgrade show up'; } }
+  setTimeout(() => { if (tok === revealTok && revealOut) { const out = revealOut; revealOut = null; dealCards(out); } }, DK.best > DK.tier ? 900 : 420);
+}
+function fallbackDunk(tok) {
+  if (tok !== revealTok) return;
+  const el = $('dunk'); if (!el) return;
+  el.classList.remove('vid'); el.classList.add('fb');
+  const lead = 1.6;
+  DK.phase = 'intro';
+  setTimeout(() => { if (tok !== revealTok || DK.phase !== 'intro') return; DK.phase = 'window'; DK.endAt = performance.now() + 700; showDunkBtn(.7); }, (lead - .7) * 1000);
+  setTimeout(() => { if (tok === revealTok && !DK.tapped && DK.phase === 'window') gradeDunk(null); }, (lead + .45) * 1000);
 }
 function ripPack(tok) {
   if (tok !== revealTok || !revealOut) return;
-  const sp = modal.querySelector('.orb'); if (sp) sp.classList.add('burst');
-  const fl = document.createElement('div'); fl.className = 'flash'; const sh = modal.querySelector('.sheet'); if (sh) sh.appendChild(fl);
-  const out = revealOut; revealOut = null;
-  setTimeout(() => { if (tok === revealTok) dealCards(out); }, 320);
+  cancelAnimationFrame(DK.raf); DK.phase = 'done';
+  for (const id of ['dkv', 'dkv2']) { const x = $(id); if (x && x.pause) x.pause(); }
+  const out = revealOut; revealOut = null; dealCards(out);
 }
 function dealCards(out) {
   const f = FR[S.fr], best = Math.max(...out.map(o => o.r));
@@ -3060,7 +3199,8 @@ function dealCards(out) {
     return `<div class="rcard r${o.r} ${o.k === 'c' ? 'skill' : ''}" style="--d:${i * 80}ms"><div class="in"><div class="face back"><span>DREAM<br>BALL</span></div><div class="face front" style="--rc:${rc};--rca:${rca}">${front}<span class="tg">${o.tag}</span></div></div></div>`;
   }).join('');
   const cols = out.length === 1 ? 1 : 5;
-  modal.innerHTML = `<div class="sheet opening dealt" style="--glow:${RAR[best].c}"><div class="rays ${best >= 2 ? 'hot' : ''}"></div><h2 class="ohead">${best === 3 ? 'LEGEND PULL!' : best === 2 ? 'EPIC PULL!' : 'RESULTS'}</h2><div class="reveal ${cols === 5 ? 'compact' : ''}" style="--cols:${cols};${cols === 1 ? 'max-width:170px;margin:0 auto;width:100%' : ''}">${cards}</div><button class="mbtn pri" data-act="mclose" style="position:relative">Collect</button></div>`;
+  const bn = revealBonus, bonusTxt = bn ? (bn.amt ? `<p class="obonus ${bn.g}">${bn.g === 'perfect' ? 'Perfect dunk' : 'Good dunk'} · +${bn.amt} ${bn.cur === 'gems' ? GEM : COIN}</p>` : `<p class="obonus miss">${bn.g === 'early' ? 'Too early' : bn.g === 'late' ? 'Too late' : 'No dunk tap'}. Hit DUNK right as he jumps for a bonus.</p>`) : '';
+  modal.innerHTML = `<div class="sheet opening dealt" style="--glow:${RAR[best].c}"><div class="rays ${best >= 2 ? 'hot' : ''}"></div><h2 class="ohead">${best === 3 ? 'LEGEND PULL!' : best === 2 ? 'EPIC PULL!' : 'RESULTS'}</h2>${bonusTxt}<div class="reveal ${cols === 5 ? 'compact' : ''}" style="--cols:${cols};${cols === 1 ? 'max-width:170px;margin:0 auto;width:100%' : ''}">${cards}</div><button class="mbtn pri" data-act="mclose" style="position:relative">Collect</button></div>`;
   modal.querySelectorAll('.rcard').forEach((el, i) => setTimeout(() => el.classList.add('flip'), 420 + i * 140));
 }
 
@@ -3317,7 +3457,7 @@ function toast(msg) {
   if (!toastEl) { toastEl = document.createElement('div'); toastEl.className = 'toast'; wrap.appendChild(toastEl); }
   toastEl.textContent = msg; toastEl.hidden = false; clearTimeout(toastEl._t); toastEl._t = setTimeout(() => { toastEl.hidden = true; }, 1900);
 }
-function closeModal() { revealTok++; modal.hidden = true; modal.innerHTML = ''; if (VW.P) { disposePerson(VW.P); VW.P = null; } renderPanel(); }
+function closeModal() { revealTok++; cancelAnimationFrame(DK.raf); for (const id of ['dkv', 'dkv2']) { const x = $(id); if (x && x.pause) { x.pause(); x.removeAttribute('src'); } } DK.vid = null; modal.hidden = true; modal.innerHTML = ''; if (VW.P) { disposePerson(VW.P); VW.P = null; } renderPanel(); }
 function act(a, d) {
   if (a === 'tab') { if (mode === 'home') openPanel(d.tab); }
   else if (a === 'close') closePanel();
@@ -3361,7 +3501,8 @@ function act(a, d) {
   else if (a === 'setq') { SET.q = d.v; saveSet(); applyQuality(); openSettings(); }
   else if (a === 'setshow') { SET.showFps = d.v === '1'; saveSet(); $('fpsbox').hidden = !SET.showFps; openSettings(); }
   else if (a === 'pull') pullBanner(d.b, +d.n);
-  else if (a === 'skipopen') ripPack(revealTok);
+  else if (a === 'skipopen' || a === 'dunkskip') ripPack(revealTok);
+  else if (a === 'dunktap') dunkTap();
   else if (a === 'play') startStory();
   else if (a === 'tipoff') tipOff();
   else if (a === 'newseason') { S.story.season++; S.story.res = []; S.gems += 100; save(); renderTop(); renderPanel(); }
