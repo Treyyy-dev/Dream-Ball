@@ -101,7 +101,7 @@ svg.ic{width:18px;height:18px;flex:none}
 .sect h3 em{font-style:normal;color:var(--ink);letter-spacing:.04em;font-size:13px}
 .hint{font-size:13px;color:var(--muted);margin:0;line-height:1.35}
 .hint.act{color:var(--gold)}
-.slots{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.slots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(74px,1fr));gap:8px}
 
 .chip{position:relative;border:2px solid var(--rc,var(--r0));background:var(--panel);border-radius:10px;padding:4px 3px 5px;display:flex;flex-direction:column;align-items:center;gap:1px;cursor:pointer;min-width:0;text-align:center}
@@ -582,6 +582,8 @@ const FR = [
   {n:'Foxes',  city:'Emerald',   c:'#2fa85a', d:'#0f3d22', trim:'#f4f1ea', numc:'#f4f1ea'}
 ];
 const REF_FR = {n:'Ref', city:'', c:'#f2f2f2', d:'#16181f', trim:'#16181f', numc:'#16181f', ref:true};
+const TEAM_N = 3;          // players per side (3-on-3)
+const POS_ORDER = ['PG','SG','SF','PF','C'];
 const POS_T = {
   PG:{sht:2,drb:8,spd:8,def:-6,h:.88,w:.95}, SG:{sht:8,drb:3,spd:4,def:-3,h:.91,w:.97}, SF:{sht:3,drb:0,spd:2,def:2,h:.94,w:1},
   PF:{sht:-3,drb:-5,spd:-2,def:7,h:.96,w:1.05}, C:{sht:-8,drb:-9,spd:-6,def:10,h:.99,w:1.1}
@@ -906,6 +908,7 @@ function fixSave(s) {
   s.gym.carry = s.gym.carry || {};
   for (const id in s.owned) s.owned[id].tr = s.owned[id].tr || {sht:0, drb:0, spd:0, def:0};
   s.deck = (s.deck || []).filter(id => CARD[id]);
+  if (s.lineup && s.lineup.length > TEAM_N * 2) s.lineup = [...s.lineup.slice(0, TEAM_N), ...s.lineup.slice(5, 5 + TEAM_N)];   // 5-on-5 saves -> 3-on-3
   s.auto = !!s.auto;
   s.seen = s.seen || Date.now();
   return s;
@@ -913,7 +916,7 @@ function fixSave(s) {
 function save() { if (!S) return; S.seen = Date.now(); try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
 function newSave(name, fr) {
   const cards = {}; for (const id in STARTER_CARDS) cards[id] = {n:STARTER_CARDS[id]};
-  S = fixSave({v:3, name, fr, coins:2500, gems:300, owned:{}, lineup:[0,1,2,3,4,5,6,7,8,9], cards, deck:starterDeck(cards), shoes:[], uid:1, story:{season:1, res:[]}});
+  S = fixSave({v:3, name, fr, coins:2500, gems:300, owned:{}, lineup:[0,2,4,1,3,9], cards, deck:starterDeck(cards), shoes:[], uid:1, story:{season:1, res:[]}});
   for (let i = 0; i < 10; i++) S.owned[i] = {st:1, sh:0, shoe:null, tr:{sht:0, drb:0, spd:0, def:0}};
   save();
 }
@@ -939,23 +942,23 @@ function lookOf(id) {
   return {skin:c.skin, hair:c.hair, h:POS_T[c.pos].h, w:POS_T[c.pos].w + ((c.id * 5) % 5 - 2) * .015, shoe:m ? [m.c, m.s] : [0xf4f1ea, 0x22252f], band:c.r >= 2, beard:c.beard, sleeve:c.sleeve, v:c.id, pid:c.id};
 }
 function userDesc(id, db) { const c = CHARS[id]; return {id, name:c.name, last:c.last, num:c.num, pos:c.pos, r:c.r, st:eff(id, db), look:lookOf(id)}; }
-function teamOvr() { const db = deckBoost(); return Math.round(S.lineup.slice(0, 5).reduce((a, id) => a + ovrOf(eff(id, db)), 0) / 5); }
+function teamOvr() { const db = deckBoost(); return Math.round(S.lineup.slice(0, TEAM_N).reduce((a, id) => a + ovrOf(eff(id, db)), 0) / TEAM_N); }
 function userTeam() {
   const db = deckBoost(), Lx = S.lineup.map(id => userDesc(id, db)), f = FR[S.fr];
-  return {name:S.name, short:S.name.toUpperCase().slice(0, 10), fr:f, starters:Lx.slice(0, 5), bench:Lx.slice(5, 10), user:true};
+  return {name:S.name, short:S.name.toUpperCase().slice(0, 10), fr:f, starters:Lx.slice(0, TEAM_N), bench:Lx.slice(TEAM_N, TEAM_N * 2), user:true};
 }
 function genTeam(fi, ovr, seed) {
-  const R = rng(seed), f = FR[fi], pos = ['PG','SG','SF','PF','C','PG','SG','SF','PF','C'], used = new Set(), usedN = new Set();
+  const R = rng(seed), f = FR[fi], pos = ['PG','SF','C','SG','PF','C'], used = new Set(), usedN = new Set();
   const ps = pos.map((pz, i) => {
     const t = POS_T[pz], st = {};
-    for (const k of STATS) st[k] = clamp(Math.round(ovr + t[k] + (R()*6 - 3) - (i >= 5 ? 3 : 0)), 35, 99);
+    for (const k of STATS) st[k] = clamp(Math.round(ovr + t[k] + (R()*6 - 3) - (i >= TEAM_N ? 3 : 0)), 35, 99);
     let num; do { num = Math.floor(R() * 56); } while (used.has(num)); used.add(num);
     const sm = SHOES[Math.floor(R() * SHOES.length)];
     const fn = FIRST[Math.floor(R() * FIRST.length)]; let ln; do { ln = LAST[Math.floor(R() * LAST.length)]; } while (usedN.has(ln)); usedN.add(ln);
     return {name:fn + ' ' + ln, last:ln, num, pos:pz, r:ovr >= 86 ? 3 : ovr >= 78 ? 2 : ovr >= 70 ? 1 : 0, st,
       look:{skin:Math.floor(R() * SKINS.length), hair:Math.floor(R() * 6), h:t.h, w:t.w + (R() - .5) * .06, shoe:[sm.c, sm.s], band:R() < .2, beard:R() < .3, sleeve:R() < .2, v:num}};
   });
-  return {name:f.city + ' ' + f.n, short:f.n.toUpperCase(), fr:f, starters:ps.slice(0, 5), bench:ps.slice(5), ovr};
+  return {name:f.city + ' ' + f.n, short:f.n.toUpperCase(), fr:f, starters:ps.slice(0, TEAM_N), bench:ps.slice(TEAM_N), ovr};
 }
 function storyGame(g, season) {
   const others = FR.map((f, i) => i).filter(i => i !== S.fr);
@@ -991,18 +994,19 @@ function offlineTraining() {
 // ================= match engine =================
 const W = 50, L = 94, SC = 18, QLEN = 100, OTLEN = 50;
 const HOOPS = [{x:25, y:5.25}, {x:25, y:88.75}];
+// 3-on-3 roles by slot: 0 = ball handler, 1 = wing, 2 = big
 const SPOTS = [
-  [[25,27],[18,25],[32,25]], [[6,21],[3,4],[11,25]], [[44,21],[47,4],[39,25]], [[36,13],[44,9],[32,19]], [[16,7],[34,7],[20,12]]
+  [[25,27],[15,24],[35,24]], [[44,19],[6,19],[43,5]], [[17,9],[33,9],[25,15]]
 ];
-const LANE_X = [25, 5, 45, 19, 31];
-const START = [[25,0],[11,3],[39,3],[18,9],[32,9]];
+const LANE_X = [25, 7, 43];
+const START = [[25,0],[12,4],[38,4]];
 const QNAMES = ['1ST QTR','2ND QTR','3RD QTR','4TH QTR'];
 const AI_MOVES = ['hesi','cross','btl','inout','btb','spin'];
 const spotPos = (t,s) => t === 0 ? {x:s[0], y:s[1]} : {x:50-s[0], y:94-s[1]};
 const dirOf = t => t === 0 ? 1 : -1;   // +1 means "away from the baseline" for team 0 (y grows)
 
 const players = [[],[]], all = [];
-for (let t = 0; t < 2; t++) for (let i = 0; i < 5; i++) {
+for (let t = 0; t < 2; t++) for (let i = 0; i < TEAM_N; i++) {
   const p = {t, i, d:null, x:0, y:0, vx:0, vy:0, spot:0, spotT:rand(1,4), stun:0, burst:0, cool:0, hot:0, side:1, ballSide:1,
     mode:'set', decide:.6, speed:16, shootT:0, celebT:0, yaw:t === 0 ? Math.PI : 0, ph:Math.random()*6, fall:0, move:null, lockT:0, gather:false, gv:0,
     cutT:rand(3, 7), cut:0, screen:0, finish:null, attack:null, lobRun:null};
@@ -1065,9 +1069,10 @@ function give(p) { const b = G.ball; b.state = 'held'; b.owner = p; b.z = 0; b.l
 
 function setLineups() {
   for (let t = 0; t < 2; t++) {
-    const T = G.T[t], five = (G.q === 2 && T.bench.length === 5) ? T.bench : T.starters;
-    for (let i = 0; i < 5; i++) {
-      const p = players[t][i]; p.d = five[i];
+    const T = G.T[t], grp = ((G.q === 2 && T.bench.length === TEAM_N) ? T.bench : T.starters).slice()
+      .sort((a, c) => POS_ORDER.indexOf(a.pos) - POS_ORDER.indexOf(c.pos));   // guard brings it up, biggest plays inside
+    for (let i = 0; i < TEAM_N; i++) {
+      const p = players[t][i]; p.d = grp[i];
       p.speed = 14.6 + (p.d.st.spd - 50) * .07 + rand(-.2, .2);
     }
   }
@@ -1262,7 +1267,7 @@ function offTarget(p) {
     const md = players[1 - p.t][b.owner.i], sx = b.owner.x < 25 ? 1 : -1;
     s = {x:md.x + sx * 1.8, y:md.y + dir * -.6}; sp = 1;
   } else if (b.state === 'shot' && b.shooter && b.shooter.t === p.t) {
-    if (p.i >= 3) s = {x:h.x + (p.i === 3 ? -5 : 5), y:h.y + dir * 6}; else s = spotPos(p.t, [25 + (p.i - 1) * 8, 34]);
+    if (p.i === 2) s = {x:h.x - 4, y:h.y + dir * 5}; else if (p.i === 1) s = {x:h.x + 6, y:h.y + dir * 8}; else s = spotPos(p.t, [25, 34]);
   }
   // keep spacing from teammates
   let px = 0, py = 0;
@@ -1329,7 +1334,7 @@ function pickChasers(px, py) {
   for (let t = 0; t < 2; t++) {
     const ps = players[t].filter(p => p.stun <= 0).sort((a, b) => Math.hypot(a.x-px, a.y-py) - Math.hypot(b.x-px, b.y-py));
     ps.slice(0, 2).forEach(p => G.chasers.add(p));
-    const big = players[t][4]; if (big.stun <= 0 && Math.hypot(big.x - px, big.y - py) < 18) G.chasers.add(big);
+    const big = players[t][TEAM_N - 1]; if (big.stun <= 0 && Math.hypot(big.x - px, big.y - py) < 18) G.chasers.add(big);
   }
 }
 function turnover(toP, text, popTxt) {
@@ -1425,7 +1430,7 @@ function update(dt) {
         p.cutT = rand(4, 8);
         const h = HOOPS[p.t];
         if (dist(b.owner, h) < 30) {
-          if (p.i >= 3 && b.owner.mode === 'set' && Math.random() < .5) { p.screen = 1.8; setTimeout(() => { if (p.screen <= 0 && b.owner && b.owner.t === p.t) p.cut = 1.4; }, 1900); }
+          if (p.i === 2 && b.owner.mode === 'set' && Math.random() < .5) { p.screen = 1.8; setTimeout(() => { if (p.screen <= 0 && b.owner && b.owner.t === p.t) p.cut = 1.4; }, 1900); }
           else if (Math.random() < .55) p.cut = 1.6;
         }
       }
@@ -1598,7 +1603,7 @@ function updateBall(dt) {
   }
   if ((b.state === 'loose' || (b.state === 'rim' && b.z < 4)) && G.phase === 'live') {
     let grab = null, gd = 1.7;
-    for (const p of all) { if (p.stun > 0) continue; const d = dist(p, b) - (p.i >= 3 ? .3 : 0); if (d < gd) { gd = d; grab = p; } }
+    for (const p of all) { if (p.stun > 0) continue; const d = dist(p, b) - (p.i === 2 ? .3 : 0); if (d < gd) { gd = d; grab = p; } }
     if (grab) {
       const off = grab.t === G.poss; give(grab);
       if (!off) { setPoss(grab.t); feed(`${nm(grab)} cleans the glass`, grab.t); }
@@ -1670,7 +1675,7 @@ function playCard(k, phase) {
     else if (c.pass === 'ahead') tg = players[0].filter(m => m !== p).sort((a, b2) => dist(a, HOOPS[0]) - dist(b2, HOOPS[0]))[0];
     else if (c.pass === 'three') tg = bestTarget(p, m => isThree(m, 0)).m || bestTarget(p).m;
     else if (c.pass === 'lob') {
-      tg = players[0].filter(m => m !== p).sort((a, b2) => (b2.d.st.spd + (b2.i >= 3 ? 10 : 0)) - (a.d.st.spd + (a.i >= 3 ? 10 : 0)))[0];
+      tg = players[0].filter(m => m !== p).sort((a, b2) => (b2.d.st.spd + (b2.i === 2 ? 10 : 0)) - (a.d.st.spd + (a.i === 2 ? 10 : 0)))[0];
       if (tg) { const h = HOOPS[0]; tg.lobRun = {x:h.x + (tg.x < 25 ? -1.6 : 1.6), y:h.y + 2.4}; }
     }
     if (tg) ok = doPass(p, tg, {steal:c.steal, hot:c.hot, burst:c.burst, lob:c.pass === 'lob'});
@@ -2309,7 +2314,7 @@ function buildStations() {
   gym.units = S.gym.units.map((u, i) => buildUnit(u, i));
 }
 function gymRoster() {
-  const ids = S.lineup.slice(0, 5).filter(id => S.owned[id]);
+  const ids = S.lineup.slice(0, TEAM_N).filter(id => S.owned[id]);
   for (const id in S.gym.assign) if (!ids.includes(+id) && S.owned[id]) ids.push(+id);
   return ids;
 }
@@ -2341,7 +2346,7 @@ function gymReassign(id) {
   const i = gym.actors.findIndex(x => x.id === id);
   if (i >= 0) {
     const a = gym.actors[i]; setActorUnit(a); a.free = spot;
-    if (!a.unit && !S.lineup.slice(0, 5).includes(id)) { a.leaving = true; }
+    if (!a.unit && !S.lineup.slice(0, TEAM_N).includes(id)) { a.leaving = true; }
     return;
   }
   const na = makeGymActor(id, true, 0); na.free = spot; gym.actors.push(na);
@@ -2607,9 +2612,9 @@ function teamHTML() {
     const db = deckBoost();
     const owned = CHARS.filter(c => S.owned[c.id]).sort((a, b) => rosterSort === 'ovr' ? ovrOf(eff(b.id, db)) - ovrOf(eff(a.id, db)) : rosterSort === 'pos' ? 'PGSGSFPFC'.indexOf(a.pos) - 'PGSGSFPFC'.indexOf(b.pos) : b.r - a.r);
     const locked = CHARS.filter(c => !S.owned[c.id]).sort((a, b) => b.r - a.r);
-    return tabs + `<div class="sect"><h3>STARTERS <em>Team OVR ${teamOvr()}</em></h3><div class="slots">${[0,1,2,3,4].map(slot).join('')}</div></div>
-      <div class="sect"><h3>SUBS <em>Play the 2nd quarter</em></h3><div class="slots">${[5,6,7,8,9].map(slot).join('')}</div></div>
-      <p class="hint ${selSlot >= 0 ? 'act' : ''}">${selSlot >= 0 ? `Pick a player below for this ${selSlot < 5 ? 'starter' : 'sub'} spot.` : 'Tap a spot, then a player, to swap them in. Tap a player in the roster to see their full body, stats, star-ups and shoes.'}</p>
+    return tabs + `<div class="sect"><h3>STARTERS <em>Team OVR ${teamOvr()}</em></h3><div class="slots">${[0,1,2].map(slot).join('')}</div></div>
+      <div class="sect"><h3>SUBS <em>Play the 2nd quarter</em></h3><div class="slots">${[3,4,5].map(slot).join('')}</div></div>
+      <p class="hint ${selSlot >= 0 ? 'act' : ''}">${selSlot >= 0 ? `Pick a player below for this ${selSlot < TEAM_N ? 'starter' : 'sub'} spot.` : 'Tap a spot, then a player, to swap them in. Tap a player in the roster to see their full body, stats, star-ups and shoes.'}</p>
       <div class="sect"><h3>ROSTER <em>${owned.length}/${CHARS.length} unlocked</em></h3>
       <div class="chips">${[['ovr','Best'],['pos','Position'],['rar','Rarity']].map(([k, l]) => `<button class="fchip ${rosterSort === k ? 'on' : ''}" data-act="rsort" data-k="${k}">${l}</button>`).join('')}</div>
       <div class="grid">${owned.map(c => chipHTML(c.id)).join('')}${locked.map(c => chipHTML(c.id)).join('')}</div></div>`;
@@ -2953,11 +2958,11 @@ function mcard(d, f, k) {
   return `<div class="mcard" style="--rc:${RAR[d.r || 0].c};--d:${k * 70}ms">${portraitSVG(d.look, f, d.num)}<span class="mo">${ovrOf(d.st)}</span><span class="mp">${d.pos}</span><b>${esc(d.last)}</b></div>`;
 }
 function showMatchup() {
-  const A = G.T[0], B = G.T[1], ov = T => Math.round(T.starters.reduce((a, d) => a + ovrOf(d.st), 0) / 5);
+  const A = G.T[0], B = G.T[1], ov = T => Math.round(T.starters.reduce((a, d) => a + ovrOf(d.st), 0) / T.starters.length);
   const el = $('matchup');
   el.innerHTML = `<div class="mside" style="--tc:${A.fr.c}"><div class="mhead">${crestSVG(A.fr)}<div><b>${esc(A.short)}</b><span>OVR ${ov(A)}</span></div></div>${A.starters.map((d, k) => mcard(d, A.fr, k)).join('')}</div>
     <div class="mvs"><b>VS</b></div>
-    <div class="mside away" style="--tc:${B.fr.c}"><div class="mhead">${crestSVG(B.fr)}<div><b>${esc(B.short)}</b><span>OVR ${ov(B)}</span></div></div>${B.starters.map((d, k) => mcard(d, B.fr, k + 5)).join('')}</div>
+    <div class="mside away" style="--tc:${B.fr.c}"><div class="mhead">${crestSVG(B.fr)}<div><b>${esc(B.short)}</b><span>OVR ${ov(B)}</span></div></div>${B.starters.map((d, k) => mcard(d, B.fr, k + TEAM_N)).join('')}</div>
     <div class="mfoot"><p class="hint">Subs play the 2nd quarter.</p><button class="mbtn pri" data-act="tipoff">Tip off</button></div>`;
   el.hidden = false; app.classList.add('pre');
 }
