@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee&family=Silkscreen:wght@400;700&family=Teko:wght@500;600&family=Barlow+Condensed:wght@500;600;700&display=swap">
 <style>
-/* Layout: locked portrait column. Home = top bar, 3D practice gym, bottom nav (Team, Story, PVP, Packs). Match = scoreboard, overhead 3D court, stamina + 4 move cards + Pass/Shoot. Single arena-night look. */
+/* Layout: locked portrait column. Home = top bar, starting three posing on blue, bottom nav (Team, Story, PVP, Banners, Shop). Match = scoreboard, overhead 3D court, stamina + 4 move cards + Pass/Shoot. Single arena-night look. */
 :root{
   --arena:#12152c; --panel:#1c2146; --panel2:#252b58; --rule:#343a6d; --ink:#f5efe4; --muted:#9ea4cf;
   --gold:#ffc94d; --gold-d:#9a6a00; --good:#5fd38a; --bad:#e2453a;
@@ -359,26 +359,7 @@ svg.ic{width:18px;height:18px;flex:none}
 
 .chip .tag.gy{background:var(--good);color:#06301a}
 .chip.maxed{opacity:.55}
-.station{background:var(--panel);border:1px solid var(--rule);border-radius:12px;padding:10px;display:flex;flex-direction:column;gap:8px}
-.shead{display:flex;align-items:center;gap:10px}
-.shead > div{flex:1;min-width:0}
-.shead b{display:block;font-size:16px}
-.shead small{color:var(--muted);font-size:12px;font-weight:600}
-.sic{width:36px;height:36px;flex:none;border-radius:9px;background:var(--panel2);display:flex;align-items:center;justify-content:center;color:var(--gold)}
-.sic svg{width:22px;height:22px}
-.slv{color:var(--gold);font-size:13px;letter-spacing:1px;white-space:nowrap}
-.slv i{font-style:normal;color:var(--rule)}
-.trainee{display:flex;align-items:center;gap:9px;border:0;background:var(--panel2);border-radius:10px;padding:5px 8px;cursor:pointer;text-align:left;width:100%}
-.trainee .av{width:40px;height:40px;border-radius:8px;flex:none}
-.trainee b{display:block;font-size:14px}
-.trainee small{color:var(--good);font-size:12px;font-weight:700}
 .shop{display:flex;flex-direction:column;gap:6px}
-.buyst{display:flex;align-items:center;gap:10px;width:100%;border:1px solid var(--rule);background:var(--panel);border-radius:10px;padding:7px 10px;cursor:pointer;text-align:left}
-.buyst > span:nth-child(2){flex:1;min-width:0}
-.buyst b{display:block;font-size:15px}
-.buyst small{color:var(--muted);font-size:12px;font-weight:600}
-.buyst .pr{display:flex;align-items:center;gap:4px;font-family:var(--num);font-size:18px;font-weight:600;color:var(--gold)}
-.buyst.no{opacity:.45;cursor:default}
 
 .pcard{padding-top:0;gap:10px}
 .vstage{position:relative;margin:0 -14px;height:min(46vh,330px);min-height:240px;background:radial-gradient(70% 60% at 50% 45%,var(--rc),transparent 72%),radial-gradient(120% 100% at 50% 0%,#2a3170,#12152c);border-radius:18px 18px 0 0;overflow:hidden;flex:none}
@@ -543,25 +524,63 @@ img.px,img.av.px,.avi.px{image-rendering:pixelated;image-rendering:crisp-edges;o
 .bi-p small{font-size:9px;color:var(--muted)}
 .bi-s .sh{width:100%}
 .bi-c .cframe .cname{font-size:8px}
-.shop-lock .shopart{display:flex;align-items:center;gap:10px}
-.shop-lock .shopart svg.ic{width:56px;height:40px}
-.shop-lock .shopart .sh{width:90px}
-.shop-lock .shopart .cframe{width:64px;transform:rotate(6deg)}
-.shop-lock .shopart svg{height:auto}
+
+/* shop */
+.shop-head{display:flex;align-items:center;gap:10px}
+.shop-head .cur{flex:none}
+.shop-head .hint{margin:0}
+.packs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.pack{position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;border:2px solid var(--rule);background:linear-gradient(180deg,#1a3a8f,#0f1f55);border-radius:4px;padding:10px 8px 8px;cursor:pointer;text-align:center;box-shadow:0 3px 0 #070b22;clip-path:polygon(4px 0,calc(100% - 4px) 0,100% 4px,100% calc(100% - 4px),calc(100% - 4px) 100%,4px 100%,0 calc(100% - 4px),0 4px)}
+.pack:active{transform:translateY(2px);box-shadow:0 1px 0 #070b22}
+.pk-tag{position:absolute;top:6px;left:50%;transform:translateX(-50%);background:var(--gold);color:#2a1d00;font-family:'Silkscreen',var(--num);font-size:10px;padding:1px 6px;white-space:nowrap;z-index:2}
+.pk-art{position:relative;width:100%;aspect-ratio:1.5;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.pk-art img.hf{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;image-rendering:pixelated}
+.pk-stack{position:relative;width:100%;height:80%}
+.pk-stack i{position:absolute;left:calc(50% - 25px + (var(--x) * 1px));bottom:calc(var(--y) * 1px);transform:rotate(calc(var(--r) * 1deg))}
+.pk-stack i svg.ic.buck{width:50px;height:34px;display:block}
+.pk-amt{display:flex;align-items:center;gap:4px;font-family:var(--num);font-size:24px;font-weight:600;line-height:1;color:var(--ink)}
+.pk-n{font-size:12px;color:var(--muted);font-weight:700}
+.pk-n em{font-style:normal;color:var(--good)}
+.pk-usd{margin-top:4px;width:100%;background:var(--good);color:#06240f;font-family:'Silkscreen',var(--num);font-size:15px;padding:5px 0 4px;box-shadow:inset 0 -3px 0 rgba(0,0,0,.25)}
+
+/* start screen */
+.start{position:fixed;inset:0;z-index:60;overflow:hidden;cursor:pointer;display:flex;flex-direction:column;align-items:center;background:#081233;transition:opacity .35s}
+.start.out{opacity:0;pointer-events:none}
+.st-bg{position:absolute;inset:0;background:
+  radial-gradient(ellipse 70% 40% at 50% 68%,rgba(79,140,240,.55),transparent 70%),
+  repeating-linear-gradient(180deg,transparent 0 6px,rgba(0,0,0,.08) 6px 8px),
+  linear-gradient(180deg,#060d2a 0%,#0b1a47 25%,#16388a 55%,#2a62cc 72%,#0c2260 100%)}
+.st-bg::after{content:"";position:absolute;inset:0;background-image:radial-gradient(#7fb2ff 1px,transparent 1.5px);background-size:37px 41px;opacity:.45;mask-image:linear-gradient(180deg,#000 0%,transparent 55%);-webkit-mask-image:linear-gradient(180deg,#000 0%,transparent 55%)}
+.st-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 40%;image-rendering:pixelated}
+.start.art-on .st-stage{display:none}
+.start.art-on .st-logo{background:linear-gradient(180deg,rgba(6,13,42,.65),transparent);padding-bottom:30px}
+.st-logo{position:relative;z-index:2;width:100%;display:flex;flex-direction:column;align-items:center;padding-top:max(12vh, calc(env(safe-area-inset-top,0px) + 40px));text-align:center}
+.st-logo h1{margin:6px 0 0;font-family:'Silkscreen',var(--display);font-weight:700;font-size:clamp(46px,15vw,78px);line-height:.92;letter-spacing:.02em;color:var(--gold);
+  text-shadow:4px 0 0 #120e18,-4px 0 0 #120e18,0 4px 0 #120e18,0 -4px 0 #120e18,4px 4px 0 #120e18,-4px 4px 0 #120e18,4px -4px 0 #120e18,-4px -4px 0 #120e18,0 8px 0 #120e18,4px 8px 0 #120e18,-4px 8px 0 #120e18}
+.st-logo small{margin-top:16px;font-family:'Silkscreen',var(--num);font-size:13px;letter-spacing:.18em;color:#cfe0ff;text-shadow:2px 2px 0 #120e18}
+.st-ball{width:46px;height:46px;image-rendering:pixelated;animation:stspin 1.2s steps(4) infinite}
+@keyframes stspin{0%{transform:translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY(0)}}
+.st-stage{position:absolute;z-index:1;left:0;right:0;bottom:15vh;height:46vh;display:flex;align-items:flex-end;justify-content:center}
+.st-stage::before{content:"";position:absolute;left:8%;right:8%;bottom:-3vh;height:9vh;border-radius:50%;background:radial-gradient(ellipse at center,#4f8cf0 0 45%,#2a62cc 46% 70%,#0d2566 71%);box-shadow:0 6px 0 #071030}
+.st-doll{position:relative;image-rendering:pixelated;width:min(46%,230px);height:auto;margin:0 -12%;margin-bottom:3vh;animation:stbob 1.6s steps(2) infinite}
+.st-doll.c{width:min(62%,320px);z-index:2;margin-bottom:-1vh;animation-delay:-.4s}
+.st-doll.r{animation-delay:-.8s}
+@keyframes stbob{50%{transform:translateY(-1.2%)}}
+.st-tap{position:absolute;z-index:3;bottom:max(8vh, calc(env(safe-area-inset-bottom,0px) + 30px));font-family:'Silkscreen',var(--num);font-size:20px;color:#fffaf2;letter-spacing:.12em;text-shadow:2px 2px 0 #120e18;animation:stblink 1.1s steps(1) infinite}
+@keyframes stblink{50%{opacity:0}}
+.st-ver{position:absolute;z-index:3;bottom:max(3vh, calc(env(safe-area-inset-bottom,0px) + 8px));font-family:'Silkscreen',var(--num);font-size:11px;color:#9cc4ff;letter-spacing:.1em}
+@media (prefers-reduced-motion: reduce){.st-ball,.st-doll,.st-tap{animation:none}}
 :root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 body{margin:0;-webkit-text-size-adjust:100%;overscroll-behavior:none;touch-action:manipulation}
 img{max-width:100%}
-[hidden]{display:none!important}
-.installbtn{display:flex;align-items:center;gap:5px;border:0;border-radius:999px;background:var(--gold);color:#2a1d00;font-weight:700;font-size:13px;padding:6px 10px;cursor:pointer;flex:none}
-</style>
+[hidden]{display:none!important}</style>
 </head>
 <body>
 
 <div class="app home" id="app">
   <div class="topbar">
     <div class="who"><span id="crest"></span><div style="min-width:0"><b id="tname">DREAM BALL</b><small id="tsub"></small></div></div>
-    <button class="installbtn" id="installBtn" hidden>Install</button>
-    <div class="wallet"><button class="gear" data-act="settings" aria-label="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button><span class="cur bucks" aria-label="Basket Bucks"><span class="gemic"></span><b id="gems">0</b></span></div>
+    <div class="wallet"><button class="installbtn" id="installBtn" hidden>Install</button><button class="gear" data-act="settings" aria-label="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button><span class="cur bucks" aria-label="Basket Bucks"><span class="gemic"></span><b id="gems">0</b></span></div>
   </div>
 
   <header class="board" aria-label="Scoreboard">
@@ -574,7 +593,7 @@ img{max-width:100%}
     <canvas id="cv" aria-label="3D view"></canvas>
     <div id="fx"></div>
     <div class="fpsbox" id="fpsbox" hidden></div>
-    <button class="gymtag" data-act="tab" data-tab="gym">TRAINING GYM · <span id="gymsub">Tap a player to put them on equipment</span></button>
+    <button class="gymtag" data-act="tab" data-tab="team">STARTING 3 · <span>Tap a player to see them</span></button>
     <button class="autobtn" id="autoBtn" data-act="auto" aria-pressed="false"><i></i>AUTOPLAY</button>
     <div class="effbar" id="effbar"></div>
     <button class="pausebtn" data-act="pause" aria-label="Pause"><svg viewBox="0 0 20 20" class="ic"><rect x="5" y="4" width="3.5" height="12" rx="1" fill="currentColor"/><rect x="11.5" y="4" width="3.5" height="12" rx="1" fill="currentColor"/></svg></button>
@@ -597,12 +616,13 @@ img{max-width:100%}
     <button data-act="tab" data-tab="story"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M7 14h3M14 14h3M7 18h3"/></svg>STORY</button>
     <button data-act="tab" data-tab="pvp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 4l11 11M20 4 9 15M6 16l-2 4M18 16l2 4M13 13l-2 2M11 13l2 2"/></svg>PVP<svg class="lock" viewBox="0 0 16 16"><rect x="3" y="7" width="10" height="8" rx="1.5" fill="currentColor"/><path d="M5 7V5a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button>
     <button data-act="tab" data-tab="packs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M6 3h12v18l-6-4-6 4z"/><path d="M12 7l1.2 2.4 2.6.4-1.9 1.8.5 2.6L12 13l-2.4 1.2.5-2.6-1.9-1.8 2.6-.4z"/></svg>BANNERS</button>
-    <button data-act="tab" data-tab="shop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 9l2-5h14l2 5M3 9h18v2a3 3 0 0 1-6 0 3 3 0 0 1-6 0 3 3 0 0 1-6 0zM5 13v8h14v-8M10 21v-5h4v5"/></svg>SHOP<svg class="lock" viewBox="0 0 16 16"><rect x="3" y="7" width="10" height="8" rx="1.5" fill="currentColor"/><path d="M5 7V5a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button>
+    <button data-act="tab" data-tab="shop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 9l2-5h14l2 5M3 9h18v2a3 3 0 0 1-6 0 3 3 0 0 1-6 0 3 3 0 0 1-6 0zM5 13v8h14v-8M10 21v-5h4v5"/></svg>SHOP</button>
   </nav>
 </div>
 
 <div class="modal" id="modal" hidden></div>
 <div class="setup" id="setup" hidden></div>
+<div class="start" id="start" hidden></div>
 <div id="rotate"><div class="phone"></div><h2>DREAM BALL</h2><p>Turn your phone upright to keep playing</p></div>
 
 <script>
@@ -783,17 +803,10 @@ const SHARDS = [0, 2, 3, 5, 8];
 const STAR_COST = [0, 50, 120, 250, 500];
 const ODDS = [.55, .3, .12, .03];
 const SEASON_GAMES = 12;
-const DECK_MAX = 50, DECK_MIN = 8, HAND = 8, STAM_MAX = 50, TRAIN_CAP = 15;
-const STATIONS = {
-  treadmill:{n:'Treadmill',     stat:['spd'],       cost:80,  icon:'run'},
-  ladder:   {n:'Agility Ladder',stat:['drb'],       cost:90,  icon:'ladder'},
-  bench:    {n:'Bench Press',   stat:['def'],       cost:120, icon:'bench'},
-  machine:  {n:'Battle Ropes',  stat:['sht'],       cost:150, icon:'ropes'},
-  squat:    {n:'Squat Rack',    stat:['def','spd'], cost:220, icon:'squat'},
-  bike:     {n:'Spin Bike',     stat:['spd','drb'], cost:180, icon:'bike'},
-  plyo:     {n:'Plyo Box',      stat:['def','sht'], cost:200, icon:'plyo'}
-};
-const GYM_SLOTS = 8, UNIT_UP = [0, 60, 140, 280, 520];
+const DECK_MAX = 50, DECK_MIN = 8, HAND = 8, STAM_MAX = 50;
+// the old training gym's prices, kept only to refund saves that bought equipment
+const STATIONS = {treadmill:{cost:80}, ladder:{cost:90}, bench:{cost:120}, machine:{cost:150}, squat:{cost:220}, bike:{cost:180}, plyo:{cost:200}};
+const UNIT_UP = [0, 60, 140, 280, 520];
 
 // ================= icons and artwork =================
 // Basket Bucks: pixel dollar bill with a basketball on it
@@ -956,6 +969,9 @@ const CARD_ART = {"hesi":"190106_13583507-99b2-4db7-897a-c3983d6f0837","cross":"
 const SHOE_ART = ["190230_efd30010-3515-4bb5-8fac-64fbfbb4b306","190232_39a35986-3117-4da8-89a4-53730e523135","190233_01014a21-9cbb-4768-9733-0d8f38f044b6","190232_965abf91-2826-4f67-b75e-025abfdc5881","190230_6c9fdb0f-9b2e-42ea-9e31-71e8e3fe22ec","190231_054cad79-20a8-4c44-99e2-739db0a97e83","190230_6db1ed17-62e6-4be2-9ef4-c59dc3fada18","190231_6ed81fd9-7675-4b8e-acdf-b55e1dfc82df","190232_a9746973-01a9-4785-8162-553663b548cb","190231_f013dd4c-9b06-4385-b0fd-c7099a1dbc5c","190231_bce97b11-4350-4712-82d1-604bdc871fc2","190252_6292861e-21b7-4185-8e40-fca471a71563"];
 const BANNER_ART = {"feat":"190253_5a451a44-ac70-4941-a722-6634276802ae","std":"190254_2028dbc3-14c1-46bb-9a95-0ff828763dd7","street":"190252_ba24add2-6af9-4dfe-bbd6-667d761d8932","shoe":"190253_ece834e9-0f47-4661-92c7-8dac9c28e397","play":"190253_af6e455e-6b9f-49ac-8652-9d9d3ee33353","hof":"190253_73230129-0c68-4784-9b19-93db69a488ad"};
 const BUCK_ART = '190252_a5deef41-9031-4a7a-9187-ddea7c71f1af';
+const START_ARTS = ['192410_05c6d980-e8a7-4edf-8000-36992d305fc5', '192412_9b8cfde9-6e78-4482-aa19-73c183ab3c7f'];
+const START_ART = START_ARTS[Math.floor(Math.random() * START_ARTS.length)];
+const PACK_ART = ['192411_0309774e-493f-4adb-a097-44c4938b2d94', '192410_38e4e1ec-30ed-4449-90cb-18defbec578a', '192410_f89fdc14-149f-4807-af44-0000b20d665a', '192409_2fa466dd-7a03-432e-a850-f2bf4e0125fd', '192411_8c0270a2-89c3-4cf6-b807-48c2ade2a22b', '192410_fe73680e-49bc-4056-b5de-40f640839a7b'];
 function cardArt(c) {
   const px = typeof pixelCardArt === 'function' ? pixelCardArt(c) : '';
   const hf = typeof PHOTO_OK !== 'undefined' && PHOTO_OK && CARD_ART[c.art] ? `<img class="hf" src="${PH_BASE + CARD_ART[c.art]}_min.webp" alt="" loading="lazy" onerror="this.remove()">` : '';
@@ -982,15 +998,19 @@ function load() {
       const cards = {};
       for (const id in STARTER_CARDS) cards[id] = {n:STARTER_CARDS[id]};
       for (const id in o.cards || {}) { if (!CARD[id]) continue; const add = LV_AT[o.cards[id].lv || 1] + (o.cards[id].cp || 0); cards[id] = {n:(cards[id] ? cards[id].n : 0) + add}; }
-      const s3 = Object.assign({}, o, {v:3, cards, deck:starterDeck(cards), gym:null});
+      const s3 = Object.assign({}, o, {v:3, cards, deck:starterDeck(cards)});
       return fixSave(s3);
     }
   } catch (e) {}
   return null;
 }
 function fixSave(s) {
-  s.gym = s.gym || {units:[{type:'treadmill', lv:1}], assign:{}, carry:{}};
-  s.gym.carry = s.gym.carry || {};
+  if (s.gym) {   // the training gym was removed: refund what was spent on it, keep stats already earned
+    let back = 0;
+    (s.gym.units || []).forEach((u, i) => { const T = STATIONS[u.type]; if (T && i > 0 && !(i === 1 && u.type === 'bench')) back += T.cost; for (let l = 1; l < (u.lv || 1); l++) back += UNIT_UP[l] || 0; });
+    if (back) { s.gems = (s.gems || 0) + back; s.gymRefund = back; }
+    delete s.gym;
+  }
   for (const id in s.owned) s.owned[id].tr = s.owned[id].tr || {sht:0, drb:0, spd:0, def:0};
   s.deck = (s.deck || []).filter(id => CARD[id]);
   if (s.lineup && s.lineup.length > TEAM_N * 2) s.lineup = [...s.lineup.slice(0, TEAM_N), ...s.lineup.slice(5, 5 + TEAM_N)];   // 5-on-5 saves -> 3-on-3
@@ -1053,31 +1073,6 @@ function storyGame(g, season) {
   const others = FR.map((f, i) => i).filter(i => i !== S.fr);
   return {g, fi:others[g % others.length], ovr:Math.round(60 + g * 2.2 + (season - 1) * 8), seed:season * 1000 + g * 17,
     win:{gems:70 + g * 4 + (g === SEASON_GAMES - 1 ? 70 : 0)}, loss:{gems:20}, final:g === SEASON_GAMES - 1};
-}
-
-// ================= gym training =================
-function unitRate(u) { return (.5 + .5 * u.lv) / 600; }      // stat points per second
-function trainTick(sec) {
-  if (!S) return [];
-  const gains = [];
-  for (const id in S.gym.assign) {
-    const ui = S.gym.assign[id], u = S.gym.units[ui], o = S.owned[id];
-    if (!u || !o) { delete S.gym.assign[id]; continue; }
-    const st = STATIONS[u.type].stat;
-    for (const k of st) {
-      const before = Math.floor(o.tr[k]);
-      o.tr[k] = Math.min(TRAIN_CAP, o.tr[k] + unitRate(u) * sec / st.length);
-      const after = Math.floor(o.tr[k]);
-      if (after > before) gains.push({id:+id, k, n:after - before});
-    }
-  }
-  return gains;
-}
-function offlineTraining() {
-  if (!S || !S.seen) return [];
-  const sec = clamp((Date.now() - S.seen) / 1000, 0, 8 * 3600);
-  if (sec < 30) return [];
-  return trainTick(sec);
 }
 
 // ================= match engine =================
@@ -1854,9 +1849,8 @@ const FS = .74, HS = .66;                    // floor foreshortening and height 
 const cam = {x:25, y:47, k:3.4};
 const camF = {x:0, z:0};
 const arenaG = {visible:false, userData:{nets:[{userData:{sw:0}}, {userData:{sw:0}}]}};
-const gymG = {visible:true};
 const crowd = {fans:[1], on:true};
-let arenaPeople = [], gymPeople = [], refP = null;
+let arenaPeople = [], refP = null;
 const OUT = '#120e18';
 const wx = x => x - 25, wz = y => y - 47;
 function darkInk(f) { return f.numc === '#1d2433' || f.numc === '#2a1240'; }
@@ -2090,7 +2084,7 @@ function poseOf(a, dt) {
   P.stars = a.stun > 0;
   a.fall = (a.fall || 0) + ((a.stun > 0 ? 1 : 0) - (a.fall || 0)) * Math.min(1, dt * (a.stun > 0 ? 9 : 3.5));
   P.lying = a.fall > .5;
-  // gym poses
+  // lying / workout poses (knocked down etc.)
   const q = CLK + (a.ph || 0) * .1;
   if (a.pose === 'squat') { const c = (Math.sin(CLK * 2.3 + a.ph * .1) + 1) / 2; P.crouch = Math.round(c * 4); P.legs = {mode:'wide'}; P.arms = [{s:1, f:0, y:-1}, {s:1, f:0, y:-1}]; P.dir = 'down'; }
   if (a.pose === 'bench') { P.lying = true; P.faceUp = true; P.armUp = 2 + Math.round((Math.sin(CLK * 2.6 + a.ph * .1) + 1) * 2); }
@@ -2130,7 +2124,7 @@ function drawBall(g, sx, sy, big) {
 const shadowAt = (g, sx, sy, rx) => { g.fillStyle = 'rgba(10,6,20,.32)'; for (let y = -1; y <= 1; y++) { const w = Math.round(rx * (y ? .7 : 1)); g.fillRect(sx - w, sy + y, 2 * w + 1, 1); } };
 
 // ---------- static scene layers ----------
-const ART = {stands:null, side:null, gym:null};
+const ART = {stands:null, side:null};
 function drawCover(g, im, x, y, w, h, alignBottom) {
   if (!im || w <= 0 || h <= 0) return;
   const iw = im.naturalWidth || im.width, ih = im.naturalHeight || im.height; if (!iw || !ih) return;
@@ -2139,8 +2133,8 @@ function drawCover(g, im, x, y, w, h, alignBottom) {
   try { g.drawImage(im, x + (w - dw) / 2, alignBottom ? y + h - dh : y + (h - dh) / 2, dw, dh); } catch (e) {}
   g.restore(); g.imageSmoothingEnabled = false;
 }
-const ART_SRC = {stands:'c8e46701-96aa-462d-b360-5f89a9dba145', side:'a81b31a8-8b71-4a2a-b338-04745ef0c1a5', gym:'5b6edc41-46ae-4a8f-8956-8092fcff3661'};
-let arenaCv = null, arenaCv2 = null, arenaKey = '', gymCv = null, gymKey = '';
+const ART_SRC = {stands:'c8e46701-96aa-462d-b360-5f89a9dba145', side:'a81b31a8-8b71-4a2a-b338-04745ef0c1a5'};
+let arenaCv = null, arenaCv2 = null, arenaKey = '';
 const AP = 6, ST = 20;  // apron and stand depth (ft)
 function worldCanvas(x0, y0, x1, y1, hTop) {
   const c = document.createElement('canvas');
@@ -2340,280 +2334,167 @@ function renderArena(dt) {
   if (owner && owner.t === 0 && G.phase === 'live' && owner._scr) { const tp = owner._scr.top - 4 + Math.round(Math.sin(CLK * 6)); const s = PX(owner.x, owner.y, 0); g.fillStyle = OUT; g.fillRect(s[0] - 3, tp - 1, 7, 4); g.fillStyle = '#ffc94d'; g.fillRect(s[0] - 2, tp, 5, 1); g.fillRect(s[0] - 1, tp + 1, 3, 1); g.fillRect(s[0], tp + 2, 1, 1); }
 }
 
-// ================= training gym (home screen) =================
-const gym = {actors:[], units:[], pops:[]};
-const SLOT_POS = [[-18, -24], [-6, -24], [6, -24], [18, -24], [-18, -11], [-6, -11], [6, -11], [18, -11]];
-const FREE_SPOTS = [{x:-17, z:2, act:'curl'}, {x:-8.5, z:2, act:'rope'}, {x:0, z:2, act:'pushup'}, {x:8.5, z:2, act:'stretch'}, {x:17, z:2, act:'curl'}, {x:-12, z:6.5, act:'pushup'}, {x:12, z:6.5, act:'rope'}];
-const FREE_N = {curl:'Dumbbell curls', rope:'Jump rope', pushup:'Push-ups', stretch:'Stretching'};
-const DOOR = {x:26 + 25, y:12 + 47};
-const toCourt = (x, z) => ({x:x + 25, y:z + 47});
-const GZ0 = -34, GZ1 = 18; let GWALL = 16;
-// box in court coords: x,y centre, w (x), d (y), h0..h1 heights; top + front faces
-function box(g, x, y, w, d, h0, h1, top, front, side) {
-  const a = PX(x - w / 2, y - d / 2, h1), b = PX(x + w / 2, y + d / 2, h1), f0 = PX(x + w / 2, y + d / 2, h0);
-  g.fillStyle = OUT; g.fillRect(a[0] - 1, a[1] - 1, b[0] - a[0] + 2, f0[1] - a[1] + 2);
-  g.fillStyle = top; g.fillRect(a[0], a[1], Math.max(1, b[0] - a[0]), Math.max(1, b[1] - a[1]));
-  g.fillStyle = front; g.fillRect(a[0], b[1], Math.max(1, b[0] - a[0]), Math.max(1, f0[1] - b[1]));
-  if (side) { g.fillStyle = side; g.fillRect(b[0] - 1, b[1], 1, Math.max(1, f0[1] - b[1])); }
-}
-function paintGym() {
-  const f = S ? FR[S.fr] : FR[0], k = cam.k;
-  const X0 = -30 + 25, X1 = 30 + 25, Y0 = GZ0 + 47, Y1 = GZ1 + 47 + 6;
-  const c = worldCanvas(X0, Y0, X1, Y1, GWALL), g = c.getContext('2d');
-  const wallH = Math.round(GWALL * k * HS);
-  const X = x => Math.round((x + 25 - X0) * k), Y = z => Math.round((z + 47 - Y0) * k * FS) + wallH;
-  // floor: dark rubber tiles with speckle
-  g.fillStyle = '#23262e'; g.fillRect(0, wallH, c.width, c.height - wallH);
-  let seed = 3; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
-  for (let i = 0; i < c.width * 3; i++) { g.fillStyle = rnd() < .5 ? '#2c3039' : '#1b1d24'; g.fillRect((rnd() * c.width) | 0, wallH + ((rnd() * (c.height - wallH)) | 0), 1, 1); }
-  g.fillStyle = '#181a20'; for (let x = 0; x < c.width; x += 16) g.fillRect(x, wallH, 1, c.height - wallH); for (let y = wallH; y < c.height; y += 12) g.fillRect(0, y, c.width, 1);
-  // lifting platforms
-  for (const z of [-24, -11]) for (const x of [-18, -6, 6, 18]) {
-    const x0 = X(x - 5.2), y0 = Y(z - 4.6), w = X(x + 5.2) - x0, h = Y(z + 4.6) - y0;
-    g.fillStyle = OUT; g.fillRect(x0 - 1, y0 - 1, w + 2, h + 2);
-    g.fillStyle = '#7a5532'; g.fillRect(x0, y0, w, h);
-    g.fillStyle = '#8b6440'; for (let yy = y0 + 1; yy < y0 + h; yy += 4) g.fillRect(x0, yy, w, 2);
-    g.fillStyle = '#3a2a1c'; g.fillRect(x0 + Math.round(w * .3), y0, 1, h); g.fillRect(x0 + Math.round(w * .7), y0, 1, h);
-  }
-  // turf lane
-  const t0 = X(-24), t1 = X(24), ty0 = Y(-2.5), ty1 = Y(8.5);
-  g.fillStyle = '#2f7d3f'; g.fillRect(t0, ty0, t1 - t0, ty1 - ty0);
-  g.fillStyle = '#378c48'; for (let x = t0; x < t1; x += 2) g.fillRect(x, ty0, 1, ty1 - ty0);
-  g.fillStyle = '#e8f2e8'; for (let i = 0; i <= 8; i++) g.fillRect(X(-24 + i * 6), ty0, 1, ty1 - ty0);
-  // crest on the floor by the door
-  const cx = X(0), cy = Y(14);
-  pell(g, cx, cy, 9, 6, f.trim); pell(g, cx, cy, 8, 5, f.c);
-  ptext(g, f.n[0], cx, cy, 8, darkInk(f) ? f.numc : '#fffaf2', 'center');
-  // back wall
-  g.fillStyle = '#2b2f3a'; g.fillRect(0, 0, c.width, wallH + 1);
-  for (let y = 2; y < wallH; y += 4) { g.fillStyle = '#323745'; g.fillRect(0, y, c.width, 1); for (let x = (y / 4 % 2) * 4; x < c.width; x += 8) { g.fillStyle = '#262a33'; g.fillRect(x, y - 3, 1, 3); } }
-  if (ART.gym) drawCover(g, ART.gym, 0, 0, c.width, wallH, true);
-  else {
-    // mirrors
-    const my = Math.round(wallH * .42), mh = wallH - my - 3, n = 6, mw = Math.floor((c.width - 8) / n) - 3;
-    for (let i = 0; i < n; i++) {
-      const x = 5 + i * (mw + 3);
-      g.fillStyle = OUT; g.fillRect(x - 1, my - 1, mw + 2, mh + 2);
-      g.fillStyle = '#8ea2b8'; g.fillRect(x, my, mw, mh); g.fillStyle = '#a9bbcd'; g.fillRect(x, my, mw, Math.round(mh * .45));
-      g.fillStyle = 'rgba(255,255,255,.35)'; for (let d = 0; d < 4; d++) g.fillRect(x + 3 + d, my + 2 + d * 2, 1, 2);
-    }
-  }
-  // team banner across the top of the wall
-  const bh = 27, ink2 = darkInk(f) ? f.numc : '#fffaf2';
-  g.fillStyle = OUT; g.fillRect(0, 2, c.width, bh + 2); g.fillStyle = f.c; g.fillRect(0, 3, c.width, bh); g.fillStyle = f.trim; g.fillRect(0, 3 + bh - 2, c.width, 2);
-  const nm = (S ? S.name : 'DREAM BALL').toUpperCase();
-  ptext(g, 'HOME OF THE', c.width / 2, 9, 8, ink2, 'center');
-  ptext(g, nm.length > 18 ? nm.slice(0, 18) : nm, c.width / 2, 20, nm.length > 11 ? 8 : 16, ink2, 'center');
-  g.fillStyle = '#15171f'; g.fillRect(0, wallH - 2, c.width, 3);
-  return {c, X0, Y0, wallH};
-}
-function repaintGym() {
-  if (!renderer) return;
-  gymKey = '';
-}
-function ensureGymCanvas() {
-  const key = (S ? S.name + S.fr : '') + cam.k.toFixed(3) + GWALL.toFixed(1) + (ART.gym ? 'a' : '');
-  if (gymKey !== key || !gymCv) { gymCv = paintGym(); gymKey = key; }
-}
-function buildUnit(u, i) {
-  const [x, z] = SLOT_POS[i];
-  const info = {type:u.type, lv:u.lv, x, z, anchor:toCourt(x, z), ends:null};
-  if (u.type === 'treadmill') { info.anchor = toCourt(x, z - .6); info.lift = .58; }
-  else if (u.type === 'ladder') info.ends = [toCourt(x, z - 4), toCourt(x, z + 4)];
-  else if (u.type === 'bench') { info.anchor = toCourt(x + .9, z + .05); info.bar = true; }
-  else if (u.type === 'squat') { info.anchor = toCourt(x, z + .4); info.bar = true; }
-  else if (u.type === 'bike') { info.anchor = toCourt(x, z - .9); info.lift = 1.15; }
-  else if (u.type === 'plyo') { info.anchor = toCourt(x + 3.2, z - 1.8); info.box = {h:3.2, dz:3}; }
-  else info.anchor = toCourt(x, z - 2.6);
-  return info;
-}
-function drawUnit(g, U, phase) {
-  const c = toCourt(U.x, U.z), x = c.x, y = c.y, team = FR[S.fr].c, steel = '#3a3f5c', steelL = '#59607f', black = '#191b22';
-  if (phase === 'back') {
-    if (U.type === 'treadmill') { for (const sx of [-1.2, 1.2]) box(g, x + sx, y - 2.9, .3, .3, 0, 4, steelL, steel); box(g, x, y - 2.9, 2.8, .5, 3.6, 4.4, steelL, steel); const s = PX(x, y - 2.65, 4.4); R(g, s[0] - 3, s[1], 6, 1, '#4fd3e8'); box(g, x, y, 3, 6.4, 0, .55, '#1b1d24', black); for (let k = 0; k < 6; k++) { const p = PX(x, y - 3 + k * 1.1 + ((CLK * 6) % 1.1), .55); R(g, p[0] - 3, p[1], 6, 1, '#2a2d36'); } }
-    if (U.type === 'ladder') { const a = PX(x - 1, y - 4.5, 0), b = PX(x + 1, y + 4.5, 0); R(g, a[0], a[1], 1, b[1] - a[1], team); R(g, b[0], a[1], 1, b[1] - a[1], team); for (let k = 0; k <= 7; k++) { const r = PX(x, y - 4.5 + k * 1.28, 0); R(g, a[0], r[1], b[0] - a[0] + 1, 1, team); } for (const sz of [-5.4, 5.4]) { const p = PX(x, y + sz, 0); R(g, p[0] - 1, p[1] - 3, 3, 3, '#ff7a2a'); R(g, p[0], p[1] - 4, 1, 1, '#ff7a2a'); } }
-    if (U.type === 'bench') { for (const sy of [-.7, .7]) box(g, x - 2.4, y + sy, .3, .3, 0, 3.8, steelL, steel); box(g, x + .4, y, 4.8, 1.4, 0, 1.4, team, shadeHex(team, .7)); box(g, x + .4, y, 4.4, .3, 0, .9, steel, steel); }
-    if (U.type === 'squat') { for (const sx of [-2.3, 2.3]) box(g, x + sx, y - 1.6, .3, .3, 0, 7.6, steelL, steel); box(g, x, y - 1.6, 4.9, .3, 7.4, 7.7, steelL, steel); }
-    if (U.type === 'bike') { box(g, x, y, .6, 3.2, 0, .3, black, black); const w = PX(x, y + 1.3, 1.4); pell(g, w[0], w[1], 3, 3, OUT); pell(g, w[0], w[1], 2, 2, '#9aa3b5'); box(g, x, y - .55, 1, 1.2, 3.3, 3.7, black, black); box(g, x, y + 1.7, 1.8, .3, 3.9, 4.2, black, black); const s = PX(x, y + 1.6, 4.5); R(g, s[0] - 1, s[1], 3, 1, '#5fd38a'); }
-    if (U.type === 'plyo') for (let k = 0; k < 3; k++) box(g, x + (k - 1) * 3.2, y + 1.2, 2.6 - k * .45, 2.4, 0, 1.4 + k * .9, k === 2 ? team : '#5a4330', k === 2 ? shadeHex(team, .7) : '#3a2a1c');
-    if (U.type === 'machine') { box(g, x, y + 4.5, .9, .9, 0, 2.6, steelL, steel); }
-  } else {
-    if (U.type === 'squat') for (const sx of [-2.3, 2.3]) box(g, x + sx, y + 1.6, .3, .3, 0, 7.6, steelL, steel);
-    if (U.type === 'bench') for (const sx of [-1.7]) void sx;
-  }
-  if (phase === 'back') for (let k = 0; k < U.lv; k++) { const p = PX(x - 1.6 + k * .75, y + 4.1, 0); R(g, p[0] - 1, p[1] - 1, 3, 2, OUT); R(g, p[0], p[1] - 1, 1, 1, '#ffc94d'); }
-}
-function drawBarbell(g, x0, y0, x1, y1) {
-  pline(g, x0 - 3, y0, x1 + 3, y1, '#c9ced8', 1);
-  for (const [px, py] of [[x0 - 3, y0], [x1 + 3, y1]]) { R(g, px - 1, py - 3, 3, 7, OUT); R(g, px, py - 2, 1, 5, '#191b22'); }
-}
-function buildStations() {
+// ================= home: your starting three posing on blue =================
+const home = {actors:[], hits:[], bg:null, bgKey:'', t:0};
+// arms: [left, right] {s: out from shoulder, f: forward, y: down from shoulder}
+const HOME_POSE = {
+  cross:{arms:[{s:-4, f:0, y:3}, {s:-4, f:0, y:2}], legs:'wide'},
+  spin:{arms:[{s:1, f:0, y:4}, {s:0, f:0, y:-9}], ball:'finger'},
+  hip:{arms:[{s:1, f:0, y:4}, {s:3, f:0, y:5}], ball:'hip', legs:'wide'},
+  point:{arms:[{s:1, f:0, y:-8}, {s:3, f:0, y:5}], ball:'hip', mouth:true},
+  flex:{arms:[{s:4, f:0, y:-3}, {s:4, f:0, y:-3}], legs:'wide', mouth:true},
+  dribble:{arms:[{s:2, f:0, y:4}, {s:2, f:3, y:5}], ball:'drib', crouch:1},
+  raise:{arms:[{s:2, f:0, y:-8}, {s:2, f:0, y:-8}], ball:'over', mouth:true}
+};
+const HOME_SEQ = [['spin', 'hip', 'dribble', 'raise'], ['cross', 'point', 'flex'], ['hip', 'flex', 'cross', 'point']];
+function homeSetup() {
   if (!S) return;
-  gym.units = S.gym.units.map((u, i) => buildUnit(u, i));
-}
-function gymRoster() {
-  const ids = S.lineup.slice(0, TEAM_N).filter(id => S.owned[id]);
-  for (const id in S.gym.assign) if (!ids.includes(+id) && S.owned[id]) ids.push(+id);
-  return ids;
-}
-function makeGymActor(id, spawn, slot) {
-  const d = userDesc(id), fs = FREE_SPOTS[slot % FREE_SPOTS.length];
-  const p0 = spawn ? DOOR : toCourt(fs.x + rand(-1, 1), fs.z + rand(-1, 1));
-  const a = {id, d, x:p0.x, y:p0.y, vx:0, vy:0, yaw:Math.PI, ph:Math.random() * 6, fall:0, stun:0, shootT:0, celebT:0, gather:false, gv:0,
-    handler:false, ballSide:1, ballZ:0, state:'go', speed:8 + (d.st.spd - 60) * .05, free:fs, t:Math.random() * 3};
-  setActorUnit(a);
-  return a;
-}
-function setActorUnit(a) {
-  const ui = S.gym.assign[a.id];
-  a.unit = ui != null && gym.units[ui] ? gym.units[ui] : null;
-  a.pose = null; a.runInPlace = null; a.fixYaw = null; a.lift = 0; a.move = null; a.state = 'go';
-}
-function freeSpotFor(i) { return FREE_SPOTS[i % FREE_SPOTS.length]; }
-function gymSetup() {
-  if (!S) return;
-  buildStations();
-  let k = 0;
-  gym.actors = gymRoster().map(id => { const a = makeGymActor(id, false, k); if (S.gym.assign[id] == null) a.free = freeSpotFor(k++); return a; });
-  for (const a of gym.actors) if (a.unit) { const g2 = a.unit.ends ? a.unit.ends[0] : a.unit.anchor; a.x = g2.x; a.y = g2.y + 2; }
-  gymPeople = gym.actors.map(a => buildPerson(a.d, FR[S.fr]));
-}
-function gymReassign(id) {
-  const used = new Set(gym.actors.filter(a => a.id !== id && !a.unit).map(a => a.free));
-  const spot = FREE_SPOTS.find(f => !used.has(f)) || FREE_SPOTS[0];
-  const i = gym.actors.findIndex(x => x.id === id);
-  if (i >= 0) {
-    const a = gym.actors[i]; setActorUnit(a); a.free = spot;
-    if (!a.unit && !S.lineup.slice(0, TEAM_N).includes(id)) { a.leaving = true; }
-    return;
-  }
-  const na = makeGymActor(id, true, 0); na.free = spot; gym.actors.push(na);
-  gymPeople.push(buildPerson(na.d, FR[S.fr]));
-}
-function gymPop(x, y, text, color) {
-  const el = document.createElement('div'); el.className = 'pop'; el.textContent = text; el.style.color = color; el.style.fontSize = '15px';
-  fx.appendChild(el); gym.pops.push({x, y, el, t:0, life:1.6});
-}
-function gymUpdate(dt) {
-  for (const a of gym.actors) {
-    a.t += dt;
-    const U = a.unit;
-    let goal = a.leaving ? DOOR : U ? (U.ends ? U.ends[a.leg || 0] : U.anchor) : toCourt(a.free.x, a.free.z);
-    let tx = null, ty = null, sp = a.speed;
-    if (a.state === 'go') {
-      tx = goal.x; ty = goal.y;
-      a.pose = null; a.runInPlace = null; a.fixYaw = null; a.lift = 0;
-      if (Math.hypot(goal.x - a.x, goal.y - a.y) < .5) {
-        if (a.leaving) { a.gone = true; continue; }
-        a.state = 'work'; a.vx = a.vy = 0; a.t = 0;
-      }
-    } else if (U && U.ends) {
-      const e = U.ends[a.leg || 0]; tx = e.x; ty = e.y; sp = 9; a.pose = 'ladder';
-      if (Math.hypot(e.x - a.x, e.y - a.y) < .5) a.leg = 1 - (a.leg || 0);
-    } else {
-      a.x = goal.x; a.y = goal.y; a.vx = a.vy = 0;
-      const kind = U ? U.type : a.free.act;
-      a.fixYaw = 0;
-      if (kind === 'treadmill') { a.runInPlace = 10 + Math.sin(a.t * .4) * 2; a.lift = U.lift; a.pose = null; }
-      else if (kind === 'bench') { a.pose = 'bench'; a.lift = 1.4; }
-      else if (kind === 'squat') { a.pose = 'squat'; }
-      else if (kind === 'bike') { a.pose = 'bike'; a.lift = U.lift; }
-      else if (kind === 'machine') { a.pose = 'ropes'; }
-      else if (kind === 'plyo') {
-        a.pose = 'plyo';
-        const c = a.t % 2.6, B = U.box;
-        let off = 0;
-        if (c < .45) { a.plyoPh = 'crouch'; a.lift = 0; }
-        else if (c < .95) { const u = (c - .45) / .5; a.plyoPh = 'air'; off = u; a.lift = B.h * u + Math.sin(Math.PI * u) * 1.6; }
-        else if (c < 1.6) { a.plyoPh = 'top'; off = 1; a.lift = B.h; }
-        else if (c < 2.2) { const u = (c - 1.6) / .6; a.plyoPh = 'down'; off = 1 - u; a.lift = B.h * (1 - u) + Math.sin(Math.PI * u) * .4; }
-        else { a.plyoPh = 'land'; a.lift = 0; }
-        a.y = goal.y + B.dz * off;
-      }
-      else { a.pose = kind; a.lift = 0; }
-    }
-    let dvx = 0, dvy = 0;
-    if (tx != null) { const dx = tx - a.x, dy = ty - a.y, d = Math.hypot(dx, dy), s2 = Math.min(sp, d * 2.5); if (d > .05) { dvx = dx / d * s2; dvy = dy / d * s2; } }
-    if (a.state === 'go' || (U && U.ends)) {
-      const k = Math.min(1, dt * 6); a.vx += (dvx - a.vx) * k; a.vy += (dvy - a.vy) * k;
-      a.x += a.vx * dt; a.y += a.vy * dt;
-    }
-  }
-  for (let i = gym.actors.length - 1; i >= 0; i--) if (gym.actors[i].gone) { gym.actors.splice(i, 1); gymPeople.splice(i, 1); }
-  const A = gym.actors;
-  for (let i = 0; i < A.length; i++) for (let j = i + 1; j < A.length; j++) {
-    const a = A[i], c = A[j]; if (a.state === 'work' || c.state === 'work') continue;
-    const dx = c.x - a.x, dy = c.y - a.y, d = Math.hypot(dx, dy), min = 2.4;
-    if (d < min && d > .001) { const push = (min - d) / 2, nx = dx / d, ny = dy / d; a.x -= nx * push; a.y -= ny * push; c.x += nx * push; c.y += ny * push; }
-  }
-  for (const p of gym.pops) p.t += dt;
-  gym.pops = gym.pops.filter(p => { if (p.t < p.life) return true; p.el.remove(); return false; });
-}
-function gymCamera() {
-  cam.k = Math.max(2, Math.min(IW / 46, IH / (16 * HS + (GZ1 - GZ0) * FS + 2)));
-  GWALL = Math.max(16, Math.min(40, (IH / cam.k - (GZ1 - GZ0) * FS - 1) / HS));
-  // back wall at the top; centre everything when the screen is tall enough
-  const wallPx = GWALL * cam.k * HS, floorPx = (GZ1 - GZ0) * cam.k * FS, top = Math.max(2, (IH - wallPx - floorPx) / 2);
-  cam.x = 25 + Math.sin(CLK * .09) * 1.2;
-  cam.y = GZ0 + 47 - (top - IH / 2 + wallPx) / (cam.k * FS);
-}
-function pickGymActor(cx, cy) {
-  if (!renderer || !gym.actors.length) return null;
-  const r = cv.getBoundingClientRect(), px = (cx - r.left) / r.width * IW, py = (cy - r.top) / r.height * IH;
-  let best = null, bd = 18;
-  gym.actors.forEach(a => { const s = PX(a.x, a.y, a.lift || 0), d = Math.hypot(s[0] - px, s[1] - 12 - py); if (d < bd) { bd = d; best = a; } });
-  return best;
-}
-function renderGym(dt) {
-  if (!ctx || !S) return;
-  gymCamera(); ensureGymCanvas();
-  const g = ctx;
-  g.fillStyle = '#15171c'; g.fillRect(0, 0, IW, IH);
-  const o = PX(-30 + 25, GZ0 + 47, GWALL);
-  g.drawImage(gymCv.c, o[0], o[1]);
-  const items = [];
-  // static wall-side props
-  items.push({y:GZ0 + 47 + 1.5, f:() => {
-    for (let k = 0; k < 10; k++) box(g, 25 - 19.8 + k * 1.75, GZ0 + 47 + 1.6, .9, .6, 2.4, 3.1, '#2c3048', '#191b22');
-    box(g, 25 - 12, GZ0 + 47 + 1.8, 18, 1.2, 0, 2.2, '#3a3f5c', '#2c3048');
-    for (let k = 0; k < 6; k++) { const p = PX(25 + 2 + k * 1.5, GZ0 + 47 + 1.4, 0); pell(g, p[0], p[1] - 2, 2, 2, OUT); pell(g, p[0], p[1] - 2, 1, 1, '#2c2f39'); }
-    const mb = ['#2a6bd1', '#e2453a', '#2fa85a', '#ffc94d'];
-    for (let k = 0; k < 4; k++) { const p = PX(25 + 17.5 + k * 1.4, GZ0 + 47 + 1.6, 0); pell(g, p[0], p[1] - 2, 2, 2, OUT); pell(g, p[0], p[1] - 2, 1, 1, mb[k]); }
-    box(g, 25 + 24.5, GZ0 + 47 + 2, 1.8, 1.8, 0, 2.2, '#ff9a4a', '#ff7a2a');
-  }});
-  items.push({y:47 + 15.5, f:() => { box(g, 25 - 14, 47 + 15.5, 10, 1.6, 0, .9, '#7a5a3a', '#6b4a2b'); ['#ffffff', '#4fd3e8', '#ffc94d'].forEach((c, k) => box(g, 25 - 17 + k * 3, 47 + 15.5, 1.2, 1, .9, 1.1, c, shadeHex(c, .8))); ['#2a6bd1', '#101418', '#e2453a'].forEach((c, k) => box(g, 25 + 10 + k * 2, 47 + 15.5, 3, .9, 0, .9, c, shadeHex(c, .75))); }});
-  for (const U of gym.units) {
-    const c = toCourt(U.x, U.z);
-    items.push({y:c.y - 2.5, f:() => drawUnit(g, U, 'back')});
-    if (U.type === 'squat') items.push({y:c.y + 1.7, f:() => drawUnit(g, U, 'front')});
-    if (U.bar && !gym.actors.some(a => a.unit === U && a.state === 'work')) {
-      const rest = U.type === 'bench' ? [PX(c.x - 3.4, c.y, 3.9), PX(c.x - 1.4, c.y, 3.9)] : [PX(c.x - 2.3, c.y - 1.35, 5.4), PX(c.x + 2.3, c.y - 1.35, 5.4)];
-      items.push({y:c.y - 1.3, f:() => drawBarbell(g, rest[0][0], rest[0][1], rest[1][0], rest[1][1])});
-    }
-  }
-  gym.actors.forEach((a, i) => {
-    const P = gymPeople[i]; if (!P) return;
-    a.lookX = null;
-    const pose = poseOf(a, dt);
-    items.push({y:a.y + .05, f:() => {
-      const s = PX(a.x, a.y, pose.lift); const sh = PX(a.x, a.y, 0);
-      if (!pose.lying) shadowAt(g, sh[0], sh[1], 5);
-      const r2 = drawPerson(g, P, a, pose, s[0], s[1]); a._scr = r2;
-      const U = a.unit, work = a.state === 'work';
-      if (work && pose.lying && U && U.bar) { const hh = r2.hands; drawBarbell(g, hh[0][0] - 2, hh[0][1] - 1, hh[1][0] + 2, hh[1][1] - 1); }
-      if (work && a.pose === 'squat' && r2.hands) { const hh = r2.hands; drawBarbell(g, hh[0][0] - 2, hh[0][1], hh[1][0] + 2, hh[1][1]); }
-      if (work && a.pose === 'curl' && r2.hands) for (const hh of r2.hands) { R(g, hh[0] - 2, hh[1], 4, 2, OUT); R(g, hh[0] - 1, hh[1], 1, 1, '#191b22'); R(g, hh[0] + 1, hh[1], 1, 1, '#191b22'); }
-      if (work && a.pose === 'rope') { const ang = pose.ropeA || 0, top = s[1] - 30, bot = s[1]; const yy = Math.round((Math.cos(ang) + 1) / 2 * (bot - top) + top); g.fillStyle = '#ff4d6a'; const hh = r2.hands; pline(g, hh[0][0], hh[0][1], s[0], yy, '#ff4d6a'); pline(g, hh[1][0], hh[1][1], s[0], yy, '#ff4d6a'); }
-      if (work && a.pose === 'ropes' && U) { const an = PX(toCourt(U.x, U.z).x, toCourt(U.x, U.z).y + 4.5, 1.2); for (let r = 0; r < 2; r++) { const hh = r2.hands[r]; let px = hh[0], py = hh[1]; const n = 10; for (let k2 = 1; k2 <= n; k2++) { const u = k2 / n, nx = hh[0] + (an[0] + (r ? 2 : -2) - hh[0]) * u, ny = hh[1] + (an[1] - hh[1]) * u + Math.sin(u * Math.PI * 3 - CLK * 12 + r * 3) * 3 * (1 - u); pline(g, px, py, nx, ny, '#111111'); px = nx; py = ny; } } }
-    }});
+  const f = FR[S.fr];
+  home.actors = S.lineup.slice(0, TEAM_N).map((id, k) => {
+    const d = userDesc(id), buf = document.createElement('canvas'); buf.width = 44; buf.height = 52;
+    return {id, d, P:buildPerson(d, f), buf, seq:HOME_SEQ[k], pi:0, pt:k * 1.3, hop:0};
   });
-  items.sort((p, q) => p.y - q.y);
-  for (const it of items) it.f();
-  for (const pp of gym.pops) {
-    const k = pp.t / pp.life, s = PX(pp.x, pp.y, 9 + k * 4), c = toCss(s[0], s[1]);
-    pp.el.style.transform = `translate(${c[0].toFixed(1)}px, ${c[1].toFixed(1)}px) translate(-50%, -50%)`;
-    pp.el.style.opacity = (1 - k * k).toFixed(3);
+  home.bgKey = ''; home.sig = homeSig();
+}
+function homeSig() { return S ? S.fr + '|' + S.lineup.slice(0, TEAM_N).map(id => id + ':' + ovrOf(eff(id)) + ':' + (S.owned[id] ? S.owned[id].shoe : '')).join(',') : ''; }
+function homeSync() {
+  if (!S) return;
+  const sig = homeSig(); if (sig === home.sig) return;
+  const old = home.actors; homeSetup(); home.sig = sig;
+  home.actors.forEach((a, k) => { if (old[k]) { a.pi = old[k].pi; a.pt = old[k].pt; if (old[k].id !== a.id) a.hop = .32; } });
+}
+// one still frame of a posed player as a PNG (start screen)
+function posedPNG(d, f, poseName) {
+  try {
+    const buf = document.createElement('canvas'); buf.width = 44; buf.height = 52;
+    const a = {id:d.id, d, P:buildPerson(d, f), buf, seq:[poseName], pi:0, pt:0, hop:0};
+    drawHomeActor(a, 1);
+    const url = buf.toDataURL('image/png');
+    return typeof url === 'string' && url.length > 30 ? url : null;
+  } catch (e) { return null; }
+}
+function homeUpdate(dt) {
+  home.t += dt;
+  for (const a of home.actors) {
+    a.pt += dt; a.hop = Math.max(0, a.hop - dt);
+    if (a.pt > 4.2) { a.pt = 0; a.pi = (a.pi + 1) % a.seq.length; a.hop = .32; }
   }
+}
+function paintHomeBg() {
+  const c = document.createElement('canvas'); c.width = IW; c.height = IH;
+  const g = c.getContext('2d');
+  const bands = ['#081233', '#0b1a47', '#0e235c', '#122d73', '#16388a', '#1a43a1', '#1e4fb8', '#2a62cc', '#1e4fb8', '#173f96', '#11307a', '#0c2260'];
+  const bh = IH / bands.length;
+  for (let i = 0; i < bands.length; i++) {
+    const y0 = Math.round(i * bh), y1 = Math.round((i + 1) * bh);
+    g.fillStyle = bands[i]; g.fillRect(0, y0, IW, y1 - y0);
+    if (i + 1 < bands.length) { g.fillStyle = bands[i + 1]; for (let y = y1 - 3; y < y1; y++) for (let x = (y % 2); x < IW; x += 2 + (y1 - y)) g.fillRect(x, y, 1, 1); }
+  }
+  // soft star field
+  let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  for (let i = 0; i < IW * IH / 260; i++) { g.fillStyle = rnd() < .3 ? '#7fb2ff' : '#3a6fd8'; g.fillRect((rnd() * IW) | 0, (rnd() * IH * .55) | 0, 1, 1); }
+  // stage: stepped pixel ellipse
+  const cx = IW >> 1, cy = Math.round(IH * .76);
+  pell(g, cx, cy + 3, Math.round(IW * .46) + 1, Math.round(IW * .1) + 1, '#071030');
+  pell(g, cx, cy + 2, Math.round(IW * .46), Math.round(IW * .1), '#0d2566');
+  pell(g, cx, cy, Math.round(IW * .46), Math.round(IW * .1), '#2a62cc');
+  pell(g, cx, cy, Math.round(IW * .44), Math.round(IW * .09), '#3b78e0');
+  pell(g, cx, cy, Math.round(IW * .3), Math.round(IW * .06), '#4f8cf0');
+  // centre-court circle on the stage
+  pring(g, cx, cy, Math.round(IW * .2), Math.round(IW * .04), '#9cc4ff');
+  return c;
+}
+function homeLayout() {
+  const u = Math.max(1, Math.floor(Math.min(IW / 60, IH / 100)));
+  const cy = Math.round(IH * .76);
+  return [
+    {x:IW >> 1, y:cy + Math.round(u * 2), sc:u + 1},
+    {x:Math.round(IW * .2), y:cy - Math.round(u * 5), sc:u},
+    {x:Math.round(IW * .8), y:cy - Math.round(u * 5), sc:u}
+  ];
+}
+function spinBall(g, x, y, t) {
+  pell(g, x, y, 3, 3, OUT); pell(g, x, y, 2, 2, '#e2702c');
+  const k = Math.floor(t * 10) % 4;
+  g.fillStyle = '#3a1606'; g.fillRect(x - 2, y, 5, 1); g.fillRect(x - 1 + (k > 1 ? 4 - k : k), y - 2, 1, 5);
+  g.fillStyle = '#ffb27a'; g.fillRect(x - 1, y - 1, 1, 1);
+}
+function drawHomeActor(a, sc) {
+  const B = a.buf, g = B.getContext('2d'), fx = 22, fy = 49;
+  g.clearRect(0, 0, B.width, B.height);
+  const name = a.seq[a.pi], H = HOME_POSE[name], t = home.t + a.pt;
+  const breathe = Math.floor((t * 1.1) % 2);
+  const lift = a.hop > 0 ? Math.round(Math.sin(a.hop / .32 * Math.PI) * 3) : 0;
+  const pose = {dir:'down', flip:1, crouch:(H.crouch || 0), bob:breathe, arms:H.arms.map(x => Object.assign({}, x)), legs:{mode:H.legs || 'stand'}, mouth:!!H.mouth, C:a.P.C};
+  if (H.ball === 'drib') { const z = Math.abs(Math.sin(t * 6)); pose.arms[1].y = 4 + Math.round((1 - z) * 2); }
+  if (name === 'flex') { const k = Math.sin(t * 3) > 0 ? 1 : 0; pose.arms[0].y -= k; pose.arms[1].y -= k; }
+  shadowAt(g, fx, fy, 6);
+  const r2 = drawDoll(g, fx, fy - lift, a.P.look, a.P.f, a.P.num, pose); a.P.C = pose.C;
+  if (H.ball && r2 && r2.hands) {
+    const hR = r2.hands[1], hL = r2.hands[0];
+    if (H.ball === 'finger') { R(g, Math.round(hR[0]), Math.round(hR[1]) - 1, 1, 2, a.P.C.skin); spinBall(g, Math.round(hR[0]), Math.round(hR[1]) - 4, t); }
+    else if (H.ball === 'hip') drawBall(g, Math.round(hR[0]) + 1, Math.round(hR[1]) - 2);
+    else if (H.ball === 'over') drawBall(g, Math.round((hL[0] + hR[0]) / 2), Math.round(Math.min(hL[1], hR[1])) - 2);
+    else if (H.ball === 'drib') { const z = Math.abs(Math.sin(t * 6)); drawBall(g, Math.round(hR[0]), Math.round(hR[1] + 2 + (1 - z) * (fy - hR[1] - 5))); }
+  }
+  return r2;
+}
+function renderHome(dt) {
+  if (!ctx || !S) return;
+  if (!home.actors.length) homeSetup();
+  const key = IW + 'x' + IH;
+  if (home.bgKey !== key || !home.bg) { home.bg = paintHomeBg(); home.bgKey = key; }
+  const g = ctx;
+  g.imageSmoothingEnabled = false;
+  g.drawImage(home.bg, 0, 0);
+  // sweeping light beams from behind the stage
+  const cx = IW >> 1, by = Math.round(IH * .2);
+  g.save(); g.globalAlpha = .07; g.fillStyle = '#bcd6ff';
+  for (let k = 0; k < 5; k++) {
+    const an = Math.PI / 2 + Math.sin(home.t * .35 + k * 1.7) * .55, w = .07;
+    g.beginPath(); g.moveTo(cx + (k - 2) * IW * .18, -4);
+    g.lineTo(cx + (k - 2) * IW * .18 + Math.cos(an - w) * IH * 1.2, -4 + Math.sin(an - w) * IH * 1.2);
+    g.lineTo(cx + (k - 2) * IW * .18 + Math.cos(an + w) * IH * 1.2, -4 + Math.sin(an + w) * IH * 1.2);
+    g.closePath(); g.fill();
+  }
+  g.restore();
+  // twinkles
+  for (let i = 0; i < 14; i++) {
+    const ph = (home.t * .8 + i * .37) % 1; if (ph > .25) continue;
+    const x = Math.round(((i * 73.13) % 1) * IW), y = Math.round(((i * 41.7) % 1) * IH * .5);
+    g.fillStyle = '#e8f1ff'; g.fillRect(x, y, 1, 1); if (ph < .12) { g.fillRect(x - 1, y, 3, 1); g.fillRect(x, y - 1, 1, 3); }
+  }
+  void by;
+  const L = homeLayout(), f = FR[S.fr];
+  home.hits = [];
+  const order = [1, 2, 0];
+  for (const k of order) {
+    const a = home.actors[k], l = L[k]; if (!a) continue;
+    const r2 = drawHomeActor(a, l.sc);
+    const B = a.buf, w = B.width * l.sc, h = B.height * l.sc, x0 = Math.round(l.x - 22 * l.sc), y0 = Math.round(l.y - 49 * l.sc);
+    g.drawImage(B, x0, y0, w, h);
+    const top = r2 ? y0 + (r2.top - 2) * l.sc : y0;
+    home.hits.push({id:a.id, x0:l.x - 12 * l.sc, x1:l.x + 12 * l.sc, y0:top, y1:l.y + 4 * l.sc});
+  }
+  // name plates
+  for (const k of order) {
+    const a = home.actors[k], l = L[k]; if (!a) continue;
+    const c = CHARS[a.id], ov = ovrOf(a.d.st), ny = l.y + 3 * l.sc + 2;
+    const label = c.last.toUpperCase(), tc = TXT.getContext('2d'); tc.font = '8px Silkscreen, "Press Start 2P", monospace';
+    const wpx = Math.max(30, Math.ceil(tc.measureText(label).width) + 24);
+    const x0 = Math.round(l.x - wpx / 2);
+    R(g, x0 - 1, ny - 1, wpx + 2, 12, OUT); R(g, x0, ny, wpx, 10, '#0b1740');
+    R(g, x0, ny, 16, 10, RAR[c.r].c); ptext(g, String(ov), x0 + 8, ny + 5, 8, '#0b1740', 'center');
+    ptext(g, label, x0 + 16 + (wpx - 16) / 2, ny + 5, 8, '#fffaf2', 'center');
+    ptext(g, c.pos, l.x, ny + 16, 8, '#9cc4ff', 'center');
+  }
+  void f; void dt;
+}
+function pickHomeActor(cx, cy) {
+  if (!renderer || !home.hits.length) return null;
+  const r = cv.getBoundingClientRect(), px = (cx - r.left) / r.width * IW, py = (cy - r.top) / r.height * IH;
+  const hit = home.hits.slice().reverse().find(h => px >= h.x0 && px <= h.x1 && py >= h.y0 && py <= h.y1);
+  return hit ? hit.id : null;
 }
 
 // ---------- popups + shot meter placement ----------
@@ -2642,11 +2523,11 @@ function loadArt() {
   for (const [k, id] of Object.entries(ART_SRC)) {
     const t = ARTT[k]; if (!t) continue;
     const im = new Image();
-    im.onload = () => { ART[k] = im; arenaKey = ''; gymKey = ''; if (mode === 'match' && G.T[0]) repaintArena(); };
+    im.onload = () => { ART[k] = im; arenaKey = ''; if (mode === 'match' && G.T[0]) repaintArena(); };
     im.src = PH_BASE + t + '_' + id + '_min.webp';
   }
 }
-let ARTT = {stands:'175603', side:'175603', gym:'175602'};
+let ARTT = {stands:'175603', side:'175603'};
 function initScene() {
   ctx = cv.getContext('2d');
   if (!ctx) throw new Error('2D canvas unavailable');
@@ -2851,7 +2732,7 @@ let meterHide = 0, meterP = null, meterV = 0;
 
 function setMode(m) {
   mode = m; app.classList.toggle('home', m === 'home'); app.classList.toggle('match', m === 'match');
-  gymG.visible = m === 'home'; arenaG.visible = m === 'match';
+  arenaG.visible = m === 'match';
 }
 function renderTop() {
   if (!S) return;
@@ -2863,8 +2744,7 @@ function renderTop() {
   $('gems').textContent = short(S.gems);
   const rs = document.documentElement.style;
   rs.setProperty('--team', f.c); rs.setProperty('--team-d', f.d); rs.setProperty('--team-ink', darkInk(f) ? f.numc : '#fffaf2');
-  const busy = Object.keys(S.gym.assign).length;
-  $('gymsub').textContent = busy ? `${busy} on equipment · tap a player to move them` : 'Tap a player to put them on equipment';
+  homeSync();
 }
 function openPanel(t) {
   if (tab === t) { closePanel(); return; }
@@ -2875,26 +2755,24 @@ function openPanel(t) {
 function closePanel() {
   tab = null; panel.hidden = true; selSlot = -1;
   document.querySelectorAll('.nav button').forEach(b => b.classList.remove('on'));
-  gymSetup();
 }
 function renderPanel() {
   if (!tab || !S) return;
   const st = panel.scrollTop;
-  const head = t => `<div class="phead"><h2>${t}</h2><button class="xbtn" data-act="close" aria-label="Back to the gym">${XIC}</button></div>`;
+  const head = t => `<div class="phead"><h2>${t}</h2><button class="xbtn" data-act="close" aria-label="Close">${XIC}</button></div>`;
   if (tab === 'team') panel.innerHTML = head('TEAM') + teamHTML();
   else if (tab === 'story') panel.innerHTML = head('STORY') + storyHTML();
-  else if (tab === 'gym') panel.innerHTML = head('TRAINING GYM') + gymHTML();
   else if (tab === 'pvp') panel.innerHTML = head('PVP') + `<div class="locked-panel"><svg viewBox="0 0 16 16"><rect x="3" y="7" width="10" height="8" rx="1.5" fill="currentColor"/><path d="M5 7V5a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="1.4"/></svg><b>PVP IS LOCKED</b><p class="hint">Head-to-head games against other players aren't open yet. Build your squad in Story mode for now.</p></div>`;
   else if (tab === 'packs') panel.innerHTML = head('BANNERS') + packsHTML();
-  else if (tab === 'shop') panel.innerHTML = head('SHOP') + `<div class="locked-panel shop-lock"><div class="shopart">${GEM}${shoeSVG(SHOES[10])}${cardFace('spain')}</div><b>SHOP IS LOCKED</b><p class="hint">Spend Basket Bucks on players, plays and sneakers here soon. For now, pull from Banners.</p></div>`;
+  else if (tab === 'shop') panel.innerHTML = head('SHOP') + shopHTML();
   panel.scrollTop = st;
 }
 function plainLook(c) { return {skin:c.skin, hair:c.hair, band:c.r >= 2, beard:c.beard, v:c.id, pid:c.id}; }
 function chipHTML(id, extra, act) {
   const c = CHARS[id], o = S.owned[id], f = FR[S.fr];
   if (!o) return `<div class="chip locked" style="--rc:${RAR[c.r].c}" aria-label="${esc(c.name)}, locked">${portraitSVG(plainLook(c), f, c.num)}<span class="nm">${esc(c.last)}</span><span class="st">${RAR[c.r].n.toUpperCase()}</span></div>`;
-  const ov = ovrOf(eff(id)), canStar = o.st < 5 && o.sh >= SHARDS[o.st], tr = S.gym.assign[id] != null;
-  return `<button class="chip ${extra || ''}" style="--rc:${RAR[c.r].c}" ${act || `data-act="char" data-id="${id}"`}><span class="ov">${ov}</span><span class="ps">${c.pos}</span>${portraitSVG(lookOf(id), f, c.num)}<span class="nm">${esc(c.last)}</span><span class="st">${'★'.repeat(o.st)}</span>${canStar ? '<span class="tag">★ UP</span>' : tr ? '<span class="tag gy">GYM</span>' : ''}</button>`;
+  const ov = ovrOf(eff(id)), canStar = o.st < 5 && o.sh >= SHARDS[o.st];
+  return `<button class="chip ${extra || ''}" style="--rc:${RAR[c.r].c}" ${act || `data-act="char" data-id="${id}"`}><span class="ov">${ov}</span><span class="ps">${c.pos}</span>${portraitSVG(lookOf(id), f, c.num)}<span class="nm">${esc(c.last)}</span><span class="st">${'★'.repeat(o.st)}</span>${canStar ? '<span class="tag">★ UP</span>' : ''}</button>`;
 }
 function teamHTML() {
   const tabs = `<div class="subtabs">${['lineup','deck','shoes'].map(s => `<button class="${teamSub === s ? 'on' : ''}" data-act="sub" data-sub="${s}">${s.toUpperCase()}</button>`).join('')}</div>`;
@@ -2961,70 +2839,28 @@ function storyHTML() {
     <div class="sect"><h3>SCHEDULE</h3><div class="games">${rows}</div></div>`;
 }
 
-// ---------- training gym panel ----------
-const ST_ICON = {
-  run:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="14" cy="4" r="2"/><path d="M8 21l3-6 3 2v5M6 12l3-4 4 1 3 4h3M11 15l-2-3"/></svg>',
-  ladder:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 3v18M17 3v18M7 7h10M7 12h10M7 17h10"/></svg>',
-  bench:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 8h20M4 5v6M20 5v6M6 15h12M9 15v5M15 15v5"/></svg>',
-  ropes:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 8c3-3 5 3 8 0s5 3 8 0 3 0 4-1M2 16c3-3 5 3 8 0s5 3 8 0 3 0 4-1"/><circle cx="2" cy="8" r=".6"/><circle cx="2" cy="16" r=".6"/></svg>',
-  bike:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="17" cy="16" r="4"/><path d="M7 21h10M9 21l2-9h6M11 12 9 7h-3M17 12l1-4h2"/></svg>',
-  plyo:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 21h18v-8H11V7H3z"/><path d="M14 3l2 2-2 2"/></svg>',
-  curl:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9v6M18 9v6M3 10.5v3M21 10.5v3M6 12h12"/></svg>',
-  squat:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 4v16M21 4v16M3 9h18M6 6v6M18 6v6M12 11l-3 4 2 5M12 11l3 4-2 5"/><circle cx="12" cy="8.5" r="1.5"/></svg>'
-};
-function perHour(u) { return Math.round(unitRate(u) * 3600 * 10) / 10; }
-function gymHTML() {
-  const g = S.gym, f = FR[S.fr];
-  const who = ui => Object.keys(g.assign).filter(id => g.assign[id] === ui).map(Number);
-  const rows = g.units.map((u, i) => {
-    const T = STATIONS[u.type], ids = who(i), up = UNIT_UP[u.lv];
-    const ppl = ids.map(id => { const o = S.owned[id], prog = T.stat.map(k => `${STATN[k]} +${Math.floor(o.tr[k])}/${TRAIN_CAP}`).join(' · ');
-      return `<button class="trainee" data-act="char" data-id="${id}">${portraitSVG(lookOf(id), f, CHARS[id].num)}<span><b>${esc(CHARS[id].last)}</b><small>${prog}</small></span></button>`; }).join('');
-    return `<div class="station">
-      <div class="shead"><span class="sic">${ST_ICON[T.icon]}</span><div><b>${T.n}</b><small>Trains ${T.stat.map(k => STATN[k]).join(' and ')} · +${perHour(u)} per hour</small></div><span class="slv">${'★'.repeat(u.lv)}<i>${'★'.repeat(5 - u.lv)}</i></span></div>
-      ${ppl || '<p class="hint">Nobody here. Send a player to start training.</p>'}
-      <div class="mrow"><button class="mbtn sec" data-act="gympick" data-u="${i}">${ids.length ? 'Swap player' : 'Send a player'}</button>${u.lv < 5 ? (S.gems >= up ? `<button class="mbtn pri" data-act="gymup" data-u="${i}">Upgrade ${GEM}${up}</button>` : `<button class="mbtn no" aria-disabled="true">Upgrade ${GEM}${up}</button>`) : '<button class="mbtn no" aria-disabled="true">Max level</button>'}</div></div>`;
-  }).join('');
-  const shop = g.units.length >= GYM_SLOTS ? '<p class="hint">Your gym is full.</p>' : Object.entries(STATIONS).map(([k, T]) => {
-    const ok = S.gems >= T.cost;
-    return `<button class="buyst ${ok ? '' : 'no'}" ${ok ? `data-act="gymbuy" data-k="${k}"` : 'aria-disabled="true"'}><span class="sic">${ST_ICON[T.icon]}</span><span><b>${T.n}</b><small>${T.stat.map(s => STATN[s]).join(' and ')}</small></span><span class="pr">${GEM}${T.cost}</span></button>`;
-  }).join('');
-  return `<p class="hint">Players at a station gain stats over time, even while the app is closed (up to 8 hours). Each stat can grow by ${TRAIN_CAP} points. Upgrading a station makes it train faster.</p>
-    <div class="sect"><h3>STATIONS <em>${g.units.length}/${GYM_SLOTS}</em></h3>${rows}</div>
-    <div class="sect"><h3>ADD EQUIPMENT</h3><div class="shop">${shop}</div></div>`;
+// ---------- shop: Basket Bucks for real money ----------
+const BUCK_PACKS = [
+  {id:'b1', n:'Handful', bucks:100, bonus:0, usd:'$0.99'},
+  {id:'b2', n:'Stack', bucks:500, bonus:50, usd:'$4.99'},
+  {id:'b3', n:'Bundle', bucks:1000, bonus:200, usd:'$9.99', tag:'POPULAR'},
+  {id:'b4', n:'Pile', bucks:2000, bonus:500, usd:'$19.99'},
+  {id:'b5', n:'Duffel Bag', bucks:5000, bonus:1500, usd:'$49.99'},
+  {id:'b6', n:'Vault', bucks:10000, bonus:4000, usd:'$99.99', tag:'BEST VALUE'}
+];
+function packArt(P, i) {
+  const spots = [[0, 4, -4], [-22, 2, -10], [22, 2, 9], [-12, 14, 6], [12, 16, -7], [0, 26, 3], [-26, 22, -12], [26, 24, 12], [0, 38, -3]];
+  const n = [1, 2, 4, 5, 7, 9][i], coded = `<span class="pk-stack">${spots.slice(0, n).map(([x, y, r]) => `<i style="--x:${x};--y:${y};--r:${r}">${GEM}</i>`).join('')}</span>`;
+  const hf = typeof PHOTO_OK !== 'undefined' && PHOTO_OK && PACK_ART[i] ? `<img class="hf" src="${PH_BASE + PACK_ART[i]}_min.webp" alt="" loading="lazy" onerror="this.remove()">` : '';
+  return `<span class="pk-art">${coded}${hf}</span>`;
 }
-let pickUnit = -1, sendId = -1;
-function openGymPicker(ui) {
-  pickUnit = ui; const f = FR[S.fr], T = STATIONS[S.gym.units[ui].type];
-  const ids = Object.keys(S.owned).map(Number).sort((a, b) => ovrOf(eff(b)) - ovrOf(eff(a)));
-  modal.innerHTML = `<div class="sheet"><div class="phead"><h2>SEND TO ${T.n.toUpperCase()}</h2><button class="xbtn" data-act="mclose" aria-label="Close">${XIC}</button></div>
-    <p class="hint">Trains ${T.stat.map(k => STATN[k]).join(' and ')}. Pick a player.</p>
-    <div class="grid">${ids.map(id => { const o = S.owned[id], room = T.stat.some(k => o.tr[k] < TRAIN_CAP);
-      return `<button class="chip ${room ? '' : 'maxed'}" style="--rc:${RAR[CHARS[id].r].c}" data-act="gymassign" data-id="${id}"><span class="ov">${ovrOf(eff(id))}</span><span class="ps">${CHARS[id].pos}</span>${portraitSVG(lookOf(id), f, CHARS[id].num)}<span class="nm">${esc(CHARS[id].last)}</span><span class="st">${T.stat.map(k => '+' + Math.floor(o.tr[k])).join(' ')}</span>${S.gym.assign[id] != null ? '<span class="tag gy">GYM</span>' : ''}</button>`; }).join('')}</div></div>`;
-  modal.hidden = false;
-}
-function openSendSheet(id) {
-  sendId = id; const c = CHARS[id], f = FR[S.fr], cur = S.gym.assign[id];
-  const opts = S.gym.units.map((u, i) => {
-    const T = STATIONS[u.type], taken = Object.keys(S.gym.assign).find(k => S.gym.assign[k] === i && +k !== id);
-    return `<button class="buyst" data-act="sendto" data-u="${i}"><span class="sic">${ST_ICON[T.icon]}</span><span><b>${T.n} ${'★'.repeat(u.lv)}</b><small>${T.stat.map(k => STATN[k]).join(' and ')}${taken != null ? ' · swaps with ' + esc(CHARS[taken].last) : ''}</small></span><span class="pr">${cur === i ? 'HERE' : ''}</span></button>`;
-  }).join('');
-  modal.innerHTML = `<div class="sheet"><div class="ptop" style="--rc:${RAR[c.r].c}">${portraitSVG(lookOf(id), f, c.num)}<div style="min-width:0"><h2>${esc(c.name)}</h2><div class="meta">${c.pos} · OVR ${ovrOf(eff(id))}</div></div></div>
-    <div class="sect"><h3>SEND TO A WORKOUT</h3>${opts}<button class="buyst" data-act="sendto" data-u="-1"><span class="sic">${ST_ICON.curl}</span><span><b>Free weights</b><small>Curls, jump rope, push-ups and stretching. Trains nothing</small></span><span class="pr">${cur == null ? 'HERE' : ''}</span></button></div>
-    <div class="mrow"><button class="mbtn sec" data-act="char" data-id="${id}">Player card</button><button class="mbtn sec" data-act="mclose">Close</button></div></div>`;
-  modal.hidden = false;
-}
-function assignTo(id, ui) {
-  if (ui >= 0 && !S.gym.units[ui]) return;
-  if (!S.owned[id]) return;
-  if (ui < 0) delete S.gym.assign[id];
-  else {
-    for (const k in S.gym.assign) if (S.gym.assign[k] === ui && +k !== id) { delete S.gym.assign[k]; gymReassign(+k); }
-    S.gym.assign[id] = ui;
-  }
-  save(); gymReassign(id); renderTop();
-  const T = ui >= 0 ? STATIONS[S.gym.units[ui].type] : null;
-  toast(T ? `${CHARS[id].last} heads to the ${T.n.toLowerCase()}` : `${CHARS[id].last} goes back to free weights`);
+function shopHTML() {
+  const fmt = n => n.toLocaleString();
+  const packs = BUCK_PACKS.map((P, i) => `<button class="pack" data-act="buybucks" data-p="${P.id}">${P.tag ? `<span class="pk-tag">${P.tag}</span>` : ''}${packArt(P, i)}
+    <b class="pk-amt">${GEM}${fmt(P.bucks + P.bonus)}</b><small class="pk-n">${P.n}${P.bonus ? ` · <em>+${fmt(P.bonus)} bonus</em>` : ''}</small><span class="pk-usd">${P.usd}</span></button>`).join('');
+  return `<div class="shop-head"><span class="cur">${GEM}<b>${S.gems.toLocaleString()}</b></span><p class="hint">Basket Bucks pull Banners and star up your players.</p></div>
+    <div class="sect"><h3>BASKET BUCKS</h3><div class="packs">${packs}</div></div>
+    <p class="odds">Prices in US dollars. Checkout isn't open yet, so no purchase will charge you.</p>`;
 }
 
 // ---------- summon banners ----------
@@ -3230,7 +3066,7 @@ function renderPlayer() {
   const rows = STATS.map(k => {
     const base = Math.min(99, c.base[k] + (o.st - 1) * 3), tr = Math.floor(o.tr[k] || 0), shoeB = (m && m.b[k]) || 0, bonus = st[k] - base;
     return `<div class="statl"><span>${STATN[k]}</span><div class="bar"><i style="width:${base}%"></i><i class="b" style="width:${Math.max(0, bonus)}%"></i></div><span>${st[k]}${bonus > 0 ? `<em>+${bonus}</em>` : ''}</span></div>
-      <div class="statsrc">${[tr ? `Gym +${tr}` : '', shoeB ? `Shoes +${shoeB}` : '', db[k] ? `Deck +${db[k]}` : ''].filter(Boolean).join(' · ')}</div>`;
+      <div class="statsrc">${[tr ? `Trained +${tr}` : '', shoeB ? `Shoes +${shoeB}` : '', db[k] ? `Deck +${db[k]}` : ''].filter(Boolean).join(' · ')}</div>`;
   }).join('');
   const need = SHARDS[o.st] || 0, cost = STAR_COST[o.st] || 0, max = o.st >= 5;
   const canStar = !max && o.sh >= need && S.gems >= cost;
@@ -3247,17 +3083,16 @@ function renderPlayer() {
   } else {
     shoeBlock = `<button class="shoe-row" style="--rc:${m ? RAR[m.r].c : 'var(--rule)'}" data-act="shoes">${shoeSVG(m || {c:0xf4f1ea, s:0x22252f})}<div class="info"><b>${m ? m.n : 'Team-issue shoes'}</b><small>${m ? Object.entries(m.b).map(([k, v]) => `${STATN[k]} +${v}`).join(', ') : 'No bonus'}</small></div><div class="w">CHANGE</div></button>`;
   }
-  const gymU = S.gym.assign[id], gymTxt = gymU != null ? `Training at the ${STATIONS[S.gym.units[gymU].type].n.toLowerCase()}` : 'Not training';
   modal.innerHTML = `<div class="sheet pcard" role="dialog" aria-label="${esc(c.name)}" style="--rc:${RAR[c.r].c}">
     <div class="vstage" id="vstage"><div class="vbadge"><b>${ovrOf(st)}</b><span>OVR</span></div><div class="vname"><span class="rar">${RAR[c.r].n} · ${c.pos} · #${c.num}</span><h2>${esc(c.name)}</h2><div class="stars">${'★'.repeat(o.st)}<span class="off">${'★'.repeat(5 - o.st)}</span></div></div>
       <div class="vfallback">${portraitSVG(lookOf(id), f, c.num)}</div>
       <div class="vposes">${[['idle','Stance'],['dribble','Dribble'],['shoot','Jumper'],['dunk','Dunk']].map(([k, l]) => `<button class="fchip ${k === 'idle' ? 'on' : ''}" data-act="vpose" data-k="${k}">${l}</button>`).join('')}</div>
       <p class="vhint">Drag to turn</p></div>
     ${rows}
-    <p class="hint">${gymTxt}. Height and build come from position: ${POS_T[c.pos].h >= .96 ? 'a big who owns the paint' : POS_T[c.pos].h <= .9 ? 'a quick guard' : 'a two-way wing'}.</p>
+    <p class="hint">Height and build come from position: ${POS_T[c.pos].h >= .96 ? 'a big who owns the paint' : POS_T[c.pos].h <= .9 ? 'a quick guard' : 'a two-way wing'}.</p>
     ${starBtn}
     <div class="sect"><h3>SHOES</h3>${shoeBlock}</div>
-    <div class="mrow"><button class="mbtn sec" data-act="sendsheet" data-id="${id}">Gym</button><button class="mbtn sec" data-act="mclose">Done</button></div></div>`;
+    <button class="mbtn sec" data-act="mclose">Done</button></div>`;
   if (viewerShow(id)) { $('vstage').appendChild(VW.canvas); $('vstage').classList.add('live'); }
 }
 
@@ -3269,7 +3104,7 @@ function renderSetup() {
     <div class="field"><label>PICK YOUR FRANCHISE</label><div class="frs">${FR.map((f, i) => `<button class="fr ${i === setupFr ? 'on' : ''}" data-act="setfr" data-fr="${i}">${crestSVG(f)}<span><b>${f.n}</b><small>${f.city}</small></span></button>`).join('')}</div></div>
     <p class="err" id="setuperr"></p>
     <button class="mbtn pri" data-act="create">Start career</button>
-    <p class="hint" style="text-align:center">You start with 10 players, a 32-card deck with your first plays, a training gym and 550 Basket Bucks.</p></div>`;
+    <p class="hint" style="text-align:center">You start with 10 players, a 32-card deck with your first plays and 550 Basket Bucks.</p></div>`;
   el.hidden = false;
   $('teamname').addEventListener('input', () => { $('setuperr').textContent = ''; });
 }
@@ -3277,10 +3112,8 @@ function createTeam() {
   const v = ($('teamname').value || '').trim().replace(/\s+/g, ' ');
   if (v.length < 2) { $('setuperr').textContent = 'Enter a team name with at least 2 letters.'; if ($('teamname').focus) $('teamname').focus(); return; }
   newSave(v, setupFr);
-  S.gym.units.push({type:'bench', lv:1});
-  S.gym.assign[S.lineup[4]] = 1; S.gym.assign[S.lineup[3]] = 0; save();
   $('setup').hidden = true; $('setup').innerHTML = '';
-  renderTop(); repaintGym(); gymSetup();
+  homeSetup(); renderTop();
 }
 
 // ---------- match flow ----------
@@ -3384,7 +3217,7 @@ const QUAL = {
 function applyQuality() {
   if (!renderer) return;
   const Q = QUAL[SET.q] || QUAL.high;
-  PXS = Q.px; resize(); arenaKey = ''; gymKey = '';
+  PXS = Q.px; resize(); arenaKey = ''; home.bgKey = '';
 }
 function openSettings() {
   const seg = (act, opts, cur) => `<div class="seg">${opts.map(([v, l]) => `<button class="${String(cur) === String(v) ? 'on' : ''}" data-act="${act}" data-v="${v}">${l}</button>`).join('')}</div>`;
@@ -3456,18 +3289,8 @@ function act(a, d) {
   else if (a === 'forfeit') { $('pause').hidden = true; G.paused = false; G.phase = 'final'; $('matchup').hidden = true; finishStory(false, true); }
   else if (a === 'continue') leaveMatch();
   else if (a === 'auto') { if (!G.game) return; G.auto = !G.auto; S.auto = G.auto; save(); if (G.auto && G.meter) releaseMeter(); for (const p of players[0]) p.attack = null; syncAuto(); toast(G.auto ? 'Autoplay on' : 'Autoplay off. Your cards are back'); }
-  else if (a === 'gympick') openGymPicker(+d.u);
-  else if (a === 'gymassign') { assignTo(+d.id, pickUnit); closeModal(); }
-  else if (a === 'sendsheet') openSendSheet(+d.id);
-  else if (a === 'sendto') { assignTo(sendId, +d.u); closeModal(); }
-  else if (a === 'gymup') {
-    const u = S.gym.units[+d.u], c = UNIT_UP[u.lv];
-    if (u.lv < 5 && S.gems >= c) { S.gems -= c; u.lv++; save(); renderTop(); renderPanel(); buildStations(); gym.actors.forEach(setActorUnit); toast(`${STATIONS[u.type].n} upgraded to level ${u.lv}`); }
-  }
-  else if (a === 'gymbuy') {
-    const T = STATIONS[d.k];
-    if (S.gym.units.length < GYM_SLOTS && S.gems >= T.cost) { S.gems -= T.cost; S.gym.units.push({type:d.k, lv:1}); save(); renderTop(); renderPanel(); buildStations(); gym.actors.forEach(setActorUnit); toast(`${T.n} added to your gym`); }
-  }
+  else if (a === 'buybucks') { const P = BUCK_PACKS.find(x => x.id === d.p); if (P) toast(`Checkout isn't open yet. You weren't charged ${P.usd}`); }
+  else if (a === 'start') hideStart();
 }
 document.addEventListener('click', e => { const el = e.target.closest && e.target.closest('[data-act]'); if (el) act(el.dataset.act, el.dataset); });
 modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
@@ -3479,8 +3302,6 @@ $('hand').addEventListener('pointerdown', e => {
     const c = CARD[id];
     if (G.auto) toast('Turn off autoplay to use your cards');
     else if (c && G.stam < c.cost) toast(`Needs ${c.cost} stamina`);
-    else if (c && c.t === 'def') toast('Defense cards work when the other team has the ball');
-    else if (c) toast('Wait until your team has the ball');
     return;
   }
   el.classList.add('fly');
@@ -3489,9 +3310,9 @@ $('hand').addEventListener('pointerdown', e => {
 const relMeter = () => { if (G.meter) releaseMeter(); };
 document.addEventListener('pointerup', relMeter); document.addEventListener('pointercancel', relMeter);
 cv.addEventListener('click', e => {
-  if (mode !== 'home' || tab || !S) return;
-  const a = pickGymActor(e.clientX, e.clientY);
-  if (a) openSendSheet(a.id);
+  if (mode !== 'home' || tab || !S || !modal.hidden) return;
+  const id = pickHomeActor(e.clientX, e.clientY);
+  if (id != null) openPlayer(id);
 });
 window.addEventListener('keydown', e => {
   if (mode !== 'match' || e.repeat) return;
@@ -3501,27 +3322,51 @@ window.addEventListener('keydown', e => {
 });
 window.addEventListener('keyup', e => { const k = (e.key || '').toLowerCase(); if (mode === 'match' && k >= '1' && k <= '8') relMeter(); });
 
+// ---------- start screen ----------
+const BALL_MAP = ['..ooooo..', '.oaaxaao.', 'oaaaxaaao', 'oaaaxaaao', 'oxxxxxxxo', 'oaaaxaaao', 'oaaaxaaao', '.oaaxaao.', '..ooooo..'];
+function startLook(id) {
+  if (S && S.owned[id]) return lookOf(id);
+  const c = CHARS[id];
+  return {skin:c.skin, hair:c.hair, h:POS_T[c.pos].h, w:POS_T[c.pos].w, shoe:[0xf4f1ea, 0x22252f], band:c.r >= 2, beard:c.beard, sleeve:c.sleeve, v:c.id, pid:c.id};
+}
+function showStart() {
+  const el = $('start'), f = S ? FR[S.fr] : FR[0];
+  const ids = S ? S.lineup.slice(0, TEAM_N) : [0, 2, 4];
+  const slots = [[ids[1], 'cross', 'l'], [ids[0], 'spin', 'c'], [ids[2], 'point', 'r']];
+  const dolls = slots.map(([id, pose, cls]) => {
+    const c = CHARS[id], url = posedPNG({id, num:c.num, look:startLook(id)}, f, pose);
+    return url ? `<img class="st-doll ${cls}" src="${url}" alt="${esc(c.name)}" draggable="false">` : '';
+  }).join('');
+  const art = START_ART ? `<img class="st-art" src="${PH_BASE + START_ART}_min.webp" alt="" onload="this.parentNode.classList.add('art-on')" onerror="this.remove()">` : '';
+  el.innerHTML = `<div class="st-bg"></div>${art}<div class="st-logo">${pixSVG(BALL_MAP, {o:'#120e18', a:'#e2702c', x:'#3a1606'}, 'st-ball')}<h1>DREAM<br>BALL</h1><small>3-ON-3 CARD HOOPS</small></div>
+    <div class="st-stage">${dolls}</div><div class="st-tap">TAP TO START</div><div class="st-ver">${S ? esc(S.name.toUpperCase()) + ' · SEASON ' + S.story.season : 'NEW CAREER'}</div>`;
+  el.hidden = false; el.classList.remove('out'); el.dataset.act = 'start';
+}
+function hideStart() {
+  const el = $('start'); if (el.hidden || el.classList.contains('out')) return;
+  el.classList.add('out');
+  setTimeout(() => { el.hidden = true; el.innerHTML = ''; }, 380);
+  if (!S) renderSetup();
+  else if (S.gymRefund) { const n = S.gymRefund; delete S.gymRefund; save(); renderTop(); setTimeout(() => toast(`The gym is closed. You got back ${n} Basket Bucks for its equipment`), 500); }
+}
+
 // ================= boot =================
 const rotMQ = window.matchMedia ? window.matchMedia('(orientation: landscape) and (max-height: 520px)') : {matches:false};
 S = load();
 try { initScene(); applyQuality(); }
 catch (err) { renderer = null; const d = document.createElement('div'); d.className = 'glfail'; d.textContent = 'This device could not start the game view. Try an up-to-date browser.'; wrap.appendChild(d); }
 setMode('home');
-if (!S) renderSetup();
+showStart();
 (() => { // painted portraits: switch on only if this host can actually load them
   const im = new Image(); im.onload = () => { PHOTO_OK = true; if (BUCK_ART) document.querySelectorAll('.gemic').forEach(e => { e.innerHTML = `<img class="hfbuck" src="${PH_BASE + BUCK_ART}_min.webp" alt="" onerror="this.parentNode.innerHTML=GEM_SVG_FALLBACK">`; }); if (S && !panel.hidden) renderPanel(); }; im.src = photoURL(0);
 })();
-if (S) {
-  const gains = offlineTraining();
-  renderTop(); repaintGym(); gymSetup(); save();
-  if (gains.length) { const tot = gains.reduce((a, g) => a + g.n, 0); setTimeout(() => toast(`While you were away your players gained ${tot} stat point${tot === 1 ? '' : 's'} in the gym`), 600); }
-}
+if (S) { homeSetup(); renderTop(); save(); }
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => {
-  repaintGym(); if (mode === 'match') { repaintArena(); buildArenaPeople(); } else if (S) gymSetup();
+  home.bgKey = ''; if (mode === 'match') { repaintArena(); buildArenaPeople(); }
 });
 if (window.ResizeObserver) new ResizeObserver(resize).observe(wrap); else window.addEventListener('resize', resize);
 resize();
-let last = performance.now(), trainAcc = 0, saveAcc = 0, lastDraw = 0, fpsN = 0, fpsT = 0;
+let last = performance.now(), saveAcc = 0, lastDraw = 0, fpsN = 0, fpsT = 0;
 $('fpsbox').hidden = !SET.showFps;
 function frame(now) {
   requestAnimationFrame(frame);
@@ -3532,12 +3377,7 @@ function frame(now) {
   fpsN++; fpsT += dt; if (fpsT >= .5) { if (SET.showFps) $('fpsbox').textContent = Math.round(fpsN / fpsT) + ' FPS'; fpsN = 0; fpsT = 0; }
   const blocked = rotMQ.matches;
   if (S) {
-    trainAcc += dt; saveAcc += dt;
-    if (trainAcc >= 1) {
-      const gains = trainTick(trainAcc); trainAcc = 0;
-      for (const g of gains) { const a = gym.actors.find(x => x.id === g.id); if (a && mode === 'home') gymPop(a.x, a.y, `+${g.n} ${STATN[g.k].toUpperCase()}`, '#5fd38a'); }
-      if (gains.length) { renderTop(); if (tab === 'gym') renderPanel(); }
-    }
+    saveAcc += dt;
     if (saveAcc > 15) { saveAcc = 0; save(); }
   }
   if (mode === 'match') {
@@ -3546,18 +3386,17 @@ function frame(now) {
     if (renderer) { renderArena(dt); placePopups(); }
     updateMatchHud();
   } else {
-    if (!blocked && S) gymUpdate(dt);
-    if (renderer && !tab && S) renderGym(dt);
+    if (!blocked && S) homeUpdate(dt);
+    if (renderer && !tab && S) renderHome(dt);
   }
   if (!modal.hidden) viewerFrame(dt);
 }
 requestAnimationFrame(frame);
 document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') save(); });
-window.__dream = {G, get S() { return S; }, act, update, gymUpdate, playCard, releaseMeter, cardUsable, players, trainTick, offlineTraining, CARDS, CHARS, buildPerson, lookOf, FR};
+window.__dream = {G, get S() { return S; }, act, update, homeUpdate, renderHome, playCard, releaseMeter, cardUsable, players, CARDS, CHARS, buildPerson, lookOf, FR};
 
 })();
 </script>
-
 <script>
 (() => {
   if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
