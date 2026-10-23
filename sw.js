@@ -1,13 +1,11 @@
-// Dream Ball service worker: app shell precache + runtime cache for the 3D library and fonts.
-const VERSION = 'dreamball-v7';
+// Dream Ball service worker: app shell precache + runtime cache for fonts and pixel art.
+const VERSION = 'dreamball-v8';
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png', './icons/maskable-512.png', './icons/apple-touch-icon.png', './icons/favicon.png'];
-const THREE_URL = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
 
 self.addEventListener('install', e => {
   e.waitUntil((async () => {
     const c = await caches.open(VERSION);
     await c.addAll(SHELL);
-    try { await c.add(new Request(THREE_URL, {mode: 'cors'})); } catch (err) {}
     await self.skipWaiting();
   })());
 });
